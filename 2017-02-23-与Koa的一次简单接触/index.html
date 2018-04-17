@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Koa 基于 Node.js 平台的下一代 web 开发框架说到Koa，不可避免的就想到了express，算是它的轻便版本吧，公司用的就是Koa v2">
+<meta name="keywords" content="gulp,koa,nodemon,DHC,babel,async,await">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与Koa的一次简单接触">
+<meta property="og:url" content="http://babytutu.coding.me/2017-02-23-与Koa的一次简单接触/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="Koa 基于 Node.js 平台的下一代 web 开发框架说到Koa，不可避免的就想到了express，算是它的轻便版本吧，公司用的就是Koa v2">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-15T08:38:29.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="与Koa的一次简单接触">
+<meta name="twitter:description" content="Koa 基于 Node.js 平台的下一代 web 开发框架说到Koa，不可避免的就想到了express，算是它的轻便版本吧，公司用的就是Koa v2">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2017-02-23-与Koa的一次简单接触/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>与Koa的一次简单接触 | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2017-02-23-与Koa的一次简单接触/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">与Koa的一次简单接触
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-02-23 12:06:18" itemprop="dateCreated datePublished" datetime="2017-02-23T12:06:18+08:00">2017-02-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 16:38:29" itemprop="dateModified" datetime="2018-03-15T16:38:29+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Koa"><a href="#Koa" class="headerlink" title="Koa"></a>Koa</h2><blockquote>
+<p>基于 Node.js 平台的下一代 web 开发框架<br>说到Koa，不可避免的就想到了express，算是它的轻便版本吧，公司用的就是Koa v2</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="来一起跑个小例子"><a href="#来一起跑个小例子" class="headerlink" title="来一起跑个小例子"></a>来一起跑个小例子</h3><h4 id="从package-json开始"><a href="#从package-json开始" class="headerlink" title="从package.json开始"></a>从package.json开始</h4><blockquote>
+<p>Koa2走起，node升级到7，新世界很美好，当然node6也可以玩</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"koa-demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"learn koa"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"app.js"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"node app.js"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"koa"</span>: <span class="string">"2.0.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"engines"</span> : &#123;</span><br><span class="line">    <span class="attr">"node"</span> : <span class="string">"&gt;=6.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="来个app-js文件跑跑"><a href="#来个app-js文件跑跑" class="headerlink" title="来个app.js文件跑跑"></a>来个app.js文件跑跑</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"></span><br><span class="line">app.use(<span class="function"><span class="params">ctx</span> =&gt;</span> &#123;</span><br><span class="line">  ctx.body = <span class="string">'Hello Koa2'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="安装npm依赖包"><a href="#安装npm依赖包" class="headerlink" title="安装npm依赖包"></a>安装npm依赖包</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<h4 id="Koa2跑跑跑"><a href="#Koa2跑跑跑" class="headerlink" title="Koa2跑跑跑"></a>Koa2跑跑跑</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<h4 id="验收成果"><a href="#验收成果" class="headerlink" title="验收成果"></a>验收成果</h4><blockquote>
+<p>浏览器访问<a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> 出来个Hello Koa2</p>
+</blockquote>
+<h4 id="给控制台输出信息添砖加瓦"><a href="#给控制台输出信息添砖加瓦" class="headerlink" title="给控制台输出信息添砖加瓦"></a>给控制台输出信息添砖加瓦</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 控制台输出接口类型，地址，返回时间</span></span><br><span class="line">app.use(<span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  <span class="keyword">return</span> next().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ms = <span class="keyword">new</span> <span class="built_in">Date</span>() - start</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;ctx.method&#125;</span> -&gt; <span class="subst">$&#123;ctx.url&#125;</span> - <span class="subst">$&#123;ms&#125;</span>ms`</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>控制台显示</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET -&gt; / - 5ms</span><br></pre></td></tr></table></figure>
+<h4 id="结合gulp的nodejs的自动重启神器-—-gulp-nodemon"><a href="#结合gulp的nodejs的自动重启神器-—-gulp-nodemon" class="headerlink" title="结合gulp的nodejs的自动重启神器 — gulp-nodemon"></a>结合gulp的nodejs的自动重启神器 — <a href="https://www.npmjs.com/package/gulp-nodemon" target="_blank" rel="noopener">gulp-nodemon</a></h4><blockquote>
+<p>node不会自动重启，不要问我为什么，反正它就是那么任性，那我们就来个gulp任务让它监控下代码变化然后自动重启</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)</span><br><span class="line"><span class="keyword">let</span> nodemon = <span class="built_in">require</span>(<span class="string">'gulp-nodemon'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// nodemon 修改服务端代码自动重启</span></span><br><span class="line">gulp.task(<span class="string">'nodemon'</span>, () =&gt; nodemon(&#123; <span class="attr">script</span>: <span class="string">'app.js'</span> &#125;))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>package.json要加2个客人，gulp，gulp-nodemon，顺便把这个gulp用起来</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"koa-demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"learn koa"</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"app.js"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"gulp nodemon"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"koa"</span>: <span class="string">"2.0.0"</span>,</span><br><span class="line">    <span class="attr">"gulp"</span>: <span class="string">"3.9.1"</span>,</span><br><span class="line">    <span class="attr">"gulp-nodemon"</span>: <span class="string">"2.2.1"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"engines"</span> : &#123;</span><br><span class="line">    <span class="attr">"node"</span> : <span class="string">"&gt;=6.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="常用插件"><a href="#常用插件" class="headerlink" title="常用插件"></a>常用插件</h3><blockquote>
+<p>热身完毕，开工，说说需求是个啥？就是一个简单的get/post请求过来，我给你响应</p>
+</blockquote>
+<h4 id="设置路由，说白了就是有个导游-—-koa-router"><a href="#设置路由，说白了就是有个导游-—-koa-router" class="headerlink" title="设置路由，说白了就是有个导游 — koa-router"></a>设置路由，说白了就是有个导游 — <a href="https://www.npmjs.com/package/koa-router" target="_blank" rel="noopener">koa-router</a></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router  = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/hello/:name'</span>, ctx =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> name = ctx.params.name</span><br><span class="line">  ctx.body = <span class="string">`&lt;h1&gt;Hello, <span class="subst">$&#123;name&#125;</span>!&lt;/h1&gt;`</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(router.routes())</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>访问<a href="http://localhost:3000/hello/x" target="_blank" rel="noopener">http://localhost:3000/hello/x</a> 出来个Hello, x!<br>不深入，get是小菜，接下来说post</p>
+</blockquote>
+<h4 id="解析请求数据-—-koa-body"><a href="#解析请求数据-—-koa-body" class="headerlink" title="解析请求数据 — koa-body"></a>解析请求数据 — <a href="https://www.npmjs.com/package/koa-body" target="_blank" rel="noopener">koa-body</a></h4><blockquote>
+<p>官方说明：A full-feature koa body parser middleware</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> koaBody = <span class="built_in">require</span>(<span class="string">'koa-body'</span>)()</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">'/link'</span>, koaBody, ctx =&gt; &#123;</span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    code: <span class="string">'0'</span>,</span><br><span class="line">    description: <span class="string">'ok'</span>,</span><br><span class="line">    result: ctx.request.body</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>用DHC模拟个post，地址’localhost:3000/link’，body类型选json，DHC会自动加上Content-Type:application/json的请求头</p>
+<blockquote>
+<p>DHC是一款使用chrome模拟REST客户端向服务器发送测试数据的谷歌浏览器插件。</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"x"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>返回啥呢?<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"code"</span>: <span class="string">"0"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"ok"</span>,</span><br><span class="line">  <span class="attr">"result"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"x"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="logger信息再优化下-–-koa-logger"><a href="#logger信息再优化下-–-koa-logger" class="headerlink" title="logger信息再优化下 – koa-logger"></a>logger信息再优化下 – <a href="https://www.npmjs.com/package/koa-logger" target="_blank" rel="noopener">koa-logger</a></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i koa-logger --save</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>项目内用起来</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> logger = <span class="built_in">require</span>(<span class="string">'koa-logger'</span>)()</span><br><span class="line">app.use(logger)</span><br></pre></td></tr></table></figure>
+<h3 id="重要特性async-await，加料了！！！"><a href="#重要特性async-await，加料了！！！" class="headerlink" title="重要特性async/await，加料了！！！"></a>重要特性async/await，加料了！！！</h3><h4 id="暂时还要babel来帮忙，引入以下的package"><a href="#暂时还要babel来帮忙，引入以下的package" class="headerlink" title="暂时还要babel来帮忙，引入以下的package"></a>暂时还要babel来帮忙，引入以下的package</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install babel-core --save</span><br><span class="line">npm install babel-preset-es2015 --save</span><br><span class="line">npm install babel-preset-stage-3 --save</span><br></pre></td></tr></table></figure>
+<h4 id="babel入口文件"><a href="#babel入口文件" class="headerlink" title="babel入口文件"></a>babel入口文件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="comment">// 用于引入babel，并且启动app.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'babel-core/register'</span>)(&#123;</span><br><span class="line">  presets: [<span class="string">'stage-3'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./app.js'</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>gulp任务的监控对象也从app.js变成了index.js</p>
+</blockquote>
+<h4 id="有人走错路怎么办？"><a href="#有人走错路怎么办？" class="headerlink" title="有人走错路怎么办？"></a>有人走错路怎么办？</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一的错误处理</span></span><br><span class="line">app.use(<span class="keyword">async</span>(ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> next()</span><br><span class="line">  &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">    ctx.body = &#123;</span><br><span class="line">      code: <span class="string">'-1'</span>,</span><br><span class="line">      description: <span class="string">'大哥，你迷路了么？？？'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="把之前的get变成一个栗子"><a href="#把之前的get变成一个栗子" class="headerlink" title="把之前的get变成一个栗子"></a>把之前的get变成一个栗子</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 来一个闹钟</span></span><br><span class="line"><span class="keyword">const</span> sleep = <span class="function">(<span class="params">time, type = <span class="number">0</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">yes, no</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">          no(<span class="string">'起床失败，重启ing'</span>)</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">          no(<span class="string">'重启失败，强制重启'</span>)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          yes(<span class="string">'起床成功。。。'</span>)</span><br><span class="line">          <span class="keyword">break</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, time)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是一个寒冬的早上，要起来上班了</span></span><br><span class="line">router.get(<span class="string">'/hello/:name'</span>, <span class="keyword">async</span>(ctx) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> name = ctx.params.name</span><br><span class="line">  ctx.body = <span class="string">`&lt;h1&gt;Hello, <span class="subst">$&#123;name&#125;</span>!&lt;/h1&gt;`</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 第一次肯定起不来</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> sleep(<span class="number">100</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(name + data)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(name + e)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 第二次还是失败了</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> sleep(<span class="number">200</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(name + data)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(name + e)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 好了，一二不过三，可以起来了</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> sleep(<span class="number">300</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(name + data)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(name + e)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="好了，可以去叫床～哦不，起床。。。"><a href="#好了，可以去叫床～哦不，起床。。。" class="headerlink" title="好了，可以去叫床～哦不，起床。。。"></a>好了，可以去叫床～哦不，起床。。。</h4><blockquote>
+<p>访问<a href="http://localhost:3000/hello/koa" target="_blank" rel="noopener">http://localhost:3000/hello/koa</a> 出来个Hello, koa!</p>
+</blockquote>
+<blockquote>
+<p>别等了，料加在汤里～哦不，控制台里了</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">koa起床失败，重启ing</span><br><span class="line">koa重启失败，强制重启</span><br><span class="line">koa起床成功。。。</span><br><span class="line">  --&gt; GET /hello/koa 200 630ms 20b</span><br></pre></td></tr></table></figure>
+<h3 id="最终代码"><a href="#最终代码" class="headerlink" title="最终代码"></a>最终代码</h3><blockquote>
+<p>目录结构</p>
+</blockquote>
+<pre><code>├─ app.js          // 核心文件
+├─ gulpfile.js     // gulp任务
+├─ index.js        // babel入口
+└─ package.json    // 配置文件
+</code></pre><blockquote>
+<p>git: <a href="https://github.com/babytutu/koa-demo.git" target="_blank" rel="noopener">https://github.com/babytutu/koa-demo.git</a></p>
+</blockquote>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><blockquote>
+<p><a href="http://koajs.com/" target="_blank" rel="noopener">koa官网</a><br><a href="https://github.com/turingou/koa-guide" target="_blank" rel="noopener">koa中文文档(推荐)</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gulp/" rel="tag"># gulp</a>
+          
+            <a href="/tags/koa/" rel="tag"># koa</a>
+          
+            <a href="/tags/nodemon/" rel="tag"># nodemon</a>
+          
+            <a href="/tags/DHC/" rel="tag"># DHC</a>
+          
+            <a href="/tags/babel/" rel="tag"># babel</a>
+          
+            <a href="/tags/async/" rel="tag"># async</a>
+          
+            <a href="/tags/await/" rel="tag"># await</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-12-10-拯救大兵Sublime Text/" rel="next" title="拯救大兵Sublime Text">
+                <i class="fa fa-chevron-left"></i> 拯救大兵Sublime Text
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017-03-25-Mac使用小技巧/" rel="prev" title="Mac使用小技巧">
+                Mac使用小技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="babytutu" />
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Koa"><span class="nav-number">1.</span> <span class="nav-text">Koa</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#来一起跑个小例子"><span class="nav-number">1.1.</span> <span class="nav-text">来一起跑个小例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从package-json开始"><span class="nav-number">1.1.1.</span> <span class="nav-text">从package.json开始</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#来个app-js文件跑跑"><span class="nav-number">1.1.2.</span> <span class="nav-text">来个app.js文件跑跑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装npm依赖包"><span class="nav-number">1.1.3.</span> <span class="nav-text">安装npm依赖包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Koa2跑跑跑"><span class="nav-number">1.1.4.</span> <span class="nav-text">Koa2跑跑跑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验收成果"><span class="nav-number">1.1.5.</span> <span class="nav-text">验收成果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#给控制台输出信息添砖加瓦"><span class="nav-number">1.1.6.</span> <span class="nav-text">给控制台输出信息添砖加瓦</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结合gulp的nodejs的自动重启神器-—-gulp-nodemon"><span class="nav-number">1.1.7.</span> <span class="nav-text">结合gulp的nodejs的自动重启神器 — gulp-nodemon</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用插件"><span class="nav-number">1.2.</span> <span class="nav-text">常用插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置路由，说白了就是有个导游-—-koa-router"><span class="nav-number">1.2.1.</span> <span class="nav-text">设置路由，说白了就是有个导游 — koa-router</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析请求数据-—-koa-body"><span class="nav-number">1.2.2.</span> <span class="nav-text">解析请求数据 — koa-body</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logger信息再优化下-–-koa-logger"><span class="nav-number">1.2.3.</span> <span class="nav-text">logger信息再优化下 – koa-logger</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重要特性async-await，加料了！！！"><span class="nav-number">1.3.</span> <span class="nav-text">重要特性async/await，加料了！！！</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#暂时还要babel来帮忙，引入以下的package"><span class="nav-number">1.3.1.</span> <span class="nav-text">暂时还要babel来帮忙，引入以下的package</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#babel入口文件"><span class="nav-number">1.3.2.</span> <span class="nav-text">babel入口文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有人走错路怎么办？"><span class="nav-number">1.3.3.</span> <span class="nav-text">有人走错路怎么办？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#把之前的get变成一个栗子"><span class="nav-number">1.3.4.</span> <span class="nav-text">把之前的get变成一个栗子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#好了，可以去叫床～哦不，起床。。。"><span class="nav-number">1.3.5.</span> <span class="nav-text">好了，可以去叫床～哦不，起床。。。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终代码"><span class="nav-number">1.4.</span> <span class="nav-text">最终代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">1.5.</span> <span class="nav-text">参考文章</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

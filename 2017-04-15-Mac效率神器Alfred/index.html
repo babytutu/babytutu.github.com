@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="懒人进击版 作为一个偶尔勤奋下的懒人，还是要不断进步的，一切为了让将来的自己能更懒，美其名曰：“晋级”">
+<meta name="keywords" content="soft">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac效率神器Alfred">
+<meta property="og:url" content="http://babytutu.coding.me/2017-04-15-Mac效率神器Alfred/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="懒人进击版 作为一个偶尔勤奋下的懒人，还是要不断进步的，一切为了让将来的自己能更懒，美其名曰：“晋级”">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/ip1.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/ip2.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/portkiller.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/killer.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/github-search.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/npm-search.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/youdao.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170415/mdn.png">
+<meta property="og:updated_time" content="2018-03-15T08:46:35.695Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac效率神器Alfred">
+<meta name="twitter:description" content="懒人进击版 作为一个偶尔勤奋下的懒人，还是要不断进步的，一切为了让将来的自己能更懒，美其名曰：“晋级”">
+<meta name="twitter:image" content="http://babytutu.coding.me/images/20170415/ip1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2017-04-15-Mac效率神器Alfred/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Mac效率神器Alfred | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2017-04-15-Mac效率神器Alfred/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mac效率神器Alfred
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-04-15 12:37:23" itemprop="dateCreated datePublished" datetime="2017-04-15T12:37:23+08:00">2017-04-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 16:46:35" itemprop="dateModified" datetime="2018-03-15T16:46:35+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="懒人进击版"><a href="#懒人进击版" class="headerlink" title="懒人进击版"></a>懒人进击版</h2><blockquote>
+<p>作为一个偶尔勤奋下的懒人，还是要不断进步的，一切为了让将来的自己能更懒，美其名曰：“晋级”</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="更少的输入"><a href="#更少的输入" class="headerlink" title="更少的输入"></a>更少的输入</h2><h3 id="前阵子对终端情有独钟，现在开始讲Alfred"><a href="#前阵子对终端情有独钟，现在开始讲Alfred" class="headerlink" title="前阵子对终端情有独钟，现在开始讲Alfred"></a>前阵子对终端情有独钟，现在开始讲<a href="https://www.alfredapp.com/" target="_blank" rel="noopener">Alfred</a></h3><blockquote>
+<p>Alfred是啥，是一个提升效率的软件，里面可以装很多东东，可以省略很多步骤，把大象塞冰箱分几步？1步！！！Alfred会做个<a href="https://www.alfredapp.com/workflows/" target="_blank" rel="noopener">workflow</a>让整个步骤变成一步！！！</p>
+</blockquote>
+<h4 id="快速获取ip来了"><a href="#快速获取ip来了" class="headerlink" title="快速获取ip来了"></a>快速获取ip来了</h4><blockquote>
+<p>获取当前ip，复制ip或直接打开ip:port(默认8080)</p>
+</blockquote>
+<p>虽然终端用命令获取ip也挺方便的，复习下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig getifaddr en1</span><br></pre></td></tr></table></figure>
+<p>但也要经过打开终端然后输入命令，Alfred快捷键是option+空格，输入‘ip’</p>
+<p><img src="/images/20170415/ip1.png" alt="img"></p>
+<p>回车，就直接把本地ip拷贝好了</p>
+<p>那要直接打开ip:9001怎么办办呢？打开Alfred，输入‘loc 9001’</p>
+<p><img src="/images/20170415/ip2.png" alt="img"></p>
+<p>回车，就在默认浏览器打开页面啦，是不是很神速？</p>
+<blockquote>
+<p>相关下载：<a href="http://www.packal.org/workflow/localport" target="_blank" rel="noopener">LocalPort</a></p>
+</blockquote>
+<h3 id="杀死死不了的端口"><a href="#杀死死不了的端口" class="headerlink" title="杀死死不了的端口"></a>杀死死不了的端口</h3><blockquote>
+<p>原理还是找到被占用的端口然后kill</p>
+</blockquote>
+<p>复习下终端方法，2步走，略麻烦</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:9001</span><br><span class="line">COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</span><br><span class="line">node    92239 tutu   30u  IPv4 0xb8e1ecea1bd5ab81      0t0  TCP *:terabase (LISTEN)</span><br><span class="line"><span class="built_in">kill</span> 92239</span><br></pre></td></tr></table></figure>
+<p>Alfred就方便多了，比如我们要杀掉9001，输入‘kp 9001’</p>
+<p><img src="/images/20170415/portkiller.png" alt="img"></p>
+<p>回车，就可以千里之外取上将首级，还会飘出个提醒信息</p>
+<p><img src="/images/20170415/killer.png" alt="img"></p>
+<blockquote>
+<p>相关下载：<a href="http://www.packal.org/workflow/portkiller" target="_blank" rel="noopener">portkiller</a></p>
+</blockquote>
+<h2 id="推荐几个比较常用的"><a href="#推荐几个比较常用的" class="headerlink" title="推荐几个比较常用的"></a>推荐几个比较常用的</h2><p><a href="http://www.packal.org/workflow/github-search" target="_blank" rel="noopener">Github Search</a></p>
+<blockquote>
+<p>Alfred workflow to search for Github repository.——顾名思义，就是快速搜索github呗</p>
+</blockquote>
+<p><img src="/images/20170415/github-search.png" alt="img"></p>
+<p><a href="http://www.packal.org/workflow/alfred-npm-search" target="_blank" rel="noopener">Alfred npm search</a></p>
+<blockquote>
+<p>Alfred workflow to search for npm package using npms API.——对，搜素npm包的。。。</p>
+</blockquote>
+<p><img src="/images/20170415/npm-search.png" alt="img"></p>
+<p><a href="http://www.packal.org/workflow/youdao-dict" target="_blank" rel="noopener">Youdao Dict</a></p>
+<blockquote>
+<p>使用有道翻译你想知道的单词和语句,其实我觉得翻译也不太准</p>
+</blockquote>
+<p><img src="/images/20170415/youdao.png" alt="img"></p>
+<p><a href="http://www.packal.org/workflow/mdn-search" target="_blank" rel="noopener">MDN Search</a></p>
+<blockquote>
+<p>我心里只有学习。。。</p>
+</blockquote>
+<p><img src="/images/20170415/mdn.png" alt="img"></p>
+<p><a href="http://www.packal.org/workflow/jenkins" target="_blank" rel="noopener">Jenkins</a></p>
+<blockquote>
+<p>工作中超实用的，这个就不截图</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/soft/" rel="tag"># soft</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017-03-25-Mac使用小技巧/" rel="next" title="Mac使用小技巧">
+                <i class="fa fa-chevron-left"></i> Mac使用小技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017-04-30-vscode/" rel="prev" title="VS Code">
+                VS Code <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="babytutu" />
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#懒人进击版"><span class="nav-number">1.</span> <span class="nav-text">懒人进击版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更少的输入"><span class="nav-number">2.</span> <span class="nav-text">更少的输入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前阵子对终端情有独钟，现在开始讲Alfred"><span class="nav-number">2.1.</span> <span class="nav-text">前阵子对终端情有独钟，现在开始讲Alfred</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快速获取ip来了"><span class="nav-number">2.1.1.</span> <span class="nav-text">快速获取ip来了</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杀死死不了的端口"><span class="nav-number">2.2.</span> <span class="nav-text">杀死死不了的端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐几个比较常用的"><span class="nav-number">3.</span> <span class="nav-text">推荐几个比较常用的</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

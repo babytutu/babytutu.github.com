@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言：懒人技术进步都从万恶的需求开始开发需求——有一批来自不同店铺的商品，要用于活动页面展示，然而后台并没有设置不同店铺商品集合的功能。。。后端可以通过3个参数来定位商品，那好吧，让万(ku)能(bi)的前端来把这些参数整合起来，哪个开发团队没遇到过那么些个临时紧急需求呢？好了，现在我们有1个excel表格，把参数都列出来了    PARMA PARMB PARMC     a01 b01 c01">
+<meta name="keywords" content="csv,json">
+<meta property="og:type" content="article">
+<meta property="og:title" content="表格数据转为json文件">
+<meta property="og:url" content="http://babytutu.coding.me/2016-11-05-表格数据转为json文件/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="前言：懒人技术进步都从万恶的需求开始开发需求——有一批来自不同店铺的商品，要用于活动页面展示，然而后台并没有设置不同店铺商品集合的功能。。。后端可以通过3个参数来定位商品，那好吧，让万(ku)能(bi)的前端来把这些参数整合起来，哪个开发团队没遇到过那么些个临时紧急需求呢？好了，现在我们有1个excel表格，把参数都列出来了    PARMA PARMB PARMC     a01 b01 c01">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://babytutu.coding.me/images/20161105/converter.png">
+<meta property="og:updated_time" content="2018-03-15T09:05:15.633Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="表格数据转为json文件">
+<meta name="twitter:description" content="前言：懒人技术进步都从万恶的需求开始开发需求——有一批来自不同店铺的商品，要用于活动页面展示，然而后台并没有设置不同店铺商品集合的功能。。。后端可以通过3个参数来定位商品，那好吧，让万(ku)能(bi)的前端来把这些参数整合起来，哪个开发团队没遇到过那么些个临时紧急需求呢？好了，现在我们有1个excel表格，把参数都列出来了    PARMA PARMB PARMC     a01 b01 c01">
+<meta name="twitter:image" content="http://babytutu.coding.me/images/20161105/converter.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2016-11-05-表格数据转为json文件/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>表格数据转为json文件 | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-11-05-表格数据转为json文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">表格数据转为json文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-11-05 17:06:18" itemprop="dateCreated datePublished" datetime="2016-11-05T17:06:18+08:00">2016-11-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 17:05:15" itemprop="dateModified" datetime="2018-03-15T17:05:15+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言：懒人技术进步都从万恶的需求开始"><a href="#前言：懒人技术进步都从万恶的需求开始" class="headerlink" title="前言：懒人技术进步都从万恶的需求开始"></a>前言：懒人技术进步都从万恶的需求开始</h3><p>开发需求——有一批来自不同店铺的商品，要用于活动页面展示，然而后台并没有设置不同店铺商品集合的功能。。。后端可以通过3个参数来定位商品，那好吧，让万(ku)能(bi)的前端来把这些参数整合起来，哪个开发团队没遇到过那么些个临时紧急需求呢？<br>好了，现在我们有1个excel表格，把参数都列出来了</p>
+<table>
+<thead>
+<tr>
+<th>PARMA</th>
+<th>PARMB</th>
+<th>PARMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a01</td>
+<td>b01</td>
+<td>c01</td>
+</tr>
+<tr>
+<td>a02</td>
+<td>b02</td>
+<td>c02</td>
+</tr>
+<tr>
+<td>a03</td>
+<td>b03</td>
+<td>c03</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h4 id="把excel导出为csv"><a href="#把excel导出为csv" class="headerlink" title="把excel导出为csv"></a>把excel导出为csv</h4><p>csv看起来像这样，我们叫它data.csv</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a01,b01,c01</span><br><span class="line">a02,b02,c02</span><br><span class="line">a03,b03,c03</span><br></pre></td></tr></table></figure>
+<h4 id="来个csv-loader让webpack认识下csv文件吧"><a href="#来个csv-loader让webpack认识下csv文件吧" class="headerlink" title="来个csv-loader让webpack认识下csv文件吧"></a>来个csv-loader让webpack认识下csv文件吧</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install csv-loader</span><br></pre></td></tr></table></figure>
+<p>装完了吧，还得给webpack加个设置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  loaders: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: <span class="regexp">/\.csv$/</span>,</span><br><span class="line">      loader: <span class="string">'csv-loader'</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="找个插件来把csv文件翻译下，comma-separated-values"><a href="#找个插件来把csv文件翻译下，comma-separated-values" class="headerlink" title="找个插件来把csv文件翻译下，comma-separated-values"></a>找个插件来把csv文件翻译下，<a href="https://www.npmjs.com/package/comma-separated-values" target="_blank" rel="noopener">comma-separated-values</a></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install comma-separated-values</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 恭迎插件</span></span><br><span class="line"><span class="keyword">import</span> CSV <span class="keyword">from</span> <span class="string">'comma-separated-values'</span></span><br><span class="line"><span class="comment">// 加载csv</span></span><br><span class="line"><span class="keyword">import</span> csv <span class="keyword">from</span> <span class="string">'data.csv'</span></span><br><span class="line"><span class="keyword">new</span> CSV(csv).data</span><br></pre></td></tr></table></figure>
+<p>来看看出来啥</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  [</span><br><span class="line">    <span class="string">"a01"</span>,</span><br><span class="line">    <span class="string">"b01"</span>,</span><br><span class="line">    <span class="string">"c01"</span></span><br><span class="line">  ],</span><br><span class="line">  [</span><br><span class="line">    <span class="string">"a02"</span>,</span><br><span class="line">    <span class="string">"b02"</span>,</span><br><span class="line">    <span class="string">"c02"</span></span><br><span class="line">  ],</span><br><span class="line">  [</span><br><span class="line">    <span class="string">"a03"</span>,</span><br><span class="line">    <span class="string">"b03"</span>,</span><br><span class="line">    <span class="string">"c03"</span></span><br><span class="line">  ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>再给它包装下，来个res</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> res = []</span><br><span class="line"><span class="keyword">new</span> CSV(csv).data.forEach(<span class="function">(<span class="params">i</span>) =&gt;</span> &#123;</span><br><span class="line">  res.push(&#123;</span><br><span class="line">    PARMA: i[<span class="number">0</span>],</span><br><span class="line">    PARMB: i[<span class="number">1</span>],</span><br><span class="line">    PARMC: i[<span class="number">2</span>]</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>看看我们的res</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"PARMA"</span>: <span class="string">"a01"</span>,</span><br><span class="line">    <span class="string">"PARMB"</span>: <span class="string">"b01"</span>,</span><br><span class="line">    <span class="string">"PARMC"</span>: <span class="string">"c01"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"PARMA"</span>: <span class="string">"a02"</span>,</span><br><span class="line">    <span class="string">"PARMB"</span>: <span class="string">"b02"</span>,</span><br><span class="line">    <span class="string">"PARMC"</span>: <span class="string">"c02"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">"PARMA"</span>: <span class="string">"a03"</span>,</span><br><span class="line">    <span class="string">"PARMB"</span>: <span class="string">"b03"</span>,</span><br><span class="line">    <span class="string">"PARMC"</span>: <span class="string">"c03"</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>好了，我们可以欢快的把res存在json文件里，接下去的使用部分就不再展开，哪里用就直接import啦</p>
+<h4 id="写完这个，发现一个github上最多star的mr-data-converter"><a href="#写完这个，发现一个github上最多star的mr-data-converter" class="headerlink" title="写完这个，发现一个github上最多star的mr-data-converter"></a>写完这个，发现一个github上最多star的<a href="http://shancarter.github.io/mr-data-converter/" target="_blank" rel="noopener">mr-data-converter</a></h4><p>给个图片感受下，如果只是简单的转换，该网站可直接使用<br><img src="/images/20161105/converter.png" alt="附图"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/csv/" rel="tag"># csv</a>
+          
+            <a href="/tags/json/" rel="tag"># json</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-10-25-vue2/" rel="next" title="vue2来了，vue2+vuex2+vue-router2">
+                <i class="fa fa-chevron-left"></i> vue2来了，vue2+vuex2+vue-router2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-12-10-拯救大兵Sublime Text/" rel="prev" title="拯救大兵Sublime Text">
+                拯救大兵Sublime Text <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="babytutu" />
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言：懒人技术进步都从万恶的需求开始"><span class="nav-number">1.</span> <span class="nav-text">前言：懒人技术进步都从万恶的需求开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#把excel导出为csv"><span class="nav-number">1.1.</span> <span class="nav-text">把excel导出为csv</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#来个csv-loader让webpack认识下csv文件吧"><span class="nav-number">1.2.</span> <span class="nav-text">来个csv-loader让webpack认识下csv文件吧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#找个插件来把csv文件翻译下，comma-separated-values"><span class="nav-number">1.3.</span> <span class="nav-text">找个插件来把csv文件翻译下，comma-separated-values</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写完这个，发现一个github上最多star的mr-data-converter"><span class="nav-number">1.4.</span> <span class="nav-text">写完这个，发现一个github上最多star的mr-data-converter</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

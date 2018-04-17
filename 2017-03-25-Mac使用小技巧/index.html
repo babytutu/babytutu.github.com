@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="懒人的懒用法 之前有小伙伴分享了很多Mac下的小工具用于提高工作效率，不得不说，即使告诉了软件名以及用软件的各种好处，也不是一定安利成功的！！！  当然每个人对工具的理解不同，以及一些奇葩的使用习惯，本文仅对自身的一些奇葩需求做了优化技巧">
+<meta name="keywords" content="soft">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac使用小技巧">
+<meta property="og:url" content="http://babytutu.coding.me/2017-03-25-Mac使用小技巧/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="懒人的懒用法 之前有小伙伴分享了很多Mac下的小工具用于提高工作效率，不得不说，即使告诉了软件名以及用软件的各种好处，也不是一定安利成功的！！！  当然每个人对工具的理解不同，以及一些奇葩的使用习惯，本文仅对自身的一些奇葩需求做了优化技巧">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://babytutu.coding.me/images/20170325/magnet.svg">
+<meta property="og:updated_time" content="2018-03-15T08:46:41.237Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac使用小技巧">
+<meta name="twitter:description" content="懒人的懒用法 之前有小伙伴分享了很多Mac下的小工具用于提高工作效率，不得不说，即使告诉了软件名以及用软件的各种好处，也不是一定安利成功的！！！  当然每个人对工具的理解不同，以及一些奇葩的使用习惯，本文仅对自身的一些奇葩需求做了优化技巧">
+<meta name="twitter:image" content="http://babytutu.coding.me/images/20170325/magnet.svg">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2017-03-25-Mac使用小技巧/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Mac使用小技巧 | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2017-03-25-Mac使用小技巧/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mac使用小技巧
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-03-25 12:37:23" itemprop="dateCreated datePublished" datetime="2017-03-25T12:37:23+08:00">2017-03-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 16:46:41" itemprop="dateModified" datetime="2018-03-15T16:46:41+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="懒人的懒用法"><a href="#懒人的懒用法" class="headerlink" title="懒人的懒用法"></a>懒人的懒用法</h2><blockquote>
+<p>之前有小伙伴分享了很多Mac下的小工具用于提高工作效率，不得不说，即使告诉了软件名以及用软件的各种好处，也不是一定安利成功的！！！</p>
+</blockquote>
+<p>当然每个人对工具的理解不同，以及一些奇葩的使用习惯，本文仅对自身的一些奇葩需求做了优化技巧</p>
+<a id="more"></a>
+<h2 id="一起从需求说起"><a href="#一起从需求说起" class="headerlink" title="一起从需求说起"></a>一起从需求说起</h2><h3 id="首先我只有1个屏幕"><a href="#首先我只有1个屏幕" class="headerlink" title="首先我只有1个屏幕"></a>首先我只有1个屏幕</h3><blockquote>
+<p>问题来了，开发的时候需要编辑器+终端+浏览器（还得开着开发者工具）</p>
+</blockquote>
+<p>如何高效分配屏幕使用率就势在必行，三指拖拽什么的太慢了</p>
+<h4 id="工具来了"><a href="#工具来了" class="headerlink" title="工具来了"></a>工具来了</h4><blockquote>
+<p>小伙伴推荐了<a href="https://manytricks.com/moom/" target="_blank" rel="noopener">moon</a>，简单看了介绍，我觉得这可能不是我想要的，我要个傻瓜版，也就是懒人版，我要biu一下就让这个窗口跑到右上角去，而且不要设置，就是那么傻瓜，然后我找到了<a href="http://magnet.crowdcafe.com/" target="_blank" rel="noopener">Magnet</a></p>
+</blockquote>
+<p>下载安装不啰嗦(正版是肯定要收费的，我下载了xx版体验，请支持正版)，打开软件先遇到当头棒喝——‘这个软件已损坏’，我呵呵呵，第一个坑来了，来填坑<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>简单解释下：spctl是啥，就是不让你装xx版本的，我们先把它关掉。如果电脑设置了密码会提示输入密码，这个就必需输入了</p>
+</blockquote>
+<p>好了，现在软件可以打开了，记得把spctl给开启，安全第一啊<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-enable</span><br></pre></td></tr></table></figure></p>
+<p>安装完毕，系统偏好设置-安全性与隐私-辅助功能，会多一个选项，这个要打开左下角的锁然后勾选，才能生效，具体实现看官网图</p>
+<p><img src="/images/20170325/magnet.svg" alt="官方介绍"></p>
+<h3 id="再来说说我和终端的故事，哦不，没有故事，就是默默的用而已。。。"><a href="#再来说说我和终端的故事，哦不，没有故事，就是默默的用而已。。。" class="headerlink" title="再来说说我和终端的故事，哦不，没有故事，就是默默的用而已。。。"></a>再来说说我和终端的故事，哦不，没有故事，就是默默的用而已。。。</h3><blockquote>
+<p>首先要说大石头是个安利专员，已经被多次安利WebStorm后，终于用上了，然后他去玩vs code了（这又是另一个故事了）</p>
+</blockquote>
+<p>忽然有一天他发来一段东东让我马上装起来，嗯，略显粗暴的安利</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>"</span></span><br></pre></td></tr></table></figure>
+<p>当然我不会你说装我就装，我也是有脑子的，对，这个没有笑点！！！嗯，提取关键字’oh-my-zsh’，这个是可以装，其实是一直想装然后想着终端用用也够了就没有装</p>
+<p>然后这个世界就变了。。。具体怎么变的我已经不太记得了，因为我已经换肤过了，哦不，我的终端换肤过了</p>
+<p>既然装了，折腾的心就起来了，为什么你在终端输入ns就执行了npm start？</p>
+<h4 id="定制化zsh配置"><a href="#定制化zsh配置" class="headerlink" title="定制化zsh配置"></a>定制化zsh配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano ~/.zshrc</span><br></pre></td></tr></table></figure>
+<p>进入配置文件后，在最后输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> pz=<span class="string">"nano ~/.zshrc"</span></span><br><span class="line"><span class="built_in">alias</span> ns=<span class="string">"npm start"</span></span><br></pre></td></tr></table></figure></p>
+<p>alias就是别名啦，表示你输入’pz’就会执行等号后面的命令，可以方便的修改配置</p>
+<p>ctrl + o 是保存，ctrl + x 是退出，现在试试输入’pz’ 好像没反应嘛，这正常的，改了配置得重启哈，可以通过’source ~/.zshrc’或者’. ~/.zshrc’立刻加载修改后的设置，使之生效，或者新开tab终端也行（原理是，每次新开终端，都会读取.zshrc文件）</p>
+<h4 id="默认的终端也可以定制哟"><a href="#默认的终端也可以定制哟" class="headerlink" title="默认的终端也可以定制哟"></a>默认的终端也可以定制哟</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>配置方式一致，就不再重复</p>
+<h3 id="再说个尴尬的事儿，关于IP"><a href="#再说个尴尬的事儿，关于IP" class="headerlink" title="再说个尴尬的事儿，关于IP"></a>再说个尴尬的事儿，关于IP</h3><blockquote>
+<p>笔记本正常来说，都是用Wi-Fi的嘛，然后公司网络又是没有mac地址绑定的，那就造成用笔记本的孩子IP天天变啊，联调的时候就经常被问起，今天你IP多少啊？</p>
+</blockquote>
+<p>Mac如何快速查看IP，其实和windows下走个命令行差不多，终端又出场了，闲着也闲着，new一个终端窗口来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> ip=<span class="string">"ipconfig getifaddr en1"</span></span><br></pre></td></tr></table></figure>
+<p>保存关闭重启，来个’ip’，出来个’192.168.1.105’，简单明了</p>
+<p>ps: 如果本身用alfred的workflow，那速度还能更快，当然获取ip的原理是不变的</p>
+<h3 id="最后再说个常见问题叫端口被占用"><a href="#最后再说个常见问题叫端口被占用" class="headerlink" title="最后再说个常见问题叫端口被占用"></a>最后再说个常见问题叫端口被占用</h3><blockquote>
+<p>也别管这是什么时候被什么东西占的坑了，反正我不要换坑，那就要把占坑的找出来砍了，比如说我的坑号是’9001’</p>
+</blockquote>
+<p>万事靠终端<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:9001</span><br></pre></td></tr></table></figure></p>
+<p>终端会把坏人给列出来<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME</span><br><span class="line">node    92239 tutu   30u  IPv4 0xb8e1ecea1bd5ab81      0t0  TCP *:terabase (LISTEN)</span><br></pre></td></tr></table></figure></p>
+<p>找人坏人在哪里了，这就去砍了它<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> 92239</span><br></pre></td></tr></table></figure></p>
+<p>简单明了，莫名的有爽点。。。然后就可以入坑了</p>
+<h3 id="附上文中提到的几个alias"><a href="#附上文中提到的几个alias" class="headerlink" title="附上文中提到的几个alias"></a>附上文中提到的几个alias</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> pz=<span class="string">"nano ~/.zshrc"</span></span><br><span class="line"><span class="built_in">alias</span> cq=<span class="string">". ~/.zshrc"</span></span><br><span class="line"><span class="built_in">alias</span> ip=<span class="string">"ipconfig getifaddr en1"</span></span><br><span class="line"><span class="built_in">alias</span> ns=<span class="string">"npm start"</span></span><br><span class="line"><span class="built_in">alias</span> ni=<span class="string">"npm i"</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/soft/" rel="tag"># soft</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017-02-23-与Koa的一次简单接触/" rel="next" title="与Koa的一次简单接触">
+                <i class="fa fa-chevron-left"></i> 与Koa的一次简单接触
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017-04-15-Mac效率神器Alfred/" rel="prev" title="Mac效率神器Alfred">
+                Mac效率神器Alfred <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="babytutu" />
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#懒人的懒用法"><span class="nav-number">1.</span> <span class="nav-text">懒人的懒用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一起从需求说起"><span class="nav-number">2.</span> <span class="nav-text">一起从需求说起</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先我只有1个屏幕"><span class="nav-number">2.1.</span> <span class="nav-text">首先我只有1个屏幕</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工具来了"><span class="nav-number">2.1.1.</span> <span class="nav-text">工具来了</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再来说说我和终端的故事，哦不，没有故事，就是默默的用而已。。。"><span class="nav-number">2.2.</span> <span class="nav-text">再来说说我和终端的故事，哦不，没有故事，就是默默的用而已。。。</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定制化zsh配置"><span class="nav-number">2.2.1.</span> <span class="nav-text">定制化zsh配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认的终端也可以定制哟"><span class="nav-number">2.2.2.</span> <span class="nav-text">默认的终端也可以定制哟</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再说个尴尬的事儿，关于IP"><span class="nav-number">2.3.</span> <span class="nav-text">再说个尴尬的事儿，关于IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后再说个常见问题叫端口被占用"><span class="nav-number">2.4.</span> <span class="nav-text">最后再说个常见问题叫端口被占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附上文中提到的几个alias"><span class="nav-number">2.5.</span> <span class="nav-text">附上文中提到的几个alias</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

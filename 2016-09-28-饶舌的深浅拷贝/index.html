@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.1.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.1.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="此文提及的浅拷贝排除了a===b的情况[镜像-你变我也变,当然这也不是拷贝]浅拷贝[克隆初代，后面都是镜像]深拷贝[克隆全家]  常见拷贝方式 Object.assign()合并对象，浅拷贝  lodash —— _.clone() / _.cloneDeep()浅拷贝／深拷贝[遍历浅拷贝]  JSON.parse(JSON.stringify(sourceObject))常规json的深拷贝取">
+<meta name="keywords" content="clone">
+<meta property="og:type" content="article">
+<meta property="og:title" content="饶舌的深浅拷贝">
+<meta property="og:url" content="http://babytutu.coding.me/2016-09-28-饶舌的深浅拷贝/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="此文提及的浅拷贝排除了a===b的情况[镜像-你变我也变,当然这也不是拷贝]浅拷贝[克隆初代，后面都是镜像]深拷贝[克隆全家]  常见拷贝方式 Object.assign()合并对象，浅拷贝  lodash —— _.clone() / _.cloneDeep()浅拷贝／深拷贝[遍历浅拷贝]  JSON.parse(JSON.stringify(sourceObject))常规json的深拷贝取">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://babytutu.coding.me/images/20160928/copyobjtest.png">
+<meta property="og:image" content="http://babytutu.coding.me/images/20160928/isEmptyObj.png">
+<meta property="og:updated_time" content="2018-03-15T08:47:51.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="饶舌的深浅拷贝">
+<meta name="twitter:description" content="此文提及的浅拷贝排除了a===b的情况[镜像-你变我也变,当然这也不是拷贝]浅拷贝[克隆初代，后面都是镜像]深拷贝[克隆全家]  常见拷贝方式 Object.assign()合并对象，浅拷贝  lodash —— _.clone() / _.cloneDeep()浅拷贝／深拷贝[遍历浅拷贝]  JSON.parse(JSON.stringify(sourceObject))常规json的深拷贝取">
+<meta name="twitter:image" content="http://babytutu.coding.me/images/20160928/copyobjtest.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2016-09-28-饶舌的深浅拷贝/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>饶舌的深浅拷贝 | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-09-28-饶舌的深浅拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">饶舌的深浅拷贝
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-09-28 09:04:18" itemprop="dateCreated datePublished" datetime="2016-09-28T09:04:18+08:00">2016-09-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 16:47:51" itemprop="dateModified" datetime="2018-03-15T16:47:51+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>此文提及的浅拷贝排除了a===b的情况[镜像-你变我也变,当然这也不是拷贝]<br>浅拷贝[克隆初代，后面都是镜像]<br>深拷贝[克隆全家]</p>
+</blockquote>
+<h4 id="常见拷贝方式"><a href="#常见拷贝方式" class="headerlink" title="常见拷贝方式"></a>常见拷贝方式</h4><ul>
+<li><p><code>Object.assign()</code><br>合并对象，浅拷贝</p>
+</li>
+<li><p><code>lodash —— _.clone() / _.cloneDeep()</code><br>浅拷贝／深拷贝[遍历浅拷贝]</p>
+</li>
+<li><p><code>JSON.parse(JSON.stringify(sourceObject))</code><br>常规json的深拷贝取巧方法，效率666</p>
+</li>
+</ul>
+<a id="more"></a>
+<h4 id="栗子来了"><a href="#栗子来了" class="headerlink" title="栗子来了"></a>栗子来了</h4><blockquote>
+<p>来一波代码，以拷贝对象为例</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://cdn.bootcss.com/lodash.js/4.16.1/lodash.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.group(<span class="string">'copy obj test'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> obj = &#123;</span></span><br><span class="line"><span class="undefined">    a: &#123;</span></span><br><span class="line"><span class="undefined">      x: 1</span></span><br><span class="line"><span class="undefined">    &#125;,</span></span><br><span class="line"><span class="undefined">    b: 2</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="comment">// Object.assign()</span></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.time(<span class="string">'assign'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> assign = <span class="built_in">Object</span>.assign(&#123;&#125;, obj)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.timeEnd(<span class="string">'assign'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.info(<span class="string">'assign.a === obj.a-&gt;'</span>, assign.a === obj.a) <span class="comment">// true</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="comment">// lodash —— _.clone() / _.cloneDeep()</span></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.time(<span class="string">'clone'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> clone = _.clone(obj)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.timeEnd(<span class="string">'clone'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.info(<span class="string">'clone.a === obj.a-&gt;'</span>, clone.a === obj.a) <span class="comment">// true</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.time(<span class="string">'cloneDeep'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> cloneDeep = _.cloneDeep(obj)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.timeEnd(<span class="string">'cloneDeep'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.warn(<span class="string">'cloneDeep.a === obj.a-&gt;'</span>, cloneDeep.a === obj.a) <span class="comment">// false</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="comment">// 借助 JSON 全局对象</span></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.time(<span class="string">'json'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="keyword">let</span> json = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj))</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.timeEnd(<span class="string">'json'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.warn(<span class="string">'json.a === obj.a-&gt;'</span>, json.a === obj.a) <span class="comment">// false</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.groupEnd()</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="comment">// 浅拷贝互相伤害，深拷贝独善其身</span></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.group(<span class="string">'test'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.info(<span class="string">'初始obj-&gt;'</span> + <span class="built_in">JSON</span>.stringify(obj))</span></span><br><span class="line"><span class="undefined">  assign.a.x = 4</span></span><br><span class="line"><span class="undefined">  assign.b = 4</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.info(<span class="string">'浅拷贝赋值assign.a.x=4 assign.b=4'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.warn(<span class="string">'结果obj.a.x-&gt;'</span> + obj.a.x, <span class="string">'obj.b-&gt;'</span> + obj.b)</span></span><br><span class="line"><span class="undefined">  json.a.x = 5</span></span><br><span class="line"><span class="undefined">  json.b = 5</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.info(<span class="string">'深拷贝赋值json.a.x=5 json.b=5'</span>)</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.warn(<span class="string">'结果obj.a.x-&gt;'</span> + obj.a.x, <span class="string">'obj.b-&gt;'</span> + obj.b)</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.groupEnd()</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看看控制台出来啥</p>
+</blockquote>
+<p><img src="/images/20160928/copyobjtest.png" alt="附图"></p>
+<blockquote>
+<p>执行效率排行榜，按需使用，常用就是1&amp;2</p>
+</blockquote>
+<ol>
+<li>Object.assign()</li>
+<li>JSON.parse(JSON.stringify())</li>
+<li>_.clone()</li>
+<li>_.cloneDeep()</li>
+</ol>
+<blockquote>
+<p>使用场景：也不是处处需要深拷贝，想明白拷贝出来是为了达到什么目的，关注效率</p>
+</blockquote>
+<h4 id="不管深浅拷贝，先判断下是否空对象吧"><a href="#不管深浅拷贝，先判断下是否空对象吧" class="headerlink" title="不管深浅拷贝，先判断下是否空对象吧"></a>不管深浅拷贝，先判断下是否空对象吧</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断是否空对象</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  a: &#123;</span><br><span class="line">    x: <span class="number">1</span></span><br><span class="line">  &#125;,</span><br><span class="line">  b: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.group(<span class="string">'isEmptyObj'</span>)</span><br><span class="line"><span class="built_in">console</span>.time(<span class="string">'Object.keys()'</span>)</span><br><span class="line"><span class="built_in">console</span>.info(!<span class="built_in">Object</span>.keys(obj).length)</span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">'Object.keys()'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.time(<span class="string">'json'</span>)</span><br><span class="line"><span class="built_in">console</span>.info(<span class="built_in">JSON</span>.stringify(obj) === <span class="string">'&#123;&#125;'</span>)</span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">'json'</span>)</span><br><span class="line"><span class="built_in">console</span>.groupEnd()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看看控制台出来啥，其实效率也差不多吧。。。</p>
+</blockquote>
+<p><img src="/images/20160928/isEmptyObj.png" alt="附图"></p>
+<h4 id="几种比较实用的console玩法"><a href="#几种比较实用的console玩法" class="headerlink" title="几种比较实用的console玩法"></a>几种比较实用的console玩法</h4><blockquote>
+<p>再也不用担心找不到调试信息了。。。</p>
+</blockquote>
+<ul>
+<li><p>信息分组，可折叠</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.group(<span class="string">'name'</span>)</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="built_in">console</span>.groupEnd()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计执行时间，代码效率如何？拉出来溜溜</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.time(<span class="string">'name'</span>)</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">'name'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4种信息类型，带了标记，找起来不要太方便哟</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'我是老实人'</span>)</span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'我是小蓝'</span>)</span><br><span class="line"><span class="built_in">console</span>.error(<span class="string">'我有个小叉子'</span>)</span><br><span class="line"><span class="built_in">console</span>.warn(<span class="string">'我有警告牌'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/clone/" rel="tag"># clone</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-05-15-rem/" rel="next" title="移动端适配方案－pxtorem">
+                <i class="fa fa-chevron-left"></i> 移动端适配方案－pxtorem
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-10-08-homebrew/" rel="prev" title="Mac下brew及brew cask安装使用">
+                Mac下brew及brew cask安装使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="babytutu" />
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见拷贝方式"><span class="nav-number">1.</span> <span class="nav-text">常见拷贝方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#栗子来了"><span class="nav-number">2.</span> <span class="nav-text">栗子来了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不管深浅拷贝，先判断下是否空对象吧"><span class="nav-number">3.</span> <span class="nav-text">不管深浅拷贝，先判断下是否空对象吧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几种比较实用的console玩法"><span class="nav-number">4.</span> <span class="nav-text">几种比较实用的console玩法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
