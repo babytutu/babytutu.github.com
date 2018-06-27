@@ -2,6 +2,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
@@ -49,19 +58,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.1.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.3.0">
 
 
-  <link rel="mask-icon" href="/images/avatar.png?v=6.1.0" color="#222">
+  <link rel="mask-icon" href="/images/avatar.png?v=6.3.0" color="#222">
 
 
 
@@ -76,7 +85,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '6.1.0',
+    version: '6.3.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
@@ -188,9 +197,7 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
+    
   </div>
 
   <div class="site-nav-toggle">
@@ -201,7 +208,6 @@
     </button>
   </div>
 </div>
-
 
 
 
@@ -290,12 +296,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-04-25-npm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016-04-25-npm/" itemprop="url">
+                  npm
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-04-25 20:55:41" itemprop="dateCreated datePublished" datetime="2016-04-25T20:55:41+08:00">2016-04-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 16:45:50" itemprop="dateModified" datetime="2018-03-15T16:45:50+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/soft/" itemprop="url" rel="index"><span itemprop="name">soft</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="npm换源"><a href="#npm换源" class="headerlink" title="npm换源"></a>npm换源</h2><h3 id="临时启用"><a href="#临时启用" class="headerlink" title="临时启用"></a>临时启用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<h3 id="持久使用"><a href="#持久使用" class="headerlink" title="持久使用"></a>持久使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line">// 配置后可通过下面方式来验证是否成功</span><br><span class="line">npm config get registry</span><br><span class="line">// 或npm info express</span><br></pre></td></tr></table></figure>
+<h3 id="通过cnpm"><a href="#通过cnpm" class="headerlink" title="通过cnpm"></a>通过cnpm</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br><span class="line">// 使用cnpm install expresstall express</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-04-23-reset form/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -468,8 +645,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -661,8 +838,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -831,8 +1008,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1004,8 +1181,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1178,8 +1355,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1348,8 +1525,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1518,8 +1695,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1695,8 +1872,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1859,190 +2036,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-04-06-flex/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="babytutu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="babytutu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016-04-06-flex/" itemprop="url">
-                  flex
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-04-06 00:00:57" itemprop="dateCreated datePublished" datetime="2016-04-06T00:00:57+08:00">2016-04-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-03-15 16:43:03" itemprop="dateModified" datetime="2018-03-15T16:43:03+08:00">2018-03-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><code>display: flex;</code></p>
-<hr>
-<h2 id="flex-for-box"><a href="#flex-for-box" class="headerlink" title="flex for box"></a>flex for box</h2><p>flex-direction<br><em>row</em> | row-reverse | column | column-reverse</p>
-<p>flex-wrap<br><em>nowrap</em> | wrap | wrap-reverse</p>
-<p>flex-flow - flex-direction &amp; flex-wrap<br><em>row nowrap</em></p>
-<p>justify-content<br><em>flex-start</em> | flex-end | center | space-between | space-around</p>
-<p>align-items<br>flex-start | flex-end | center | baseline | <em>stretch</em></p>
-<p>align-content<br>flex-start | flex-end | center | space-between | space-around | <em>stretch</em></p>
-<h2 id="flex-for-item"><a href="#flex-for-item" class="headerlink" title="flex for item"></a>flex for item</h2><p>order [integer]<br><em>0</em></p>
-<p>flex-grow [number]<br><em>0</em></p>
-<p>flex-shrink [number]<br><em>1</em></p>
-<p>flex-basis [length | auto]<br><em>auto</em></p>
-<p>flex - flex-grow &amp; flex-shrink &amp; flex-basis<br><em>0 1 auto</em></p>
-<p>align-self<br><em>auto</em> | flex-start | flex-end | center | baseline | stretch</p>
-<h2 id="flex-在安卓支付宝里的坑-入坑后自救"><a href="#flex-在安卓支付宝里的坑-入坑后自救" class="headerlink" title="flex 在安卓支付宝里的坑[入坑后自救]"></a><em>flex</em> 在安卓支付宝里的坑[入坑后自救]</h2><p>安卓支付宝的内置浏览器，当 <em>flex</em> 的子容器用的 <em>span/em/i</em> 标签时，子容器设置的 <em>flex-grow</em> 无效(不会自动扩展)，必须再加 <em>display:block</em> , 子容器用 <em>div</em> 最保险</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2079,10 +2072,6 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.png"
-                alt="babytutu" />
-            
               <p class="site-author-name" itemprop="name">babytutu</p>
               <p class="site-description motion-element" itemprop="description">blog</p>
           </div>
@@ -2094,7 +2083,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2341,21 +2330,21 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.1.0"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.1.0"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
 
 
 
