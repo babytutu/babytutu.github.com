@@ -296,6 +296,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-04-10-editor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016-04-10-editor/" itemprop="url">
+                  Sublime Text 3
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-04-10 15:47:34" itemprop="dateCreated datePublished" datetime="2016-04-10T15:47:34+08:00">2016-04-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-15 16:43:23" itemprop="dateModified" datetime="2018-03-15T16:43:23+08:00">2018-03-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/soft/" itemprop="url" rel="index"><span itemprop="name">soft</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="INSTALLATION"><a href="#INSTALLATION" class="headerlink" title="INSTALLATION"></a>INSTALLATION</h2><ol>
+<li>install Sublime Text 3</li>
+<li><p>add License</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">—– BEGIN LICENSE —–</span><br><span class="line">Michael Barnes</span><br><span class="line">Single User License</span><br><span class="line">EA7E-821385</span><br><span class="line">8A353C41 872A0D5C DF9B2950 AFF6F667</span><br><span class="line">C458EA6D 8EA3C286 98D1D650 131A97AB</span><br><span class="line">AA919AEC EF20E143 B361B1E7 4C8B7F04</span><br><span class="line">B085E65E 2F5F5360 8489D422 FB8FC1AA</span><br><span class="line">93F6323C FD7F7544 3F39C318 D95E6480</span><br><span class="line">FCCC7561 8A4A1741 68FA4223 ADCEDE07</span><br><span class="line">200C25BE DBBC4855 C4CFB774 C5EC138C</span><br><span class="line">0FEC1CEF D9DCECEC D3A5DAD1 01316C36</span><br><span class="line">—— END LICENSE ——</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ctrl+` shortcut or the View &gt; Show Console menu</p>
+</li>
+<li>paste the appropriate Python code<br>import urllib.request,os,hashlib; h = ‘2915d1851351e5ee549c20394736b442’ + ‘8bc59f460fa1548d1514676163dafc88’; pf = ‘Package Control.sublime-package’; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( ‘<a href="http://packagecontrol.io/&#39;" target="_blank" rel="noopener">http://packagecontrol.io/&#39;</a> + pf.replace(‘ ‘, ‘%20’)).read(); dh = hashlib.sha256(by).hexdigest(); print(‘Error validating download (got %s instead of %s), please try manual install’ % (dh, h)) if dh != h else open(os.path.join( ipp, pf), ‘wb’ ).write(by)</li>
+</ol>
+<h2 id="COMMEND"><a href="#COMMEND" class="headerlink" title="COMMEND"></a>COMMEND</h2><h3 id="CMD-SHIFT-P"><a href="#CMD-SHIFT-P" class="headerlink" title="CMD + SHIFT + P"></a>CMD + SHIFT + P</h3><h4 id="INSTALL-PACKAGES"><a href="#INSTALL-PACKAGES" class="headerlink" title="INSTALL PACKAGES"></a>INSTALL PACKAGES</h4><ol>
+<li>install</li>
+<li>packeage name [nodejs,emmet,vue]</li>
+<li>“enter”</li>
+</ol>
+<h2 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"tab_size": 2,</span><br><span class="line">"translate_tabs_to_spaces": true,</span><br><span class="line">"save_on_focus_lost": true</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2016-04-06-flex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -867,7 +1050,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
