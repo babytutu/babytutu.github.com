@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="打包js的另一个选择 Rollup 是一个 JavaScript 模块打包器  之前开发都是基于webpack，打包代码当然用webpack也可以，但如果想更快捷的打包，rollup也是一个不错的选择rollup-demo">
+<meta name="keywords" content="rollup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rollup">
+<meta property="og:url" content="http://babytutu.coding.me/2018-07-25-rollup/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="打包js的另一个选择 Rollup 是一个 JavaScript 模块打包器  之前开发都是基于webpack，打包代码当然用webpack也可以，但如果想更快捷的打包，rollup也是一个不错的选择rollup-demo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-25T06:45:45.835Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="rollup">
+<meta name="twitter:description" content="打包js的另一个选择 Rollup 是一个 JavaScript 模块打包器  之前开发都是基于webpack，打包代码当然用webpack也可以，但如果想更快捷的打包，rollup也是一个不错的选择rollup-demo">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2018-07-25-rollup/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>rollup | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2018-07-25-rollup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">rollup
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-25 09:00:40 / Modified: 14:45:45" itemprop="dateCreated datePublished" datetime="2018-07-25T09:00:40+08:00">2018-07-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="打包js的另一个选择"><a href="#打包js的另一个选择" class="headerlink" title="打包js的另一个选择"></a>打包js的另一个选择</h2><blockquote>
+<p>Rollup 是一个 JavaScript 模块打包器</p>
+</blockquote>
+<p>之前开发都是基于webpack，打包代码当然用webpack也可以，但如果想更快捷的打包，rollup也是一个不错的选择<br><a href="https://github.com/babytutu/rollup-demo" target="_blank" rel="noopener">rollup-demo</a></p>
+<a id="more"></a>
+<h2 id="一些有用的插件"><a href="#一些有用的插件" class="headerlink" title="一些有用的插件"></a>一些有用的插件</h2><h3 id="处理外部模块"><a href="#处理外部模块" class="headerlink" title="处理外部模块"></a>处理外部模块</h3><p><a href="https://github.com/rollup/rollup-plugin-node-resolve" target="_blank" rel="noopener">rollup-plugin-node-resolve</a></p>
+<h3 id="转译commonjs模块到ES6"><a href="#转译commonjs模块到ES6" class="headerlink" title="转译commonjs模块到ES6"></a>转译commonjs模块到ES6</h3><p><a href="https://github.com/rollup/rollup-plugin-commonjs" target="_blank" rel="noopener">rollup-plugin-commonjs</a></p>
+<h3 id="引入Babel"><a href="#引入Babel" class="headerlink" title="引入Babel"></a>引入Babel</h3><p><a href="https://github.com/rollup/rollup-plugin-babel" target="_blank" rel="noopener">rollup-plugin-babel</a></p>
+<blockquote>
+<p>options</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>desc</th>
+<th>type</th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>babelrc</td>
+<td>是否启用默认的配置</td>
+<td>Boolean</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://github.com/babel/babel/tree/master/packages/babel-preset-env" target="_blank" rel="noopener">babel-preset-env</a><br><a href="https://github.com/babel/babel/tree/master/packages/babel-plugin-external-helpers" target="_blank" rel="noopener">babel-plugin-external-helpers</a></p>
+<h3 id="引入eslint"><a href="#引入eslint" class="headerlink" title="引入eslint"></a>引入eslint</h3><p><a href="https://github.com/TrySound/rollup-plugin-eslint" target="_blank" rel="noopener">rollup-plugin-eslint</a><br><a href="https://github.com/eslint/eslint" target="_blank" rel="noopener">eslint</a><br><a href="https://github.com/babel/babel-eslint" target="_blank" rel="noopener">babel-eslint</a></p>
+<h3 id="压缩-混淆代码"><a href="#压缩-混淆代码" class="headerlink" title="压缩/混淆代码"></a>压缩/混淆代码</h3><p><a href="https://github.com/Comandeer/rollup-plugin-babel-minify" target="_blank" rel="noopener">rollup-plugin-babel-minify</a></p>
+<blockquote>
+<p>options</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>desc</th>
+<th>type</th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>comments</td>
+<td>是否把注释打包</td>
+<td>Boolean</td>
+<td>true</td>
+</tr>
+<tr>
+<td>sourceMap</td>
+<td>是否把sourceMap打包</td>
+<td>Boolean</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<h2 id="一个简单的🌰"><a href="#一个简单的🌰" class="headerlink" title="一个简单的🌰"></a>一个简单的🌰</h2><h3 id="安装以上提到的依赖包"><a href="#安装以上提到的依赖包" class="headerlink" title="安装以上提到的依赖包"></a>安装以上提到的依赖包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D rollup rollup-plugin-node-resolve rollup-plugin-commonjs rollup-plugin-babel babel-preset-env babel-plugin-external-helpers rollup-plugin-eslint eslint babel-eslint rollup-plugin-babel-minify</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一些配置文件</p>
+</blockquote>
+<p>.babelrc</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"presets"</span>: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"env"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">"modules"</span>: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"plugins"</span>: [</span><br><span class="line">    <span class="string">"external-helpers"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>.eslintrc<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"root"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"env"</span>: &#123;</span><br><span class="line">    <span class="attr">"browser"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"node"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"es6"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"parserOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"parser"</span>: <span class="string">"babel-eslint"</span>,</span><br><span class="line">    <span class="attr">"ecmaVersion"</span>: <span class="number">6</span>,</span><br><span class="line">    <span class="attr">"sourceType"</span>: <span class="string">"module"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"extends"</span>: [</span><br><span class="line">    <span class="string">"eslint:recommended"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"rules"</span>: &#123;</span><br><span class="line">    <span class="attr">"no-console"</span>: [<span class="number">0</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="rollup配置"><a href="#rollup配置" class="headerlink" title="rollup配置"></a>rollup配置</h3><blockquote>
+<p>虽然命令行可以直接压缩文件，但用了插件，需要有个配置文件，默认就是rollup.config.js</p>
+</blockquote>
+<p>rollup.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> resolve <span class="keyword">from</span> <span class="string">'rollup-plugin-node-resolve'</span></span><br><span class="line"><span class="keyword">import</span> commonjs <span class="keyword">from</span> <span class="string">'rollup-plugin-commonjs'</span></span><br><span class="line"><span class="keyword">import</span> babel <span class="keyword">from</span> <span class="string">'rollup-plugin-babel'</span></span><br><span class="line"><span class="keyword">import</span> minify <span class="keyword">from</span> <span class="string">'rollup-plugin-babel-minify'</span></span><br><span class="line"><span class="keyword">import</span> &#123; eslint &#125; <span class="keyword">from</span> <span class="string">'rollup-plugin-eslint'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  input: <span class="string">'src/main.js'</span>,</span><br><span class="line">  output: [</span><br><span class="line">    &#123;</span><br><span class="line">      file: <span class="string">'dist/bundle.js'</span>,</span><br><span class="line">      format: <span class="string">'es'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      file: <span class="string">'dist/bundle.umd.js'</span>,</span><br><span class="line">      format: <span class="string">'umd'</span>,</span><br><span class="line">      name: <span class="string">'answer'</span></span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">  plugins: [</span><br><span class="line">    minify(),</span><br><span class="line">    resolve(),</span><br><span class="line">    commonjs(),</span><br><span class="line">    babel(),</span><br><span class="line">    eslint(),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><blockquote>
+<p>需要引入一个‘the-answer’用来测试能否正确加载外部的包</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D the-answer</span><br></pre></td></tr></table></figure>
+<p>src/main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> answer <span class="keyword">from</span> <span class="string">'the-answer'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`the answer is <span class="subst">$&#123;answer&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>增加1个打包的命令</p>
+</blockquote>
+<p>package.json</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "build": "rollup -c"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>运行脚本查看结果</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+<ul>
+<li>会在dist目录生成2个文件</li>
+</ul>
+<h2 id="rollup和gulp在一起"><a href="#rollup和gulp在一起" class="headerlink" title="rollup和gulp在一起"></a>rollup和gulp在一起</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D gulp</span><br></pre></td></tr></table></figure>
+<p>gulpfile.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>)</span><br><span class="line"><span class="keyword">const</span> rollup = <span class="built_in">require</span>(<span class="string">'rollup'</span>)</span><br><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">'rollup-plugin-babel'</span>)</span><br><span class="line"><span class="keyword">const</span> commonjs = <span class="built_in">require</span>(<span class="string">'rollup-plugin-commonjs'</span>)</span><br><span class="line"><span class="keyword">const</span> resolve = <span class="built_in">require</span>(<span class="string">'rollup-plugin-node-resolve'</span>)</span><br><span class="line"><span class="keyword">const</span> minify = <span class="built_in">require</span>(<span class="string">'rollup-plugin-babel-minify'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;eslint&#125; = <span class="built_in">require</span>(<span class="string">'rollup-plugin-eslint'</span>)</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'default'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> bundle = <span class="keyword">await</span> rollup.rollup(&#123;</span><br><span class="line">    input: <span class="string">'src/main.js'</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">      minify(),</span><br><span class="line">      resolve(),</span><br><span class="line">      commonjs(),</span><br><span class="line">      babel(),</span><br><span class="line">      eslint(),</span><br><span class="line">    ]</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> bundle.write(&#123;</span><br><span class="line">    file: <span class="string">'dist/bundle.umd.gulp.js'</span>,</span><br><span class="line">    format: <span class="string">'umd'</span>,</span><br><span class="line">    name: <span class="string">'answer'</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">await</span> bundle.write(&#123;</span><br><span class="line">    file: <span class="string">'dist/bundle.gulp.js'</span>,</span><br><span class="line">    format: <span class="string">'es'</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>package.json<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">  "gulp": "gulp"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run gulp</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dist文件夹下会生成带gulp的2个文件，和之前生成的文件内容相同</li>
+</ul>
+<h2 id="rollup和vue的故事"><a href="#rollup和vue的故事" class="headerlink" title="rollup和vue的故事"></a>rollup和vue的故事</h2><p>官方已经出了整合版本插件<a href="https://github.com/vuejs/rollup-plugin-vue" target="_blank" rel="noopener">rollup-plugin-vue</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rollup/" rel="tag"># rollup</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-07-19-vue-unit-test/" rel="next" title="vue-unit-test">
+                <i class="fa fa-chevron-left"></i> vue-unit-test
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#打包js的另一个选择"><span class="nav-number">1.</span> <span class="nav-text">打包js的另一个选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些有用的插件"><span class="nav-number">2.</span> <span class="nav-text">一些有用的插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理外部模块"><span class="nav-number">2.1.</span> <span class="nav-text">处理外部模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转译commonjs模块到ES6"><span class="nav-number">2.2.</span> <span class="nav-text">转译commonjs模块到ES6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入Babel"><span class="nav-number">2.3.</span> <span class="nav-text">引入Babel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入eslint"><span class="nav-number">2.4.</span> <span class="nav-text">引入eslint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩-混淆代码"><span class="nav-number">2.5.</span> <span class="nav-text">压缩/混淆代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的🌰"><span class="nav-number">3.</span> <span class="nav-text">一个简单的🌰</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装以上提到的依赖包"><span class="nav-number">3.1.</span> <span class="nav-text">安装以上提到的依赖包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rollup配置"><span class="nav-number">3.2.</span> <span class="nav-text">rollup配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">3.3.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rollup和gulp在一起"><span class="nav-number">4.</span> <span class="nav-text">rollup和gulp在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rollup和vue的故事"><span class="nav-number">5.</span> <span class="nav-text">rollup和vue的故事</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
