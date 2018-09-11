@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/avatar.png?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Vue源码了解一下说起vue原理，就会提到Object.definePropery()，也因为它，vue不支持IE9以下">
+<meta name="keywords" content="vue,vuex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue&amp;vuex源码解析">
+<meta property="og:url" content="http://babytutu.coding.me/2018-09-11-vue-vuex源码解析/index.html">
+<meta property="og:site_name" content="babytutu">
+<meta property="og:description" content="Vue源码了解一下说起vue原理，就会提到Object.definePropery()，也因为它，vue不支持IE9以下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://babytutu.coding.me/images/20180911/new_Vue.png">
+<meta property="og:updated_time" content="2018-09-11T16:35:33.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue&amp;vuex源码解析">
+<meta name="twitter:description" content="Vue源码了解一下说起vue原理，就会提到Object.definePropery()，也因为它，vue不支持IE9以下">
+<meta name="twitter:image" content="http://babytutu.coding.me/images/20180911/new_Vue.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://babytutu.coding.me/2018-09-11-vue-vuex源码解析/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>vue&vuex源码解析 | babytutu</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">babytutu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://babytutu.coding.me/2018-09-11-vue-vuex源码解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="babytutu">
+      <meta itemprop="description" content="blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="babytutu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue&vuex源码解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-11 14:37:08" itemprop="dateCreated datePublished" datetime="2018-09-11T14:37:08+08:00">2018-09-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-12 00:35:33" itemprop="dateModified" datetime="2018-09-12T00:35:33+08:00">2018-09-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/code/" itemprop="url" rel="index"><span itemprop="name">code</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Vue源码了解一下"><a href="#Vue源码了解一下" class="headerlink" title="Vue源码了解一下"></a>Vue源码了解一下</h1><p>说起vue原理，就会提到<code>Object.definePropery()</code>，也因为它，vue<code>不支持IE9以下</code></p>
+<a id="more"></a>
+<h2 id="数据劫持"><a href="#数据劫持" class="headerlink" title="数据劫持"></a>数据劫持</h2><p><code>v-model</code>是个神奇的东东，实现了数据双向绑定，那是通过啥实现的，看看源码</p>
+<ul>
+<li>node_modules/vue/src/core/observer/index.js，150行开始</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">  enumerable: <span class="literal">true</span>,</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span> <span class="title">reactiveGetter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> value = getter ? getter.call(obj) : val</span><br><span class="line">    <span class="keyword">if</span> (Dep.target) &#123;</span><br><span class="line">      dep.depend()</span><br><span class="line">      <span class="keyword">if</span> (childOb) &#123;</span><br><span class="line">        childOb.dep.depend()</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</span><br><span class="line">        dependArray(value)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> value</span><br><span class="line">  &#125;,</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span> <span class="title">reactiveSetter</span> (<span class="params">newVal</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> value = getter ? getter.call(obj) : val</span><br><span class="line">    <span class="comment">/* eslint-disable no-self-compare */</span></span><br><span class="line">    <span class="keyword">if</span> (newVal === value || (newVal !== newVal &amp;&amp; value !== value)) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* eslint-enable no-self-compare */</span></span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span> &amp;&amp; customSetter) &#123;</span><br><span class="line">      customSetter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (setter) &#123;</span><br><span class="line">      setter.call(obj, newVal)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      val = newVal</span><br><span class="line">    &#125;</span><br><span class="line">    childOb = !shallow &amp;&amp; observe(newVal)</span><br><span class="line">    dep.notify()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>回顾下，这个东东本身作用就是改写Object的哟，get/set，顾名思义，查询/改写对象咯，也就是vue用到的数据劫持<br><code>get</code>的时候<code>dep.depend()</code>建立对应关系<br><code>set</code>的时候<code>dep.notify()</code>通知模版更新</p>
+<h2 id="观察者-订阅者模式"><a href="#观察者-订阅者模式" class="headerlink" title="观察者-订阅者模式"></a>观察者-订阅者模式</h2><p><code>observer</code>（观察者），当<code>set</code>变化了，可以理解为数据更新了，就要通过<code>dep</code>去通知<code>watcher</code>（订阅者），然后就要通知模版更新咯。</p>
+<h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2><p><code>MVVM</code>模式，通过操作数据（model变化），更新虚拟DOM（view-model），通过模版编译实现页面更新(view)，无需操作DOM</p>
+<h2 id="模版编译"><a href="#模版编译" class="headerlink" title="模版编译"></a>模版编译</h2><p>建立vue实例时，一边<code>observer</code>变量，一边通过<code>compile</code>解析<code>template</code>，生成和<code>DOM</code>结构对应的<code>vnode</code>树，这个<code>vnode</code>上的变量都会初始化一个<code>watcher</code>，并增加<code>dep</code>(<code>addDep()</code>),那<code>dep</code>就作为桥梁，当<code>dep.notify()</code>的时候，<code>watcher</code>就会通知<code>vnode</code>要更新了（<code>watcher.update()</code>）</p>
+<p>用一个微信中的例子<br>关注了一个公众号（有了<code>dep</code>），公众号发新消息的时候(<code>dep.notify()</code>)，就会看到一条新消息（<code>watcher.update()</code>）</p>
+<p><img src="/images/20180911/new_Vue.png" alt="示意图"></p>
+<h1 id="Vuex的小秘密"><a href="#Vuex的小秘密" class="headerlink" title="Vuex的小秘密"></a>Vuex的小秘密</h1><ul>
+<li>node_modules/vuex/dist/vuex.js，行数不多，慢慢看也花不了多久</li>
+</ul>
+<p>判断vue版本，嗯，找对爸爸</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (version &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">  Vue.mixin(&#123; <span class="attr">beforeCreate</span>: vuexInit &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下去是this.$store的来历了，最最朴素的用法<code>this.$store.state.xxx</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Vuex init hook, injected into each instances init hooks list.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vuexInit</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> options = <span class="keyword">this</span>.$options;</span><br><span class="line">  <span class="comment">// store injection</span></span><br><span class="line">  <span class="keyword">if</span> (options.store) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$store = <span class="keyword">typeof</span> options.store === <span class="string">'function'</span></span><br><span class="line">      ? options.store()</span><br><span class="line">      : options.store;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (options.parent &amp;&amp; options.parent.$store) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$store = options.parent.$store;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>忽略一堆vuex的内部实现方法，看到了352行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// initialize the store vm, which is responsible for the reactivity</span></span><br><span class="line"><span class="comment">// (also registers _wrappedGetters as computed properties)</span></span><br><span class="line">resetStoreVM(<span class="keyword">this</span>, state);</span><br></pre></td></tr></table></figure>
+<p>看来要去看看这个方法，继续，忽然看到了熟悉的警告，vuex的单向数据流知道咋来了吧，set方法被改了哟～所以想直接修改是不行滴！！！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> prototypeAccessors = &#123; <span class="attr">state</span>: &#123; <span class="attr">configurable</span>: <span class="literal">true</span> &#125; &#125;;</span><br><span class="line"></span><br><span class="line">prototypeAccessors.state.get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>._vm._data.$$state</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">prototypeAccessors.state.set = <span class="function"><span class="keyword">function</span> (<span class="params">v</span>) </span>&#123;</span><br><span class="line">  &#123;</span><br><span class="line">    assert(<span class="literal">false</span>, <span class="string">"Use store.replaceState() to explicit replace store state."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>继续看，前方高能531行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resetStoreVM</span> (<span class="params">store, state, hot</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> oldVm = store._vm;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// bind store public getters</span></span><br><span class="line">  store.getters = &#123;&#125;;</span><br><span class="line">  <span class="keyword">var</span> wrappedGetters = store._wrappedGetters;</span><br><span class="line">  <span class="keyword">var</span> computed = &#123;&#125;;</span><br><span class="line">  forEachValue(wrappedGetters, <span class="function"><span class="keyword">function</span> (<span class="params">fn, key</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// use computed to leverage its lazy-caching mechanism</span></span><br><span class="line">    computed[key] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> fn(store); &#125;;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(store.getters, key, &#123;</span><br><span class="line">      get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> store._vm[key]; &#125;,</span><br><span class="line">      enumerable: <span class="literal">true</span> <span class="comment">// for local getters</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// use a Vue instance to store the state tree</span></span><br><span class="line">  <span class="comment">// suppress warnings just in case the user has added</span></span><br><span class="line">  <span class="comment">// some funky global mixins</span></span><br><span class="line">  <span class="keyword">var</span> silent = Vue.config.silent;</span><br><span class="line">  Vue.config.silent = <span class="literal">true</span>;</span><br><span class="line">  store._vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      $$state: state</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: computed</span><br><span class="line">  &#125;);</span><br><span class="line">  Vue.config.silent = silent;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// enable strict mode for new vm</span></span><br><span class="line">  <span class="keyword">if</span> (store.strict) &#123;</span><br><span class="line">    enableStrictMode(store);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (oldVm) &#123;</span><br><span class="line">    <span class="keyword">if</span> (hot) &#123;</span><br><span class="line">      <span class="comment">// dispatch changes in all subscribed watchers</span></span><br><span class="line">      <span class="comment">// to force getter re-evaluation for hot reloading.</span></span><br><span class="line">      store._withCommit(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        oldVm._data.$$state = <span class="literal">null</span>;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    Vue.nextTick(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">return</span> oldVm.$destroy(); &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到了<code>new Vue</code>?? 这是一个哑巴vue组件。。。还看到了<code>$$state</code>，好了，解密了。。<code>store</code>就是没有<code>template</code>的静默vue组件</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/vuex/" rel="tag"># vuex</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018-07-25-rollup/" rel="next" title="rollup">
+                <i class="fa fa-chevron-left"></i> rollup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">babytutu</p>
+              <p class="site-description motion-element" itemprop="description">blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/babytutu" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.npmjs.com/~babytutu" target="_blank" title="NPM"><i class="fa fa-fw fa-coffee"></i>NPM</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue源码了解一下"><span class="nav-number">1.</span> <span class="nav-text">Vue源码了解一下</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据劫持"><span class="nav-number">1.1.</span> <span class="nav-text">数据劫持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者-订阅者模式"><span class="nav-number">1.2.</span> <span class="nav-text">观察者-订阅者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟DOM"><span class="nav-number">1.3.</span> <span class="nav-text">虚拟DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模版编译"><span class="nav-number">1.4.</span> <span class="nav-text">模版编译</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vuex的小秘密"><span class="nav-number">2.</span> <span class="nav-text">Vuex的小秘密</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">babytutu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
