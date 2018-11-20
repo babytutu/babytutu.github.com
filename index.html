@@ -342,7 +342,7 @@
                 
               
 
-              <time title="Created: 2018-11-20 09:20:31 / Modified: 09:36:03" itemprop="dateCreated datePublished" datetime="2018-11-20T09:20:31+08:00">2018-11-20</time>
+              <time title="Created: 2018-11-20 09:20:31 / Modified: 10:37:30" itemprop="dateCreated datePublished" datetime="2018-11-20T09:20:31+08:00">2018-11-20</time>
             
 
             
@@ -399,44 +399,20 @@
 
       
         
-          
-            <h1 id="CentOS-使用firewalld打开关闭防火墙与端口"><a href="#CentOS-使用firewalld打开关闭防火墙与端口" class="headerlink" title="CentOS 使用firewalld打开关闭防火墙与端口"></a>CentOS 使用firewalld打开关闭防火墙与端口</h1><blockquote>
+          <h1 id="CentOS-使用firewalld打开关闭防火墙与端口"><a href="#CentOS-使用firewalld打开关闭防火墙与端口" class="headerlink" title="CentOS 使用firewalld打开关闭防火墙与端口"></a>CentOS 使用firewalld打开关闭防火墙与端口</h1><blockquote>
 <p>安装完一个服务后，开启了9001端口，网页访问提示无权限，考虑到可能是防火墙导致，关闭防火墙后正常访问，考虑到安全性，开启防火墙，单独开放了9001端口即可</p>
 </blockquote>
 <h2 id="单独开启9001端口"><a href="#单独开启9001端口" class="headerlink" title="单独开启9001端口"></a>单独开启9001端口</h2><p>查看所有打开的端口：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure></p>
 <p>添加（–permanent永久生效，没有此参数重启后失效）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=9001/tcp --permanent</span><br></pre></td></tr></table></figure></p>
 <p>重新载入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure></p>
 <p>再次查看所有打开的端口已确认效果</p>
-<h2 id="所有相关资料"><a href="#所有相关资料" class="headerlink" title="所有相关资料"></a>所有相关资料</h2><h3 id="firewalld的基本使用"><a href="#firewalld的基本使用" class="headerlink" title="firewalld的基本使用"></a>firewalld的基本使用</h3><p>启动：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld</span><br></pre></td></tr></table></figure></p>
-<p>关闭：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure></p>
-<p>查看状态：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld</span><br></pre></td></tr></table></figure></p>
-<p>开机禁用：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br></pre></td></tr></table></figure></p>
-<p>开机启用：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> firewalld</span><br></pre></td></tr></table></figure></p>
-<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>启动一个服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>关闭一个服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>重启一个服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>显示一个服务的状态：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>在开机时启用一个服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>在开机时禁用一个服务：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">disable</span> firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>查看服务是否开机启动：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl is-enabled firewalld.service</span><br></pre></td></tr></table></figure></p>
-<p>查看已启动的服务列表：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files|grep enabled</span><br></pre></td></tr></table></figure></p>
-<p>查看启动失败的服务列表：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure></p>
-<h3 id="配置firewalld-cmd"><a href="#配置firewalld-cmd" class="headerlink" title="配置firewalld-cmd"></a>配置firewalld-cmd</h3><p>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --version</span><br></pre></td></tr></table></figure></p>
-<p>查看帮助：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --<span class="built_in">help</span></span><br></pre></td></tr></table></figure></p>
-<p>显示状态：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --state</span><br></pre></td></tr></table></figure></p>
-<p>查看所有打开的端口：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --list-ports</span><br></pre></td></tr></table></figure></p>
-<p>更新防火墙规则：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure></p>
-<p>查看区域信息:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-active-zones</span><br></pre></td></tr></table></figure></p>
-<p>查看指定接口所属区域：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --get-zone-of-interface=eth0</span><br></pre></td></tr></table></figure></p>
-<p>拒绝所有包：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --panic-on</span><br></pre></td></tr></table></figure></p>
-<p>取消拒绝状态：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --panic-off</span><br></pre></td></tr></table></figure></p>
-<p>查看是否拒绝：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --query-panic</span><br></pre></td></tr></table></figure></p>
-<h3 id="开启一个端口-9001"><a href="#开启一个端口-9001" class="headerlink" title="开启一个端口(9001)"></a>开启一个端口(9001)</h3><p>添加（–permanent永久生效，没有此参数重启后失效）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=9001/tcp --permanent</span><br></pre></td></tr></table></figure></p>
-<p>重新载入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure></p>
-<p>查看<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --query-port=9001/tcp</span><br></pre></td></tr></table></figure></p>
-<p>删除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --remove-port=9001/tcp --permanent</span><br></pre></td></tr></table></figure></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018-11-20-CentOS-firewall/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
