@@ -1,0 +1,158 @@
+# 使用vuepress快速搭建网站
+
+> 基于2.0版本
+
+[vuepress官方文档](https://v2.vuepress.vuejs.org/zh/)
+
+## 安装依赖
+
+> 以books目录为例
+
+```bash
+mkdir books
+cd books
+
+git init
+yarn init
+
+yarn add -D vuepress@next
+```
+
+## 增加配置
+
+在 `package.json` 中添加一些 `scripts`
+
+```json
+{
+  "scripts": {
+    "start": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  }
+}
+```
+
+添加`.gitignore`文件
+
+```
+node_modules
+.temp
+.cache
+```
+
+## 增加第一个文件
+
+新建目录`docs`,目录下新建`README.md`
+
+```md
+# HELLO VUEPRESS
+```
+
+## 开启本地调试
+
+```bash
+yarn start
+```
+
+## 增加菜单配置
+
+在`docs/.vuepress`目录下，新建`config.js`
+
+[主题配置官方文档](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE)
+
+```js
+module.exports = {
+  base: '/books/', // 部署到GitHub Pages需要
+  title: '网站标题',
+  description: '网站描述',
+  themeConfig: {
+    sidebar: [
+      {
+        text: '首页',
+        link: '/README.md'
+      },
+    ]
+  }
+}
+```
+
+## 部署GitHub Pages
+
+[部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)
+
+官方文档缺少`GITHUB_TOKEN`设置，会无法部署，以下示例已补全
+
+新建`.github/workflows/docs.yml`
+
+```yml
+name: docs
+
+on:
+  # 每当 push 到 master 分支时触发部署
+  push:
+    branches: [master]
+  # 手动触发部署
+  # workflow_dispatch:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          # 选择要使用的 node 版本
+          node-version: '14'
+
+      # 缓存 node_modules
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # 如果缓存没有命中，安装依赖
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile
+
+      # 运行构建脚本
+      - name: Build VuePress site
+        run: yarn docs:build
+
+      # 查看 workflow 的文档来获取更多信息
+      # @see https://github.com/crazy-max/ghaction-github-pages
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          # 部署到 gh-pages 分支
+          target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: docs/.vuepress/dist
+        # 官方文档缺少以下，会导致无法部署，请一并复制
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+## 目录结构
+
+```
+├─ .github
+│  └─ workflows
+│     └─ docs.yml
+├─ docs
+│  ├─ .vuepress
+│  │  └─ config.js
+│  └─ README.md
+├─ .gitignore
+└─ package.json
+```

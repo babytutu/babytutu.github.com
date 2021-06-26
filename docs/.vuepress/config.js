@@ -5,11 +5,16 @@ module.exports = {
   themeConfig: {
     sidebar: [
       {
+        text: '首页',
+        link: '/README.md'
+      },
+      {
         text: '指南',
         children: [
-          '/docs/ES6实用技术点.md',
-          '/docs/抓包工具charles使用说明.md',
-          '/docs/Markdown基本语法.md',
+          '/books/使用vuepress搭建网站.md',
+          '/books/ES6实用技术点.md',
+          '/books/抓包工具charles使用说明.md',
+          '/books/Markdown基本语法.md',
         ]
       },
       {
