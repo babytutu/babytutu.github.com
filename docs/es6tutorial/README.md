@@ -1,10 +1,3 @@
----
-tags:
-  - 配置
-  - 主题
-  - 索引
----
-
 # ES6 入门教程
 
 官方镜像：[网道（WangDoc.com）](https://wangdoc.com/es6/)
