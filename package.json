@@ -1,0 +1,14 @@
+{
+  "name": "books",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "babytutu <babytutu@live.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.19"
+  }
+}
