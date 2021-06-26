@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "babytutu <babytutu@live.com>",
   "license": "MIT",
+  "homepage": "https://babytutu.github.io/books",
   "scripts": {
     "start": "vuepress dev docs",
     "docs:build": "vuepress build docs"

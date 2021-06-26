@@ -1,4 +1,5 @@
 module.exports = {
+  base: '/books/',
   title: '学习材料',
   description: '资料合集',
   themeConfig: {
