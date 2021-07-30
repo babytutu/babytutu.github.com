@@ -1,8 +1,6 @@
-# Markdown基本语法
+# Markdown
 
 > Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。
-
-
 
 ## 一、标题
 
@@ -130,13 +128,12 @@
 示例：
 
 ```
-![utry](http://www.utry.cn/static/web/img/ewm_11.jpg?v=v1)
+![logo](./logo.svg)
 ```
 
 效果如下：
 
-![utry](http://www.utry.cn/static/web/img/ewm_11.jpg?v=v1)
-
+![logo](./logo.svg)
 
 
 ##  六、超链接

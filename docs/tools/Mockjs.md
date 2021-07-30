@@ -1,4 +1,4 @@
-# Mockjs能做什么
+# Mockjs
 
 [官网](http://mockjs.com/)
 > 生成随机数据，拦截 Ajax 请求

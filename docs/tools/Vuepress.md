@@ -1,6 +1,6 @@
-# 快速搭建网站
+# Vuepress
 
-> 基于vuepress2.0版本
+> Vue 驱动的静态网站生成器
 
 [vuepress官方文档](https://v2.vuepress.vuejs.org/zh/)
 
@@ -18,7 +18,7 @@ yarn init
 yarn add -D vuepress@next
 ```
 
-## 增加配置
+## 增加脚本
 
 在 `package.json` 中添加一些 `scripts`
 
@@ -57,7 +57,7 @@ yarn start
 
 在`docs/.vuepress`目录下，新建`config.js`
 
-[主题配置官方文档](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html)
+[默认主题配置官方文档](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html)
 
 ```js
 module.exports = {
@@ -75,15 +75,71 @@ module.exports = {
 }
 ```
 
+## Markdown
+
+[自定义容器](https://v2.vuepress.vuejs.org/zh/reference/default-theme/markdown.html)
+
+```md
+::: tip
+这是一个提示
+:::
+
+::: warning
+这是一个警告
+:::
+
+::: danger
+这是一个危险警告
+:::
+
+::: details
+这是一个 details 标签
+:::
+```
+
+::: tip
+这是一个提示
+:::
+
+::: warning
+这是一个警告
+:::
+
+::: danger
+这是一个危险警告
+:::
+
+::: details
+这是一个 details 标签
+:::
+
+## 配置首页
+
+[官方文档](https://v2.vuepress.vuejs.org/zh/reference/default-theme/frontmatter.html#首页)
+
+例子
+
+```md
+---
+home: true
+---
+```
+
+通过设置`heroImage`,`actions`,`features`来配置个性化信息，效果同Vuepress官网首页
+
+
 ## 部署GitHub Pages
 
 [部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)
 
-官方文档缺少`GITHUB_TOKEN`设置，会无法部署，以下示例已补全
 
 新建`.github/workflows/docs.yml`
 
+
+::: details 点击查看代码
 ```yml
+
+# 文件目录
 name: docs
 
 on:
@@ -138,10 +194,11 @@ jobs:
           target_branch: gh-pages
           # 部署目录为 VuePress 的默认输出目录
           build_dir: docs/.vuepress/dist
-        # 官方文档缺少以下，会导致无法部署，请一并复制
         env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+:::
 
 ## 目录结构
 

@@ -759,22 +759,4 @@ async getData () {
 ## 相关推荐
 
 - 在线教程-[ECMAScript 6 入门](http://es6.ruanyifeng.com)
-- 《ES6标准入门（第3版）》
-- 《深入理解ES6》
 
-
-
-
-
-## nodeppt
-
-```bash
-// 安装神奇的东东
-npm i nodeppt -g
-
-// 自定义端口号
-nodeppt start -p 8090
-
-// 开启遥控功能
-nodeppt start -c socket
-```

@@ -14,14 +14,17 @@ License Key: 48891cf209c6d32bf4
 
 `Help-SSL Proxying-Install Charles Root Certificate`
 
-### 开启代理，默认Port`8888`
+### 开启代理
+
+> 默认Port`8888`
 
 `Proxy-Proxy Settings-Enable transparent HTTP proxying`
 
-### 添加https的网址和端口（默认443）
+### 添加https的网址和端口
+
+> 端口默认443
 
 `Proxy-SSL Proxying Settings-Enable SSL Proxying-Add `
-
 
 
 ## 手机端设置

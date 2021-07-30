@@ -1,14 +1,24 @@
 module.exports = {
-  base: '/books/',
-  title: '学习材料',
-  description: '资料合集',
+  base: '/',
+  title: '学无止境',
+  port: 9001,
+  description: '前端开发入门',
   themeConfig: {
+    logo: '/images/logo.svg',
     lastUpdated: false,
     contributors: false,
     navbar: [
       {
-        text: '指南',
-        link: '/books/',
+        text: '新手起步',
+        link: '/study/',
+      },
+      {
+        text: '实用工具',
+        link: '/tools/Vuepress.md',
+      },
+      {
+        text: 'Mac小技巧',
+        link: '/mac/',
       },
       {
         text: 'ES6 入门教程',
@@ -29,27 +39,43 @@ module.exports = {
             text: 'Vant',
             link: 'https://vant-contrib.gitee.io/vant/#/zh-CN/'
           },
+          {
+            text: 'miniprogram',
+            link: 'https://developers.weixin.qq.com/miniprogram/dev/framework/'
+          },
+          {
+            text: 'MDN Web Docs',
+            link: 'https://developer.mozilla.org'
+          }
         ],
       },
     ],
     sidebar: {
-      '/books/': [
+      '/study/': [
         {
-          isGroup: true,
-          text: '指南',
+          text: '新手起步',
           children: [
-            '/books/README.md',
-            '/books/ES6实用技术点.md',
-            '/books/抓包工具charles使用说明.md',
-            '/books/Markdown基本语法.md',
-            '/books/Mockjs能做什么.md',
-            '/books/快速搭建网站.md',
+            '/study/README.md',
+            '/study/ES6实用技术点.md',
+            '/study/Vue源码解析.md',
+          ],
+        },
+      ],
+      '/tools/': [
+        {
+          text: '实用工具',
+          children: [
+            '/tools/Vuepress.md',
+            '/tools/Charles.md',
+            '/tools/Markdown.md',
+            '/tools/Mockjs.md',
+            '/tools/Mocha.md',
+            '/tools/Nodeppt.md',
           ],
         },
       ],
       '/es6tutorial/': [
         {
-          isGroup: true,
           text: 'ES6 入门教程',
           children: [
             {
@@ -182,7 +208,23 @@ module.exports = {
             },
           ],
         },
+      ],
+      '/mac/': [
+        {
+          text: 'Mac小技巧',
+          children: [
+            '/mac/README.md',
+            '/mac/Oh-My-ZSH.md',
+            '/mac/Magnet.md',
+          ]
+        }
       ]
     }
   },
+  markdown: {
+    code: {
+      lineNumbers: false
+    }
+  },
+  repo: 'babytutu/books',
 }
