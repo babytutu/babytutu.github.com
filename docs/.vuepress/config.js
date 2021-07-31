@@ -10,15 +10,28 @@ module.exports = {
     navbar: [
       {
         text: '新手起步',
-        link: '/study/',
+        children: [
+          '/study/基础技能.md',
+          '/study/ES6实用技术点.md',
+          '/study/Vue源码解析.md',
+        ],
       },
       {
         text: '实用工具',
-        link: '/tools/Vuepress.md',
+        children: [
+          '/tools/Vuepress.md',
+          '/tools/Charles.md',
+          '/tools/Markdown.md',
+          '/tools/Mockjs.md',
+          '/tools/Mocha.md',
+          '/tools/Nodeppt.md',
+          '/tools/Oh-My-ZSH.md',
+          '/tools/Magnet.md',
+      ],
       },
       {
         text: 'Mac小技巧',
-        link: '/mac/',
+        link: '/mac/'
       },
       {
         text: 'ES6 入门教程',
@@ -55,7 +68,7 @@ module.exports = {
         {
           text: '新手起步',
           children: [
-            '/study/README.md',
+            '/study/基础技能.md',
             '/study/ES6实用技术点.md',
             '/study/Vue源码解析.md',
           ],
@@ -71,8 +84,16 @@ module.exports = {
             '/tools/Mockjs.md',
             '/tools/Mocha.md',
             '/tools/Nodeppt.md',
+            '/tools/Oh-My-ZSH.md',
+            '/tools/Magnet.md',
           ],
         },
+      ],
+      '/mac/': [
+        {
+          text: 'Mac小技巧',
+          link: '/mac/',
+        }
       ],
       '/es6tutorial/': [
         {
@@ -209,16 +230,6 @@ module.exports = {
           ],
         },
       ],
-      '/mac/': [
-        {
-          text: 'Mac小技巧',
-          children: [
-            '/mac/README.md',
-            '/mac/Oh-My-ZSH.md',
-            '/mac/Magnet.md',
-          ]
-        }
-      ]
     }
   },
   markdown: {
@@ -226,5 +237,16 @@ module.exports = {
       lineNumbers: false
     }
   },
-  repo: 'babytutu/books',
+  plugins: [
+    [
+      '@vuepress/plugin-search',
+      {
+        locales: {
+          '/': {
+            placeholder: '站内搜索',
+          }
+        },
+      },
+    ],
+  ],
 }

@@ -161,6 +161,33 @@ html.dark {
 ```
 :::
 
+## 增加搜索功能
+
+需要手动安装插件，[配置文档](https://v2.vuepress.vuejs.org/zh/reference/plugin/search.html)
+
+```bash
+yarn add -D @vuepress/plugin-search@next
+```
+
+在配置文件中增加plugins配置，docs/.vuepress/config.js
+
+```js
+module.exports = {
+  plugins: [
+    [
+      '@vuepress/plugin-search',
+      {
+        locales: {
+          '/': {
+            placeholder: '站内搜索',
+          },
+        },
+      },
+    ],
+  ],
+}
+```
+
 ## 部署GitHub Pages
 
 [部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)
