@@ -1,5 +1,7 @@
 # Charles
 
+> 抓包神器
+
 [软件下载](https://www.charlesproxy.com/download/)
 
 key
@@ -40,8 +42,6 @@ License Key: 48891cf209c6d32bf4
 - 手机打开浏览器，访问`chls.pro/ssl`安装证书
 - ***iOS*** 需要在手机`设置 -> 通用 -> 关于本机 -> 证书信任设置` 中打开信任
 
-
-
 ## 基础使用
 
 ### 代理到本地文件
@@ -49,4 +49,3 @@ License Key: 48891cf209c6d32bf4
 - 添加代理规则，`Tools-Map Local Settings-Add`
 - 分别填写远程和本地地址，`Map From-Map To`
 - 设置完成后手机重新请求资源，即可代理到本地文件
-

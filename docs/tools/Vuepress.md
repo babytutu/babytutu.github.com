@@ -128,6 +128,39 @@ home: true
 通过设置`heroImage`,`actions`,`features`来配置个性化信息，效果同Vuepress官网首页
 
 
+## 自定义样式
+
+[官方说明](https://v2.vuepress.vuejs.org/zh/reference/default-theme/styles.html)
+
+Style 文件的路径是 `.vuepress/styles/index.scss`，新建一个就可以了
+
+可以添加额外的样式，或者利用它来覆盖默认主题的预定义 CSS 变量，需要注意样式有2套变量，默认的和暗黑模式的，想改哪个改哪个
+
+::: details 此项目的样式
+```scss
+:root {
+  // brand colors
+  --c-brand: #f60;
+  --c-brand-light: #f90;
+
+  // custom container colors
+  --c-tip: #f60;
+
+  // layout vars
+  --sidebar-width: 18rem;
+  --content-width: 900px;
+  --homepage-width: 960px;
+}
+
+// 暗黑模式样式
+html.dark {
+  // brand colors
+  --c-brand: #f60;
+  --c-brand-light: #f90;
+}
+```
+:::
+
 ## 部署GitHub Pages
 
 [部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)

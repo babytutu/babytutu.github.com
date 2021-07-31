@@ -1,4 +1,4 @@
-# Vue源码了解一下
+# Vue源码解析
 
 说起vue原理，就会提到`Object.definePropery()`，也因为它，vue`不支持IE9以下`
 
@@ -6,7 +6,7 @@
 
 `v-model`是个神奇的东东，实现了数据双向绑定，那是通过啥实现的，看看源码
 
-- node_modules/vue/src/core/observer/index.js，150行开始
+- node_modules/vue/src/core/observer/index.js
 
 ```js
   Object.defineProperty(obj, key, {
