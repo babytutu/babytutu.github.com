@@ -10,6 +10,17 @@
   --sidebar-width: 18rem;
   --content-width: 900px;
   --homepage-width: 960px;
+
+  /* 统一滚动条样式 */
+  /*轨道样式*/
+  ::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  /*滚动条的样式*/
+  ::-webkit-scrollbar-thumb {
+    background-color: #7f7f7f;
+    border-radius: 4px;
+  }
 }
 
 // 暗黑模式样式
@@ -17,4 +28,14 @@ html.dark {
   // brand colors
   --c-brand: #f60;
   --c-brand-light: #f90;
+
+  /* 统一滚动条样式 */
+  /*轨道样式*/
+  ::-webkit-scrollbar-track {
+    background-color: #22272e;
+  }
+  /*滚动条的样式*/
+  ::-webkit-scrollbar-thumb {
+    background-color: #919397;
+  }
 }
