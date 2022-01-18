@@ -1,12 +1,13 @@
 :root {
   // brand colors
-  --c-brand: #f60;
-  --c-brand-light: #f90;
+  --c-brand: #409EFF;
+  --c-brand-light: #66b1ff;
 
   // custom container colors
-  --c-tip: #f60;
+  --c-tip: #409EFF;
 
   // layout vars
+  --navbar-height: 3rem;
   --sidebar-width: 18rem;
   --content-width: 900px;
   --homepage-width: 960px;
@@ -26,8 +27,8 @@
 // 暗黑模式样式
 html.dark {
   // brand colors
-  --c-brand: #f60;
-  --c-brand-light: #f90;
+  --c-brand: #ccc;
+  --c-brand-light: #ddd;
 
   /* 统一滚动条样式 */
   /*轨道样式*/
