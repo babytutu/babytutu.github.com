@@ -2,15 +2,18 @@
 
 使用`mediarecorder`实现纯前端在线录音，仅支持`localhost`和`https`环境，需要开启浏览器`麦克风权限`。
 
-点击[完成]，将base64数据进行预览播放
 
 ## Demo
 
-<button @click="startRecoreder" :disabled="showRecorder">开始录音</button>
-<div class="recorder-container">
-  <recorder v-model="showRecorder" v-if="showRecorder" @src="getRecord"></recorder>
-  <audio :src="src" controls v-if="src"></audio>
-</div>
+点击[完成]，将base64数据进行预览播放
+
+<ClientOnly>
+  <button @click="startRecoreder" :disabled="showRecorder">开始录音</button>
+  <div class="recorder-container">
+    <recorder v-model="showRecorder" v-if="showRecorder" @src="getRecord"></recorder>
+    <audio :src="src" controls v-if="src"></audio>
+  </div>
+</ClientOnly>
 
 <script>
   export default {

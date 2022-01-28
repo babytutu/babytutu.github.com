@@ -205,6 +205,27 @@ export default defineClientAppEnhance(({ app, router, siteData }) => {
 })
 ```
 
+vuepress在build时在`Node`环境进行预渲染，可能导致报错（window，document等未定义），可通过环境变量`__VUEPRESS_SSR__`判断是否加载组件
+
+```js
+import { defineClientAppEnhance } from '@vuepress/client'
+
+export default defineClientAppEnhance(async ({ app }) => {
+  if (!__VUEPRESS_SSR__) {
+    const MyComponent = await import('./MyComponent.vue')
+    app.component('MyComponent', MyComponent.default)
+  }
+})
+```
+
+使用组件时，用内置的`ClientOnly`包裹即可
+
+```md
+<ClientOnly>
+  <MyComponent />
+</ClientOnly>
+```
+
 ## 部署GitHub Pages
 
 [部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)

@@ -4,7 +4,9 @@
 
 使用`FileReader`方法，选择图片后读取到`base64`格式的图片信息，通过赋值给`img`的`src`实现图片预览
 
-<uploadImg v-model="imgurl" tip="500K以内的jpg或png格式"></uploadImg>
+<ClientOnly>
+  <uploadImg v-model="imgurl" tip="500K以内的jpg或png格式"></uploadImg>
+</ClientOnly>
 
 <script>
   export default {

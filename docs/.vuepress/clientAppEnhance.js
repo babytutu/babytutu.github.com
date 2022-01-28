@@ -1,8 +1,10 @@
 import { defineClientAppEnhance } from '@vuepress/client'
-import recorder from './components/recorder/recorder.vue'
-import uploadImg from './components/uploadImg/uploadImg.vue'
 
-export default defineClientAppEnhance(({ app, router, siteData }) => {
-  app.component('recorder', recorder)
-  app.component('uploadImg', uploadImg)
+export default defineClientAppEnhance(async ({ app }) => {
+  if (!__VUEPRESS_SSR__) {
+    const recorder = await import('./components/recorder/recorder.vue')
+    const uploadImg = await import('./components/uploadImg/uploadImg.vue')
+    app.component('recorder', recorder.default)
+    app.component('uploadImg', uploadImg.default)
+  }
 })
