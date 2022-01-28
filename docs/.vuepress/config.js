@@ -17,6 +17,13 @@ module.exports = {
         ],
       },
       {
+        text: '练手组件',
+        children: [
+          '/components/Recoreder.md',
+          '/components/UploadImg.md',
+        ],
+      },
+      {
         text: '实用工具',
         children: [
           '/tools/Vuepress.md',
@@ -64,6 +71,10 @@ module.exports = {
       },
     ],
     sidebar: {
+      '/components/': [
+        '/components/Recoreder.md',
+        '/components/UploadImg.md'
+      ],
       '/study/': [
         {
           text: '新手起步',

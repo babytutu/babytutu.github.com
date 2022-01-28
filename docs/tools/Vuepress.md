@@ -188,6 +188,23 @@ module.exports = {
 }
 ```
 
+## 注册 Vue 组件
+
+你可以通过 component 方法来注册 Vue 全局组件：
+
+官方文档[Client App Enhance 的使用方法](https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-app-enhance.html)
+
+.vuepress/clientAppEnhance.js
+
+```js
+import { defineClientAppEnhance } from '@vuepress/client'
+import MyComponent from './MyComponent.vue'
+
+export default defineClientAppEnhance(({ app, router, siteData }) => {
+  app.component('MyComponent', MyComponent)
+})
+```
+
 ## 部署GitHub Pages
 
 [部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)
