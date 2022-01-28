@@ -5,7 +5,7 @@
 使用`FileReader`方法，选择图片后读取到`base64`格式的图片信息，通过赋值给`img`的`src`实现图片预览
 
 <ClientOnly>
-  <uploadImg v-model="imgurl" tip="500K以内的jpg或png格式"></uploadImg>
+  <uploadImg v-model="imgurl"></uploadImg>
 </ClientOnly>
 
 <script>
@@ -22,13 +22,13 @@
 
 ```vue
 <template>
-  <uploadImg v-model="imgurl" tip="500K以内的jpg或png格式"></uploadImg>
+  <uploadImg v-model="imgurl"></uploadImg>
 </template>
 <script>
   export default {
     data () {
       return {
-        imgurl: ''
+        imgurl: 'https://v2.vuepress.vuejs.org/images/hero.png'
       }
     }
   }

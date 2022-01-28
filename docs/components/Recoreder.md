@@ -8,7 +8,7 @@
 点击[完成]，将base64数据进行预览播放
 
 <ClientOnly>
-  <button @click="startRecoreder" :disabled="showRecorder">开始录音</button>
+  <button class="btn" @click="startRecoreder" :disabled="showRecorder">开始录音</button>
   <div class="recorder-container">
     <recorder v-model="showRecorder" v-if="showRecorder" @src="getRecord"></recorder>
     <audio :src="src" controls v-if="src"></audio>
@@ -55,7 +55,7 @@
 ```vue
 <template>
   <div>
-    <button @click="startRecoreder" :disabled="showRecorder">开始录音</button>
+    <button class="btn" @click="startRecoreder" :disabled="showRecorder">开始录音</button>
     <div class="recorder-container">
       <recorder v-model="showRecorder" v-if="showRecorder" @src="getRecord"></recorder>
       <audio :src="src" controls v-if="src"></audio>

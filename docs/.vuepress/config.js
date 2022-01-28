@@ -17,10 +17,11 @@ module.exports = {
         ],
       },
       {
-        text: '练手组件',
+        text: '实用组件',
         children: [
           '/components/Recoreder.md',
           '/components/UploadImg.md',
+          '/components/Player.md',
         ],
       },
       {
@@ -72,8 +73,14 @@ module.exports = {
     ],
     sidebar: {
       '/components/': [
-        '/components/Recoreder.md',
-        '/components/UploadImg.md'
+        {
+          text: '实用组件',
+          children: [
+            '/components/Recoreder.md',
+            '/components/UploadImg.md',
+            '/components/Player.md',
+          ],
+        }
       ],
       '/study/': [
         {

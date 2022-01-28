@@ -40,3 +40,24 @@ html.dark {
     background-color: #919397;
   }
 }
+
+.btn {
+  padding: 12px 20px;
+  font-size: 14px;
+  line-height: 1;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  color: #409eff;
+  background: #ecf5ff;
+  border-color: #b3d8ff;
+  cursor: pointer;
+  &:hover{
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+  }
+}
