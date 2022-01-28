@@ -303,10 +303,10 @@ function foo(x = x) {
   // ...
 }
 
-foo() // ReferenceError: x is not defined
+foo() // ReferenceError: Cannot access 'x' before initialization
 ```
 
-上面代码中，参数`x = x`形成一个单独作用域。实际执行的是`let x = x`，由于暂时性死区的原因，这行代码会报错”x 未定义“。
+上面代码中，参数`x = x`形成一个单独作用域。实际执行的是`let x = x`，由于暂时性死区的原因，这行代码会报错。
 
 如果参数的默认值是一个函数，该函数的作用域也遵守这个规则。请看下面的例子。
 
@@ -418,7 +418,7 @@ add(2, 5, 3) // 10
 ```javascript
 // arguments变量的写法
 function sortNumbers() {
-  return Array.prototype.slice.call(arguments).sort();
+  return Array.from(arguments).sort();
 }
 
 // rest参数的写法
@@ -427,7 +427,7 @@ const sortNumbers = (...numbers) => numbers.sort();
 
 上面代码的两种写法，比较后可以发现，rest 参数的写法更自然也更简洁。
 
-`arguments`对象不是数组，而是一个类似数组的对象。所以为了使用数组的方法，必须使用`Array.prototype.slice.call`先将其转为数组。rest 参数就不存在这个问题，它就是一个真正的数组，数组特有的方法都可以使用。下面是一个利用 rest 参数改写数组`push`方法的例子。
+`arguments`对象不是数组，而是一个类似数组的对象。所以为了使用数组的方法，必须使用`Array.from`先将其转为数组。rest 参数就不存在这个问题，它就是一个真正的数组，数组特有的方法都可以使用。下面是一个利用 rest 参数改写数组`push`方法的例子。
 
 ```javascript
 function push(array, ...items) {

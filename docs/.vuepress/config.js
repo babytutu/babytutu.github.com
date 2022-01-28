@@ -144,87 +144,91 @@ module.exports = {
               link: '/es6tutorial/docs/object.md',
             },
             {
-              text: '11. 对象的新增方法',
+              text: '11. 运算符的扩展',
+              link: '/es6tutorial/docs/operator.md',
+            },
+            {
+              text: '12. 对象的新增方法',
               link: '/es6tutorial/docs/object-methods.md',
             },
             {
-              text: '12. Symbol',
+              text: '13. Symbol',
               link: '/es6tutorial/docs/symbol.md',
             },
             {
-              text: '13. Set 和 Map 数据结构',
+              text: '14. Set 和 Map 数据结构',
               link: '/es6tutorial/docs/set-map.md',
             },
             {
-              text: '14. Proxy',
+              text: '15. Proxy',
               link: '/es6tutorial/docs/proxy.md',
             },
             {
-              text: '15. Reflect',
+              text: '16. Reflect',
               link: '/es6tutorial/docs/reflect.md',
             },
             {
-              text: '16. Promise 对象',
+              text: '17. Promise 对象',
               link: '/es6tutorial/docs/promise.md',
             },
             {
-              text: '17. Iterator 和 for...of 循环',
+              text: '18. Iterator 和 for...of 循环',
               link: '/es6tutorial/docs/iterator.md',
             },
             {
-              text: '18. Generator 函数的语法',
+              text: '19. Generator 函数的语法',
               link: '/es6tutorial/docs/generator.md',
             },
             {
-              text: '19. Generator 函数的异步应用',
+              text: '20. Generator 函数的异步应用',
               link: '/es6tutorial/docs/generator-async.md',
             },
             {
-              text: '20. async 函数',
+              text: '21. async 函数',
               link: '/es6tutorial/docs/async.md',
             },
             {
-              text: '21. Class 的基本语法',
+              text: '22. Class 的基本语法',
               link: '/es6tutorial/docs/class.md',
             },
             {
-              text: '22. Class 的继承',
+              text: '23. Class 的继承',
               link: '/es6tutorial/docs/class-extends.md',
             },
             {
-              text: '23. Module 的语法',
+              text: '24. Module 的语法',
               link: '/es6tutorial/docs/module.md',
             },
             {
-              text: '24. Module 的加载实现',
+              text: '25. Module 的加载实现',
               link: '/es6tutorial/docs/module-loader.md',
             },
             {
-              text: '25. 编程风格',
+              text: '26. 编程风格',
               link: '/es6tutorial/docs/style.md',
             },
             {
-              text: '26. 读懂规格',
+              text: '27. 读懂规格',
               link: '/es6tutorial/docs/spec.md',
             },
             {
-              text: '27. 异步遍历器',
+              text: '28. 异步遍历器',
               link: '/es6tutorial/docs/async-iterator.md',
             },
             {
-              text: '28. ArrayBuffer',
+              text: '29. ArrayBuffer',
               link: '/es6tutorial/docs/arraybuffer.md',
             },
             {
-              text: '29. 最新提案',
+              text: '30. 最新提案',
               link: '/es6tutorial/docs/proposals.md',
             },
             {
-              text: '30. Decorator',
+              text: '31. Decorator',
               link: '/es6tutorial/docs/decorator.md',
             },
             {
-              text: '31. 参考链接',
+              text: '32. 参考链接',
               link: '/es6tutorial/docs/reference.md',
             },
           ],

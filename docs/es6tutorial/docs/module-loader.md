@@ -292,7 +292,7 @@ Node.js 要求 ES6 模块采用`.mjs`后缀文件名。也就是说，只要脚�
 }
 ```
 
-一旦设置了以后，该目录里面的 JS 脚本，就被解释用 ES6 模块。
+一旦设置了以后，该项目的 JS 脚本，就被解释成 ES6 模块。
 
 ```bash
 # 解释成 ES6 模块
@@ -439,7 +439,7 @@ import submodule from './node_modules/es-module-package/private-module.js';
 }
 ```
 
-注意，如果同时还有其他别名，就不能采用简写，否则或报错。
+注意，如果同时还有其他别名，就不能采用简写，否则会报错。
 
 ```javascript
 {
