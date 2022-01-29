@@ -1,12 +1,12 @@
 <template>
   <div class="imgContent">
     <div class="img-container">
-      <input type="file" :accept="accept" ref="file" @change="onFileChange" title="">
       <img :src="preview" class="img" v-if="preview" />
-      <i class="icon plus" v-if="!preview">&#43;</i>
-      <i class="icon remove" v-if="preview" @click="resetIMG">&times;</i>
+      <input type="file" :accept="accept" ref="file" @change="onFileChange" title="">
+      <i class="remove" v-if="preview" @click="resetIMG">&times;</i>
+      <i class="plus" v-if="!preview">&#43;</i>
     </div>
-    <p class="tip">{{tip}}</p>
+    <div class="tip">{{tip}}</div>
   </div>
 </template>
 <script>
@@ -136,10 +136,8 @@ export default {
   }
 
   .img-container {
-    display: flex;
     width: 100px;
     height: 100px;
-    padding: 8px;
     background: #fff;
     border: 1px solid #E4E7ED;
     border-radius: 4px;
@@ -154,9 +152,13 @@ export default {
       line-height: 1;
     }
 
-    .img {
+    .img, input {
+      padding: 10px;
+      box-sizing: border-box;
       width: 100%;
       height: 100%;
+      position: absolute;
+      z-index: 999;
     }
 
     .remove {
@@ -179,7 +181,6 @@ export default {
 
     input {
       opacity: 0;
-      z-index: 999;
       cursor: pointer;
     }
   }
