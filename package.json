@@ -7,7 +7,8 @@
   "homepage": "https://babytutu.github.io",
   "scripts": {
     "start": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "preview": "vuepress build docs -c docs/.vuepress/configPreview.js"
   },
   "devDependencies": {
     "@vuepress/plugin-search": "^2.0.0-beta.35",

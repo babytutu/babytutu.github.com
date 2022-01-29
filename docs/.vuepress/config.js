@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   base: '/',
   title: '学无止境',
@@ -9,19 +11,25 @@ module.exports = {
     contributors: false,
     navbar: [
       {
-        text: '新手起步',
+        text: '基础知识',
         children: [
-          '/study/基础技能.md',
-          '/study/ES6实用技术点.md',
-          '/study/Vue源码解析.md',
-        ],
-      },
-      {
-        text: '实用组件',
-        children: [
-          '/components/Recoreder.md',
-          '/components/UploadImg.md',
-          '/components/Player.md',
+          {
+            text: '新手起步',
+            children: [
+              '/study/基础技能.md',
+              '/study/ES6实用技术点.md',
+              '/study/Vue2源码解析.md',
+              '/study/Vue2组件升级.md',
+            ]
+          },
+          {
+            text: '实用组件',
+            children: [
+              '/components/Recoreder.md',
+              '/components/UploadImg.md',
+              '/components/Player.md',
+            ],
+          },
         ],
       },
       {
@@ -35,7 +43,7 @@ module.exports = {
           '/tools/Nodeppt.md',
           '/tools/Oh-My-ZSH.md',
           '/tools/Magnet.md',
-      ],
+        ],
       },
       {
         text: 'Mac小技巧',
@@ -88,7 +96,8 @@ module.exports = {
           children: [
             '/study/基础技能.md',
             '/study/ES6实用技术点.md',
-            '/study/Vue源码解析.md',
+            '/study/Vue2源码解析.md',
+            '/study/Vue2组件升级.md',
           ],
         },
       ],
@@ -257,7 +266,10 @@ module.exports = {
   markdown: {
     code: {
       lineNumbers: false
-    }
+    },
+    importCode: {
+      handleImportPath: (str) => str.replace(/^@src/, path.resolve(__dirname))
+    },
   },
   plugins: [
     [

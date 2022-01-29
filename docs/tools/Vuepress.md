@@ -226,6 +226,35 @@ export default defineClientAppEnhance(async ({ app }) => {
 </ClientOnly>
 ```
 
+## 引入代码块
+
+你可以使用下面的语法，从文件中导入代码块：
+
+```md
+<!-- 最简单的语法 -->
+@[code js](../foo.js)
+```
+
+需要注意的是，路径别名在导入代码语法中不会生效。你可以通过下面的配置来自行处理路径别名：
+
+```js
+// .vuepress/config.js
+const path = require('path')
+
+module.exports = {
+  markdown: {
+    importCode: {
+      handleImportPath: (str) => str.replace(/^@src/, path.resolve(__dirname)),
+    },
+  },
+}
+```
+
+```md
+<!-- 会被解析至 '.vuepress/foo.js' -->
+@[code js](@src/foo.js)
+```
+
 ## 部署GitHub Pages
 
 [部署说明官方文档](https://v2.vuepress.vuejs.org/zh/guide/deployment.html#github-pages)
@@ -235,67 +264,9 @@ export default defineClientAppEnhance(async ({ app }) => {
 
 
 ::: details 点击查看代码
-```yml
 
-# 文件目录
-name: docs
+@[code yml](@src/docs.yml)
 
-on:
-  # 每当 push 到 master 分支时触发部署
-  push:
-    branches: [master]
-  # 手动触发部署
-  # workflow_dispatch:
-
-jobs:
-  docs:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          # 选择要使用的 node 版本
-          node-version: '14'
-
-      # 缓存 node_modules
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      # 如果缓存没有命中，安装依赖
-      - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
-
-      # 运行构建脚本
-      - name: Build VuePress site
-        run: yarn docs:build
-
-      # 查看 workflow 的文档来获取更多信息
-      # @see https://github.com/crazy-max/ghaction-github-pages
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2
-        with:
-          # 部署到 gh-pages 分支
-          target_branch: gh-pages
-          # 部署目录为 VuePress 的默认输出目录
-          build_dir: docs/.vuepress/dist
-        env:
-          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
 :::
 
 ## 目录结构

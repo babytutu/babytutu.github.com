@@ -84,6 +84,9 @@ export default {
   mounted () {
     this.init()
   },
+  beforeUnmount () {
+    this.cancelRecord()
+  },
   methods: {
     /**
      * 关闭录音模块

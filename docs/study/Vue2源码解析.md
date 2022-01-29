@@ -1,4 +1,4 @@
-# Vue源码解析
+# Vue2源码解析
 
 说起vue原理，就会提到`Object.definePropery()`，也因为它，vue`不支持IE9以下`
 
