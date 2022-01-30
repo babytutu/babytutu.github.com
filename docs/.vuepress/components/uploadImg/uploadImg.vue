@@ -183,6 +183,10 @@ export default {
       opacity: 0;
       cursor: pointer;
     }
+
+    img {
+      object-fit: fill
+    }
   }
 }
 </style>
