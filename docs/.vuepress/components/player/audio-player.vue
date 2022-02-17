@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-player-container" :class="{ mini }">
+  <div class="audio-player-container" :class="{ mini }" @mousedown="onDragBegin" :style="mini ? floatStyleObj : ''">
     <div class="audio-player-warper">
       <div class="audio-player-control-btn">
         <template v-if="!error">
@@ -10,12 +10,12 @@
             <path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path>
           </svg>
         </template>
-        <svg v-else viewBox="0 0 1024 1024" class="audio-player-control-icon" width="20" height="20">
+        <svg v-else viewBox="0 0 1024 1024" class="audio-player-control-icon">
           <path d="M517.08411984 479.11475483L301.90637831 263.93753776a26.85237631 26.85237631 0 1 0-37.98667221 37.95153335l215.17669262 215.19504873L263.91970607 732.27864411a26.85237631 26.85237631 0 1 0 37.96936504 37.96884057l215.19504878-215.17669264 215.19504866 215.17669264a26.85237631 26.85237631 0 1 0 37.9688406-37.95100889l-215.17669262-215.2123559 215.17669262-215.1772171a26.85237631 26.85237631 0 1 0-37.9688406-37.96936505L517.10195147 479.11475483z"></path>
         </svg>
       </div>
       <div v-if="mini" class="audio-player-mini">
-        <svg @click="close" viewBox="0 0 1024 1024">
+        <svg @click="closeWin" viewBox="0 0 1024 1024">
           <path d="M517.08411984 479.11475483L301.90637831 263.93753776a26.85237631 26.85237631 0 1 0-37.98667221 37.95153335l215.17669262 215.19504873L263.91970607 732.27864411a26.85237631 26.85237631 0 1 0 37.96936504 37.96884057l215.19504878-215.17669264 215.19504866 215.17669264a26.85237631 26.85237631 0 1 0 37.9688406-37.95100889l-215.17669262-215.2123559 215.17669262-215.1772171a26.85237631 26.85237631 0 1 0-37.9688406-37.96936505L517.10195147 479.11475483z"></path>
         </svg>
         <svg viewBox="0 0 1024 1024" @click="changeStatus(false)">
@@ -26,14 +26,16 @@
       </div>
       <div class="audio-player-warper-content" v-if="!mini">
         <div class="audio-player-title">
-          <p>{{value.name}}</p>
-          <div v-if="!error">
-            <span>倍速</span>
-            <span v-for="i in rates" :class="{ 'rate-active': playbackRate === i }" :key="i" @click="changeRate(i)">{{i}}</span>
+          <div>{{value.name}}</div>
+          <div class="audio-player-title-btn">
+            <template v-if="!error">
+              <span>倍速</span>
+              <span v-for="i in rates" :class="{ 'rate-active': playbackRate === i }" :key="i" @click="changeRate(i)">{{i}}</span>
+            </template>
+            <svg v-if="miniable" @click="changeStatus(true)" viewBox="0 0 1024 1024" width="20" height="20">
+              <path d="M18.285714 201.142857c0-100.571429 82.285714-182.857143 182.857143-182.857143h621.714286c100.571429 0 182.857143 82.285714 182.857143 182.857143v621.714286c0 100.571429-82.285714 182.857143-182.857143 182.857143h-621.714286a183.369143 183.369143 0 0 1-182.857143-182.857143z m694.857143-109.714286v109.714286c0 60.342857 49.371429 109.714286 109.714286 109.714286h109.714286v-109.714286c0-60.342857-49.371429-109.714286-109.714286-109.714286h-109.714286z m-621.714286 109.714286v621.714286c0 60.342857 49.371429 109.714286 109.714286 109.714286h621.714286c60.342857 0 109.714286-49.371429 109.714286-109.714286v-438.857143h-109.714286a183.369143 183.369143 0 0 1-182.857143-182.857143v-109.714286h-438.857143c-60.342857 0-109.714286 49.371429-109.714286 109.714286z m129.828572 601.6c-14.628571-14.628571-14.628571-36.571429 0-51.2L479.085714 493.714286h-131.657143a36.644571 36.644571 0 0 1-36.571428-36.571429c0-20.114286 16.457143-36.571429 36.571428-36.571428h219.428572c9.142857 0 18.285714 3.657143 25.6 10.971428 7.314286 5.485714 10.971429 14.628571 10.971428 25.6v219.428572c0 20.114286-16.457143 36.571429-36.571428 36.571428a36.644571 36.644571 0 0 1-36.571429-36.571428v-131.657143l-257.828571 257.828571c-14.628571 14.628571-36.571429 14.628571-51.2 0z" p-id="5623"></path>
+            </svg>
           </div>
-          <svg v-if="miniable" @click="changeStatus(true)" viewBox="0 0 1024 1024" width="20" height="20">
-            <path d="M18.285714 201.142857c0-100.571429 82.285714-182.857143 182.857143-182.857143h621.714286c100.571429 0 182.857143 82.285714 182.857143 182.857143v621.714286c0 100.571429-82.285714 182.857143-182.857143 182.857143h-621.714286a183.369143 183.369143 0 0 1-182.857143-182.857143z m694.857143-109.714286v109.714286c0 60.342857 49.371429 109.714286 109.714286 109.714286h109.714286v-109.714286c0-60.342857-49.371429-109.714286-109.714286-109.714286h-109.714286z m-621.714286 109.714286v621.714286c0 60.342857 49.371429 109.714286 109.714286 109.714286h621.714286c60.342857 0 109.714286-49.371429 109.714286-109.714286v-438.857143h-109.714286a183.369143 183.369143 0 0 1-182.857143-182.857143v-109.714286h-438.857143c-60.342857 0-109.714286 49.371429-109.714286 109.714286z m129.828572 601.6c-14.628571-14.628571-14.628571-36.571429 0-51.2L479.085714 493.714286h-131.657143a36.644571 36.644571 0 0 1-36.571428-36.571429c0-20.114286 16.457143-36.571429 36.571428-36.571428h219.428572c9.142857 0 18.285714 3.657143 25.6 10.971428 7.314286 5.485714 10.971429 14.628571 10.971428 25.6v219.428572c0 20.114286-16.457143 36.571429-36.571428 36.571428a36.644571 36.644571 0 0 1-36.571429-36.571428v-131.657143l-257.828571 257.828571c-14.628571 14.628571-36.571429 14.628571-51.2 0z" p-id="5623"></path>
-          </svg>
         </div>
         <div class="audio-player-error" v-if="error">
           文件加载失败
@@ -97,6 +99,7 @@ export default {
      */
     rates: {
       type: Array,
+      default: () => ([0.5, 1, 2])
     }
   },
   data () {
@@ -109,7 +112,16 @@ export default {
       rate: 0, // 播放进度条
       volume: 1, // 音量
       mini: false,
-      value: {}
+      value: {},
+      // 拖拽效果临时参数
+      dragStartX: 0,
+      dragStartY: 0,
+      floatOriginX: 0,
+      floatOriginY: 0,
+      floatOffsetLeft: 0,
+      floatOffsetTop: 0,
+      clientWidth: 0,
+      clientHeight: 0,
     }
   },
   created () {
@@ -147,7 +159,7 @@ export default {
        * 异常处理
        * @param {*} e 错误
        */
-      onerror: (e) => {
+      onerror: () => {
         this.error = true
       }
     })
@@ -172,19 +184,25 @@ export default {
      */
     playbackRate () {
       return this.player.playbackRate
-    }
+    },
+    /**
+     * 拖拽时样式
+     */
+    floatStyleObj () {
+      return {
+        transform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
+        cursor: 'move'
+      }
+    },
   },
-  beforeUnmount () {
-    // console.log('beforeUnmount触发停止播放')
-    this.closePlayer()
+  beforeDestroy () {
+    this.close()
   },
   methods: {
     /**
      * 播放器关闭时，暂停录音并清空播放器
-     * 兼容处理了ie和其他浏览器
      */
-    closePlayer () {
-      // console.log('关闭触发停止播放')
+    close () {
       this.player && this.player.pause()
       this.player = ''
     },
@@ -199,12 +217,6 @@ export default {
      */
     toggleMute () {
       this.player.toggleMute()
-    },
-    /**
-     * 音频重置
-     */
-    reload () {
-      this.player && this.player.reload()
     },
     /**
      * 调整播放进度
@@ -235,28 +247,246 @@ export default {
       if (media === this.value) {
         this.togglePlay()
       } else {
-        this.reload()
         this.value = media
-        this.player.initPlayer(media.src)
-        this.togglePlay()
+        // 初始化新的音频
+        this.player && this.player.reload(media.src)
       }
     },
     /**
      * 回到常规模式
+     * @param {boolean} val 是否迷你模式
      */
     changeStatus (val) {
       this.mini = val
+      /**
+       * 切换模式
+       * @event change
+       * @param {boolean} val 是否迷你模式
+       */
       this.$emit('change', val)
     },
     /**
-     * 关闭
+     * 最小化后的内部关闭按钮触发
      */
-    close () {
+    closeWin () {
+      this.close()
+      /**
+       * 关闭迷你模式
+       * @event close
+       */
       this.$emit('close')
+    },
+
+    /**
+     * mini模式下，数据拖拽开始
+     */
+    onDragBegin (e) {
+      if (this.mini) {
+        this.clientWidth = document.body.clientWidth
+        this.clientHeight = document.body.clientHeight
+        this.floatOriginX = this.floatOffsetLeft
+        this.floatOriginY = this.floatOffsetTop
+        this.dragStartX = e.clientX
+        this.dragStartY = e.clientY
+        document.addEventListener('mousemove', this.onDocumentMouseMove)
+        document.addEventListener('mouseup', this.onDocumentMouseUp)
+      }
+    },
+    /**
+     * 鼠标按下且拖拽时，实时更新播放器位置，限制在一定范围内
+     */
+    onDocumentMouseMove (e) {
+      const left = this.floatOriginX + e.clientX - this.dragStartX
+      const top = this.floatOriginY + e.clientY - this.dragStartY
+      if (left > 0) {
+        this.floatOffsetLeft = 0
+      } else if (left < -this.clientWidth + 84) {
+        this.floatOffsetLeft = -this.clientWidth + 84
+      } else {
+        this.floatOffsetLeft = left
+      }
+      if (top > this.clientHeight - 120) {
+        this.floatOffsetTop = this.clientHeight - 120
+      } else if (top < -60) {
+        this.floatOffsetTop = -60
+      } else {
+        this.floatOffsetTop = top
+      }
+    },
+    /**
+     * 鼠标移开，取消监听
+     */
+    onDocumentMouseUp () {
+      document.removeEventListener('mouseup', this.onDocumentMouseUp)
+      document.removeEventListener('mousemove', this.onDocumentMouseMove)
     },
   },
 }
 </script>
 <style lang="stylus" scoped>
-@import './css.styl'
+$btn-size = 60px
+$line-height = 30px
+$btn = 24px
+$space = 10px
+
+svg {
+  opacity .8
+  fill #666
+  cursor pointer
+  &:hover{
+    opacity 1
+  }
+}
+
+.audio-player{
+  // 外围
+  &-container {
+    box-sizing: border-box;
+    // overflow: hidden;
+    border-top: 1px solid rgba(0, 0, 0, .07)
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 7%), 0 1px 5px 0 rgba(0, 0, 0, 10%);
+    border-radius: 2px;
+    // 迷你模式
+    &.mini {
+      position absolute
+      top 60px
+      right 0
+      z-index 1999
+      background #fff
+    }
+  }
+  &-mini {
+    display flex
+    flex-direction: column;
+    justify-content: space-around;
+    > svg {
+      width $btn
+      height $btn
+    }
+  }
+  // 播放核心区域
+  &-warper{
+    display flex
+    &-content{
+      flex 1
+    }
+  }
+  // 错误提示
+  &-error {
+    padding 0 $space
+    line-height: $line-height;
+    color: #f56c6c;
+  }
+  // 标题
+  &-title {
+    position: relative;
+    display: flex;
+    justify-content space-between
+    align-items: center;
+    padding 0 $space
+    font-size: 14px;
+    line-height: $line-height;
+    span {
+      padding 0 5px
+      cursor pointer
+    }
+    .rate-active {
+      font-weight 700
+      color #20a0ff
+    }
+    &-btn {
+      display: flex;
+      align-items: center;
+    }
+  }
+  // 音量控制样式
+  &-volume-slider {
+    width: 40px;
+  }
+  // 播放控制条
+  &-control {
+    display: flex;
+    height: $line-height;
+    line-height: $line-height;
+    align-items: center;
+    padding-right 10px
+
+    &-btn {
+      width $btn-size
+      height: $btn-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background #20a0ff
+    }
+
+    // 播放暂停按钮
+    &-icon {
+      box-sizing: content-box;
+      width: $btn;
+      height: $btn;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      fill: #fff;
+      border: 2px solid #fff;
+      border-radius: 100%;
+      padding: 1px;
+      opacity: .8;
+      &:hover {
+        opacity 1
+      }
+      &.volume{
+        fill: #999
+      }
+
+      &.reload {
+        margin-left: $space;
+      }
+    }
+
+    &-progress {
+      flex: 1;
+      padding: 0 $space;
+    }
+
+    &-time {
+      margin-right: $space;
+      font-family: Arial;
+      color #999
+      font-size: 14px;
+    }
+  }
+  // 播放列表
+  &-list {
+    ul, li {
+      list-style: none;
+      padding 0
+      margin 0
+    }
+
+    ul {
+      border-top: 1px solid #eee;
+    }
+
+    li {
+      position: relative;
+      margin-top 1px
+      padding: 0 $space
+      border-bottom: 1px solid #eee;
+      border-left: 3px outset #ccc;
+      color: #666;
+      font-size 12px
+      line-height: 2em;
+      cursor: pointer;
+
+      &.active, &:hover {
+        background: #eee;
+        border-left-color: #20a0ff;
+        color: #333;
+      }
+    }
+  }
+}
 </style>

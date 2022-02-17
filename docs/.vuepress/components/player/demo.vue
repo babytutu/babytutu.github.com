@@ -1,7 +1,7 @@
 <template>
   <player :list="list" :rates="[1, 2, 3]"></player>
   <button class="btn" @click="showDialog = true">弹窗播放</button>
-  <dialogPlayer miniable :list="list" v-model="showDialog" v-if="showDialog" />
+  <player miniable :list="list" v-model="showDialog" v-if="showDialog" @close="showDialog = false" />
 </template>
 <script>
   export default {

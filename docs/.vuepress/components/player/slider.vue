@@ -6,13 +6,13 @@
         v-show="!disabled"
         @click="clickBox"
         :style="{
-      background: `linear-gradient(to right, ${active} ${modelValue * 100}%, ${background} ${modelValue * 100}%)`
+      background: `linear-gradient(to right, ${active} ${value * 100}%, ${background} ${value * 100}%)`
     }">
       <div class="slider-pointer"
           :id="odragID"
           @mousedown="dragStart"
           :style="{
-              left: maxWidth * modelValue + 'px',
+              left: maxWidth * value + 'px',
               background: active,
             }">
       </div>
@@ -40,7 +40,7 @@ export default {
     /**
      * 进度百分比
      */
-    modelValue: {
+    value: {
       type: [Number, String],
       default: 0,
     },
@@ -110,10 +110,10 @@ export default {
       // 修改父组件值，组件内部修改通过方法触发方法供父组件使用
       /**
        * 修改比例回显
-       * @event update:modelValue
+       * @event input
        * @type {string}
        */
-      this.$emit('update:modelValue', Number(rate).toFixed(2))
+      this.$emit('input', Number(rate).toFixed(2))
       /**
        * 修改实际比例
        * @event change
