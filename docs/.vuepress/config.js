@@ -22,6 +22,7 @@ module.exports = {
               '/study/Vue2组件升级.md',
               '/study/vue组件库开发指南.md',
               '/study/tree.md',
+              '/study/stylus.md',
             ]
           },
           {
@@ -102,6 +103,7 @@ module.exports = {
             '/study/Vue2组件升级.md',
             '/study/vue组件库开发指南.md',
             '/study/tree.md',
+            '/study/stylus.md',
           ],
         },
       ],
