@@ -21,6 +21,7 @@ module.exports = {
               '/study/Vue2源码解析.md',
               '/study/Vue2组件升级.md',
               '/study/vue组件库开发指南.md',
+              '/study/tree.md',
             ]
           },
           {
@@ -99,7 +100,8 @@ module.exports = {
             '/study/ES6实用技术点.md',
             '/study/Vue2源码解析.md',
             '/study/Vue2组件升级.md',
-            '/study/vue组件库开发指南.md'
+            '/study/vue组件库开发指南.md',
+            '/study/tree.md',
           ],
         },
       ],
