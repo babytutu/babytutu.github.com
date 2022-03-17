@@ -151,6 +151,59 @@ index.wxml
 ```
 
 
+## 自定义组件
+
+[自定义组件](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/)
+
+### 创建自定义组件
+
+新建文件夹后，右键可选择新建组件，会自动生成 json wxml wxss js 4个文件
+
+基本语法和页面差不多，但组件默认不会加载css，可在js文件中增加配置
+
+```js
+Component({
+  options: {
+    addGlobalClass: true,
+  },
+})
+```
+
+参数传递，和vue中的props类似，在js中定义
+
+```js
+Component({
+  properties: {
+    // 这里定义了innerText属性，属性值可以在组件使用时指定
+    innerText: {
+      type: String,
+      value: 'default value',
+    }
+  },
+})
+```
+
+### 使用自定义组件
+
+修改页面的json文件
+
+```json
+{
+  "usingComponents": {
+    "component-tag-name": "path/to/the/custom/component"
+  }
+}
+```
+
+页面wxml中使用
+
+```xml
+<view>
+  <!-- 以下是对一个自定义组件的引用 -->
+  <component-tag-name inner-text="Some text"></component-tag-name>
+</view>
+```
+
 ## API
 
 ### 基础
@@ -335,3 +388,48 @@ Page({
 
 
 - [微信云开发](https://cloud.weixin.qq.com/cloudbase)
+
+## 开发小帖士
+
+### 全局变量
+
+在app.js里定义的变量，可作为全部变量
+
+```js app.js
+this.globalData = {
+  title: 'test'
+}
+```
+
+在页面page中使用
+
+```js page.js
+const app = getApp()
+const title = app.globalData.title
+```
+
+### 换行
+
+小程序不支持`<br>`,`text`标签支持`/n`
+
+```xml
+<text>1\n 2 abc \n3</text>
+```
+
+页面解析效果
+
+```html
+1
+2 abc
+3
+```
+
+### 图片
+
+建议在app.js同层建立`images`目录，图片直接放目录内
+
+页面内加载图片
+
+```xml
+<image src="/images/xxx.jpg"></image>
+```
