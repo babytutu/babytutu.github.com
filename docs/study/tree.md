@@ -40,15 +40,23 @@ tree -L 2
 tree -d
 ```
 
+### 防止中文乱码
+
+增加`-N`，支持中文命名的目录和文件
+
+```bash
+tree -N
+```
+
 ### 生成文件
 
 把tree的结果写入到一个md文件
 
 ```bash
-tree -I node_modules -d > text.md
+tree -N -I node_modules -d > list.md
 ```
 
-text.md
+list.md
 
 ```markdown
 .
@@ -63,7 +71,6 @@ text.md
 
 8 directories
 ```
-
 
 ### 帮助
 
