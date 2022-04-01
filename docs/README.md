@@ -4,7 +4,7 @@ home: true
 heroImage: /images/logo.svg
 actions:
   - text: 新手起步
-    link: /study/基础技能.md
+    link: /study/base.md
     type: primary
   - text: 实用工具
     link: /tools/Vuepress.md
