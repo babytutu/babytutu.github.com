@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <title>Document</title>
+  <style>
+    #app {
+      width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="text" />
+    <p>AES加密：{{encrypt(text)}}</p>
+    <p>AES解密：{{decrypt(text)}}</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data () {
+        return {
+          key: 'xxxxxx',
+          text: 'Message',
+        }
+      },
+      methods: {
+        /**
+         * AES加密
+         */
+        encrypt (text) {
+          return CryptoJS.AES.encrypt(text, this.key).toString()
+        },
+        /**
+         * AES解密
+         */
+        decrypt (text) {
+          return CryptoJS.AES.decrypt(this.encrypt(text), this.key).toString(CryptoJS.enc.Utf8)
+        }
+      },
+    })
+  </script>
+</body>
+</html>
