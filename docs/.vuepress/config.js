@@ -1,5 +1,7 @@
 const path = require('path')
 const fs = require('fs')
+const { searchPlugin } = require('@vuepress/plugin-search')
+const { defaultTheme } = require('@vuepress/theme-default')
 
 /**
  * 根据相对目录返回md文件列表
@@ -13,7 +15,7 @@ module.exports = {
   title: '学无止境',
   port: 9001,
   description: '前端开发入门',
-  themeConfig: {
+  theme: defaultTheme({
     logo: '/images/logo.svg',
     lastUpdated: false,
     contributors: false,
@@ -119,7 +121,7 @@ module.exports = {
         },
       ],
     }
-  },
+  }),
   markdown: {
     code: {
       lineNumbers: false
@@ -130,14 +132,13 @@ module.exports = {
   },
   plugins: [
     [
-      '@vuepress/plugin-search',
-      {
+      searchPlugin({
         locales: {
           '/': {
             placeholder: '站内搜索',
           }
         },
-      },
+      }),
     ],
   ],
 }

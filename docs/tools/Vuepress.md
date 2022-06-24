@@ -60,18 +60,20 @@ yarn start
 [默认主题配置官方文档](https://v2.vuepress.vuejs.org/zh/reference/default-theme/config.html)
 
 ```js
+const { defaultTheme } = require('@vuepress/theme-default')
+
 module.exports = {
   base: '/books/', // 部署到GitHub Pages需要
   title: '网站标题',
   description: '网站描述',
-  themeConfig: {
+  theme: defaultTheme({
     sidebar: [
       {
         text: '首页',
         link: '/README.md'
       },
     ]
-  }
+  })
 }
 ```
 
@@ -172,17 +174,18 @@ yarn add -D @vuepress/plugin-search@next
 在配置文件中增加plugins配置，docs/.vuepress/config.js
 
 ```js
+const { searchPlugin } = require('@vuepress/plugin-search')
+
 module.exports = {
   plugins: [
     [
-      '@vuepress/plugin-search',
-      {
+      searchPlugin({
         locales: {
           '/': {
             placeholder: '站内搜索',
-          },
+          }
         },
-      },
+      }),
     ],
   ],
 }
@@ -192,28 +195,31 @@ module.exports = {
 
 你可以通过 component 方法来注册 Vue 全局组件：
 
-官方文档[Client App Enhance 的使用方法](https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-app-enhance.html)
+官方文档[客户端配置的使用方法](https://v2.vuepress.vuejs.org/zh/advanced/cookbook/usage-of-client-config.html)
 
-.vuepress/clientAppEnhance.js
+.vuepress/client.js
 
 ```js
-import { defineClientAppEnhance } from '@vuepress/client'
-import MyComponent from './MyComponent.vue'
+import { defineClientConfig } from '@vuepress/client'
 
-export default defineClientAppEnhance(({ app, router, siteData }) => {
-  app.component('MyComponent', MyComponent)
+export default defineClientConfig({
+  enhance({ app, router, siteData }){},
+  setup(){},
+  rootComponents: [],
 })
 ```
 
 vuepress在build时在`Node`环境进行预渲染，可能导致报错（window，document等未定义），可通过环境变量`__VUEPRESS_SSR__`判断是否加载组件
 
 ```js
-import { defineClientAppEnhance } from '@vuepress/client'
+import { defineClientConfig } from '@vuepress/client'
 
-export default defineClientAppEnhance(async ({ app }) => {
-  if (!__VUEPRESS_SSR__) {
-    const MyComponent = await import('./MyComponent.vue')
-    app.component('MyComponent', MyComponent.default)
+export default defineClientConfig({
+  async enhance({ app }) {
+    if (!__VUEPRESS_SSR__) {
+      const MyComponent = await import('./MyComponent.vue')
+      app.component('MyComponent', MyComponent.default)
+    }
   }
 })
 ```
