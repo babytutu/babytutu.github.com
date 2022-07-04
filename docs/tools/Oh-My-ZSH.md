@@ -8,10 +8,44 @@
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
+mirror in mainland China
+
+```bash
+sh -c "$(wget -O- https://gitee.com/mcornella/ohmyzsh/raw/master/tools/install.sh)"
+```
+
+
 设置为默认终端
 
 ```bash
 chsh -s $(which zsh)
+```
+
+#### Error
+
+```
+Insecure completion-dependent directories detected:
+/usr/local/share/zsh
+/usr/local/share/zsh/site-functions
+```
+
+To fix your permissions
+
+
+```bash
+nano ~/.zshrc
+```
+
+set the variable ZSH_DISABLE_COMPFIX to "true"
+
+```
+ZSH_DISABLE_COMPFIX="true"
+```
+
+重新加载配置
+
+```bash
+source .zshrc
 ```
 
 ### 定制化zsh配置
