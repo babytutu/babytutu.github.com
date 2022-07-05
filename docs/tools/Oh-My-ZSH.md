@@ -11,7 +11,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 mirror in mainland China
 
 ```bash
-sh -c "$(wget -O- https://gitee.com/mcornella/ohmyzsh/raw/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://gitee.com/mcornella/ohmyzsh/raw/master/tools/install.sh)"
 ```
 
 
@@ -21,7 +21,7 @@ sh -c "$(wget -O- https://gitee.com/mcornella/ohmyzsh/raw/master/tools/install.s
 chsh -s $(which zsh)
 ```
 
-#### Error
+#### 解决权限错误
 
 ```
 Insecure completion-dependent directories detected:
@@ -29,20 +29,19 @@ Insecure completion-dependent directories detected:
 /usr/local/share/zsh/site-functions
 ```
 
-To fix your permissions
-
+修改配置
 
 ```bash
 nano ~/.zshrc
 ```
 
-set the variable ZSH_DISABLE_COMPFIX to "true"
+在配置文件第一行加上
 
 ```
 ZSH_DISABLE_COMPFIX="true"
 ```
 
-重新加载配置
+保存配置并重新加载配置
 
 ```bash
 source .zshrc
@@ -61,7 +60,7 @@ nano ~/.zshrc
 [主题列表](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
 
 ```bash
-ZSH_THEME="robbyrussell"
+ZSH_THEME="pygmalion"
 ```
 
 ### 定义别名
@@ -73,7 +72,7 @@ alias pz="nano ~/.zshrc"
 alias ns="npm start"
 ```
 
-ctrl + o 是保存，ctrl + x 是退出，修改配置后需要执行命令重启，可以通过'source ~/.zshrc'或者'. ~/.zshrc'立刻加载修改后的设置，使之生效，或者重新打开终端（原理是，每次新开终端，都会读取.zshrc文件）
+ctrl + x 退出，如果内容有修改，会提示是否保存修改（Y/N），修改配置后需要执行命令重启，可以通过'source ~/.zshrc'或者'. ~/.zshrc'立刻加载修改后的设置，使之生效，或者重新打开终端（原理是，每次新开终端，都会读取.zshrc文件）
 
 > 默认的终端也可以定制,配置方式一致
 
@@ -89,4 +88,7 @@ alias cq=". ~/.zshrc"
 alias ip="ipconfig getifaddr en1"
 alias ns="npm start"
 alias ni="npm i"
+alias sshkey="pbcopy < ~/.ssh/id_rsa.pub"
+alias sall="defaults write com.apple.finder AppleShowAllFiles YES"
+alias noall="defaults write com.apple.finder AppleShowAllFiles NO"
 ```
