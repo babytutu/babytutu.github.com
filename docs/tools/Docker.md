@@ -162,15 +162,29 @@ clean.sh
 ```shell
 #! /bin/bash
 
-echo "docker-demo 停止容器"
-docker stop docker-demo
+# 执行脚本需要传递参数，容器$1和镜像$2,只传递一个默认容器和镜像同名
+container=$1
+image=$1
 
-echo "docker-demo 删除容器"
-docker rm docker-demo
+if [ $2 ]; then
+image=$2
+fi
 
-echo "docker-demo 删除镜像"
-docker rmi docker-demo
+echo "清理可能存在的同名容器$container 和镜像$image"
 
+echo "停止容器" $container
+docker stop $container
+
+echo "删除容器"
+docker rm $container
+
+echo "删除镜像"
+docker rmi $image
+
+echo "清理结束"
+
+# 正常退出，可执行后续操作
+exit 0
 ```
 
 ### 应用场景
@@ -199,9 +213,9 @@ package.json
   "version": "1.0.0",
   "description": "docker-demo",
   "scripts": {
-    "start": "sh clean.sh && docker build -t docker-demo . && docker run -dp 9002:8080 --name docker-demo docker-demo",
-    "save": "sh clean.sh && docker build -t docker-demo . && docker save -o docker-demo.tar docker-demo",
-    "load": "sh clean.sh && docker load -i ./docker-demo.tar && docker run -dp 9002:8080 --name docker-demo docker-demo"
+    "start": "sh clean.sh docker-demo && docker build -t docker-demo . && docker run -dp 9002:8080 --name docker-demo docker-demo",
+    "save": "sh clean.sh docker-demo && docker build -t docker-demo . && docker save -o docker-demo.tar docker-demo",
+    "load": "sh clean.sh docker-demo && docker load -i ./docker-demo.tar && docker run -dp 9002:8080 --name docker-demo docker-demo"
   },
   "license": "ISC"
 }
