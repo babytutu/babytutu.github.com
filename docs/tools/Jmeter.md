@@ -8,11 +8,11 @@
 
 选择Java SE Development Kit 8u333下载，下载后安装即可
 
-![img](./Jmeter/jdk.png)
+![img](Jmeter/jdk.png)
 
 在终端（terminal）输入java -version查看本机JDK版本
 
-![img](./Jmeter/jdkversion.png)
+![img](Jmeter/jdkversion.png)
 
 
 
@@ -20,7 +20,7 @@
 
 进入官网下载 https://jmeter.apache.org/download_jmeter.cgi
 
-![img](./Jmeter/jmeter.png)
+![img](Jmeter//jmeter.png)
 
 解压后进入目录/apache-jmeter-5.5/bin，双击ApacheJMeter.jar即可运行，可制作1个替身放到应用程序
 
@@ -40,71 +40,71 @@ sampleresult.default.encoding=UTF-8
 
 ### 设置请求头
 
-![img](./Jmeter/header.png)
+![img](Jmeter//header.png)
 
 常用请求头Content-Type: application/json;charset=UTF-8
 
 ### 添加变量
 
-![img](./Jmeter/var.png)
+![img](Jmeter//var.png)
 
 一般会对接口的ip和port做变量定义方便使用
 
-![img](./Jmeter/varres.png)
+![img](Jmeter//varres.png)
 
 使用时用${名称}
 
 ### 新建线程组
 
-![img](./Jmeter/group.png)
+![img](Jmeter//group.png)
 
 配置线程组
 
 假设要在5秒内新建10个线程
 
-![img](./Jmeter/groupsetting.png)
+![img](Jmeter//groupsetting.png)
 
 ### 新建http请求
 
-![img](./Jmeter/http.png)
+![img](Jmeter//http.png)
 
 编辑接口信息，以登陆接口为例，使用了之前定义的变量，接口传参通过消息体数据填写
 
-![img](./Jmeter/login.png)
+![img](Jmeter//login.png)
 
 ### 添加查看结果树
 
-![img](./Jmeter/result.png)
+![img](Jmeter//result.png)
 
 ### 添加汇总报告
 
-![img](./Jmeter/report.png)
+![img](Jmeter//report.png)
 
 ### 添加响应时间图
 
-![img](./Jmeter/chart.png)
+![img](Jmeter//chart.png)
 
 需要对图表进行简单配置，如时间间隔，可配置的再小一些，如1000
 
-![img](./Jmeter/chartsetting.png)
+![img](Jmeter//chartsetting.png)
 
 ## 开始测试
 
 点击绿色箭头开始测试，根据线程组配置，5秒内10个线程请求登陆接口
 
-![img](./Jmeter/run.png)
+![img](Jmeter//run.png)
 
 运行过程中绿色箭头置灰，可点击stop按钮暂停测试或关闭按钮停止测试，测试完成后绿色箭头恢复可点击
 
-![img](./Jmeter/runres.png)
+![img](Jmeter//runres.png)
 
 可以看到10次接口调用都成功返回，再查看汇总报告
 
-![img](./Jmeter/loginreport.png)
+![img](Jmeter//loginreport.png)
 
 可通过图形更直观的看到实际执行的结果
 
-![img](./Jmeter/loginchart.png)
+![img](Jmeter//loginchart.png)
 
 
 
@@ -114,25 +114,25 @@ sampleresult.default.encoding=UTF-8
 
 正常业务场景，需要在登陆后获取登陆接口返回的票据，再后续接口请求头中都需要增加票据来实现权限认证，那么需要对登陆接口增加后置处理器
 
-![img](./Jmeter/loginnext.png)
+![img](Jmeter//loginnext.png)
 
 ### 获取接口返回的票据并添加为变量
 
-![img](./Jmeter/accessToken.png)
+![img](Jmeter//accessToken.png)
 
 ### 在HTTP信息头管理器中添加票据
 
-![img](./Jmeter/addheader.png)
+![img](Jmeter//addheader.png)
 
 ### 验证请求头
 
 新增一个http请求
 
-![img](./Jmeter/http2.png)
+![img](Jmeter//http2.png)
 
 再次点击测试后查看结果树，请求-请求头，可以看到请求头中已经有了票据
 
-![img](./Jmeter/infores.png)
+![img](Jmeter//infores.png)
 
 ## 安装插件
 
@@ -140,10 +140,10 @@ sampleresult.default.encoding=UTF-8
 
 https://jmeter-plugins.org/install/Install/
 
-![img](./Jmeter/plugins.png)
+![img](Jmeter//plugins.png)
 
 
-![img](./Jmeter/addplugins.png)
+![img](Jmeter//addplugins.png)
 
 插件包可能安装失败，可以直接下载插件包 https://jmeter-plugins.org/downloads/old/
 
@@ -160,21 +160,21 @@ JMeterPlugins-Extras-1.4.0.zip https://jmeter-plugins.org/downloads/file/JMeterP
 
 ### jp@gc - Stepping Thread Group
 
-![img](./Jmeter/step.png)
+![img](Jmeter//step.png)
 
 配置参数，使线程可促次递增
 
-![img](./Jmeter/stepset.png)
+![img](Jmeter//stepset.png)
 
 同时配置jp@gc - Transactions per Second和jp@gc - Active Threads Over Time来观察数据变化
 
-![img](./Jmeter/tps.png)
+![img](Jmeter//tps.png)
 
-![img](./Jmeter/at.png)
+![img](Jmeter//at.png)
 
 
 ### jp@gc - Ultimate Thread Group
 
 配置更自由
 
-![img](./Jmeter/ut.png)
+![img](Jmeter//ut.png)
