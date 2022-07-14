@@ -640,3 +640,30 @@ echo "name $name"
 ```
 
 运行test2.sh,输出name abc
+
+
+## Shell 选择
+
+```shell
+#! /bin/bash
+
+echo "what is your favorite color :"
+select color in "red" "blue" "green" "white" "black"
+do
+  echo "you choose is $color"
+  break
+done
+```
+
+执行后，输入5，会打印black会退出
+
+```
+what is your favorite color :
+1) red
+2) blue
+3) green
+4) white
+5) black
+#? 5
+you choose is black
+```
