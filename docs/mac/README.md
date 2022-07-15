@@ -20,22 +20,22 @@ node    7500 tutu   24u  IPv4  0x27bd9      0t0  TCP *:etlservicemgr (LISTEN)
 kill 92239
 ```
 
-## 安装非官方下载的App
+## macOS 运行应用出现「意外退出」及「崩溃闪退」问题修复方法
 
-如果是从网络下载的软件，容易出现提示'这个软件已损坏'，解决办法：
+更新系统后有很多软件打不开，或者出现闪退的情况，是因为Apple苹果公司在新系统中删除了TNT的证书
 
-系统偏好设置 -> 安全性与隐私 -> 通用 -> 选择“任何来源”
+打开终端工具输入并执行如下命令：
 
 ```bash
-# 显示"任何来源"选项在控制台中执行
-sudo spctl --master-disable
+sudo codesign --force --deep --sign - (应用路径)
 ```
 
-好了，现在软件可以打开了，记得把spctl给开启，安全第一啊
+应用路径：打开访达（Finder），点击左侧导航栏的 应用程序，找到相关应用，将它拖进终端命令- 的后面，然后按下回车即可，注意最后一个 - 后面有一个空格。
+
+正常情况下只有一行提示，即成功：
 
 ```bash
-# 不显示"任何来源"选项在控制台中执行，默认值
-sudo spctl --master-enable
+/文件位置 : replacing existing signature
 ```
 
 ## 强制升级macOS
