@@ -546,6 +546,20 @@ lambda 来创建匿名函数
 6
 ```
 
+## File(文件) 方法
+
+open() 函数常用形式是接收两个参数：文件名(file)和模式(mode)。
+
+```py
+open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+```
+
+```py
+f = open('README.txt', 'w')
+f.write('下班啦')
+f.close()
+```
+
 ## 正则表达式
 
 re 模块，它提供 Perl 风格的正则表达式模式
@@ -628,4 +642,208 @@ split 方法按照能够匹配的子串将字符串分割后返回列表
 >>> it = re.split('x', 'xyzxabcx')
 >>> it
 ['', 'yz', 'abc', '']
+```
+
+## 发送邮件
+
+使用内置smtplib工具，[官方文档](https://docs.python.org/zh-cn/3/library/smtplib.html)
+
+电子邮件消息 [官方文档](https://docs.python.org/zh-cn/3/library/email.html)
+
+发送邮件，使用到2个核心模块
+
+- email.mime: 从头创建电子邮件和 MIME 对象
+- email.header: 国际化标头
+
+发送邮件，包含本地图片，本地附件的完整示例
+
+```py
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
+
+
+# 第三方 SMTP 服务
+host = 'smtp.xxx.com' # 设置服务器
+user = 'xxx@xxx.com'  # 用户名
+pwd  = 'xxxxxxxxxxx'  # 口令
+port = 465 # 端口号
+
+# 接收邮件
+receivers = ['xxx@xxx.com']
+
+# 邮件正文内容
+Msg = """
+<p>Python 邮件发送测试...</p>
+<p>图片演示：</p>
+<p><img src="cid:image1" /></p>
+"""
+
+# 发件人，收件人，标题
+From,To,Subject = 'Python','小白鼠','Python SMTP 邮件发送'
+
+Filename,Imagename = 'test.txt','test.png'
+
+# 指定图片为当前目录
+fp = open(Imagename, 'rb')
+msgImage = MIMEImage(fp.read())
+fp.close()
+
+# 定义图片 ID，在 HTML 文本中引用
+msgImage.add_header('Content-ID', '<image1>')
+
+# 创建一个复杂实例
+message = MIMEMultipart()
+
+# 构造附件1，传送当前目录下的文件
+att1 = MIMEText(open(Filename, 'rb').read(), 'base64', 'utf-8')
+att1.add_header('Content-Disposition', 'attachment', filename=Filename)
+message.attach(att1)
+message.attach(MIMEText(Msg, 'html', 'utf-8'))
+message.attach(msgImage)
+
+
+message['From'] = Header(From, 'utf-8')
+message['To'] = Header(To, 'utf-8')
+message['Subject'] = Header(Subject, 'utf-8')
+
+
+try:
+  server = smtplib.SMTP_SSL(host, port)
+  server.login(user, pwd)
+  server.sendmail(user, receivers, message.as_string())
+  server.quit()
+  print('邮件发送成功')
+except smtplib.SMTPException as e:
+  print(str(e))
+
+```
+
+## JSON 数据解析
+
+- json.dumps 转为json字符串
+- json.loads 转为dics
+- json.dump 输出json文件
+- json.load 读取json文件
+
+```py
+import json
+
+# Python 字典类型转换为 JSON 对象
+data1 = { 'no': 1, 'name': 'xiaoming', 'age': 20 }
+
+json_str = json.dumps(data1, sort_keys=True, indent=2)
+print(json_str)
+
+# 写入 JSON 数据
+with open('data.json', 'w') as f:
+  json.dump(data1, f)
+
+# 读取数据
+with open('data.json', 'r') as f:
+  data = json.load(f)
+
+```
+
+## 日期和时间
+
+Python 提供了一个 time 和 calendar 模块可以用于格式化日期和时间
+
+时间值由 gmtime()，localtime() 和 strptime() 返回，并被 asctime()， mktime() 和 strftime() 接受，是一个 9 个整数的序列。
+### time
+
+当前时间time.time()
+
+本地时间time.localtime()
+
+格式化时间time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+### calendar
+
+获取某月的日历
+
+```py
+import calendar
+
+cal = calendar.month(2022, 7)
+print ("以下输出2022年7月份的日历:")
+print (cal)
+```
+
+```
+     July 2022
+Mo Tu We Th Fr Sa Su
+             1  2  3
+ 4  5  6  7  8  9 10
+11 12 13 14 15 16 17
+18 19 20 21 22 23 24
+25 26 27 28 29 30 31
+```
+
+## pip
+
+pip 是 Python 包管理工具
+
+- python3 -m pip install xxx
+- python3 -m pip uninstall xxx
+- python3 -m pip list
+
+## math
+
+```py
+import math
+
+dir(math)
+```
+
+## requests
+
+需要安装依赖包 [requests](https://pypi.org/project/requests/)
+
+[API文档](https://requests.readthedocs.io/en/latest/)
+
+```bash
+python3 -m pip install requests
+```
+
+```py
+# 导入 requests 包
+import requests
+
+# 发送请求
+x = requests.get('https://www.runoob.com/')
+
+# 返回网页内容
+print(x.text)
+```
+
+## 爬虫
+
+[BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/)
+
+```bash
+python3 -m pip install beautifulsoup4
+```
+
+解析网页数据，[find_all](https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/#find-all)查找内容
+
+```py
+import requests
+from bs4 import BeautifulSoup
+
+# 发送请求
+x = requests.get('https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/')
+
+#创建一个BeautifulSoup解析对象
+soup = BeautifulSoup(x.text, "html.parser")
+
+codes = soup.find_all('div', class_='highlight')
+print('保存演示代码')
+f = open('code.txt', 'w')
+for code in codes:
+  f.write(code.get_text())
+
+f.close()
 ```
