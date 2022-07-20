@@ -141,11 +141,11 @@ nginx -c /path/xxx.conf
 
 ## 虚拟主机
 
-端口号 8080，默认首页 index.html
+端口号 8081，默认首页 index.html
 
 ```
 server {
-  listen       8080;
+  listen       8081;
   server_name  localhost;
 
   location / {
@@ -180,14 +180,14 @@ location / {
 直接访问文件，返回 404
 
 ```bash
-curl -I http://127.0.0.1:8080/js/test.js
+curl -I http://127.0.0.1:8081/js/test.js
 // 404
 ```
 
 添加 referer 后访问，返回 200
 
 ```bash
-curl -I http://127.0.0.1:8080/js/test.js -e "http://127.0.0.1"
+curl -I http://127.0.0.1:8081/js/test.js -e "http://127.0.0.1"
 // 200
 ```
 
@@ -298,50 +298,81 @@ window.onload = function () {
 
 `http`内部新增一个`server`，实现以下功能
 
-- 端口号8080
+- 端口号8081
 - 日志路径`/usr/local/Cellar/nginx/1.19.2/logs/test.access.log`
 - 路径配置到`test`文件夹
 - js目录下文件无法在浏览器中直接访问
+- 静态资源不缓存，更改代码后刷新即可生效
 
 ::: details nginx.conf server部分
 
-```
-server {
-    listen       8080;
-    server_name  localhost;
+```conf
+# 测试nginx功能
+    server {
+        listen       8081;
+        server_name  localhost;
 
-    access_log  logs/test.access.log  main;
+        access_log  logs/test.access.log  main;
 
-    location / {
-        root   /usr/local/etc/nginx/test;
-        index  index.html index.htm;
-    }
+        location / {
+            # 设置不缓存
+            add_header Cache-Control no-cache;
 
-    location ^~ /js/ {
-        valid_referers localhost 127.0.0.1 10.0.7.31;
-        if ($invalid_referer) {
-            return 404;
+            root   /usr/local/etc/nginx/test;
+            index  index.html index.htm;
         }
-        root   /usr/local/etc/nginx/test;
-    }
 
-}
+        location ^~ /js/ {
+            # 设置白名单
+            valid_referers localhost 127.0.0.1 10.0.7.31;
+            # 设置无法直接通过url打开文件
+            if ($invalid_referer) {
+                return 404;
+            }
+            root   /usr/local/etc/nginx/test;
+        }
+    }
 ```
 :::
 
 ### 访问
 
-浏览器访问`http://localhost:8080/`，页面展示
+浏览器访问`http://localhost:8081/`，页面展示
 
 ```
 Hello! test.js加载成功
 ```
 
-浏览器访问`http://localhost:8080/js/test.js`，页面`404 Not Found`
+浏览器访问`http://localhost:8081/js/test.js`，页面`404 Not Found`
 
 ### 日志
 
 ```
-127.0.0.1 - - [21/Mar/2022:16:32:33 +0800] "GET /js/test.js HTTP/1.1" 200 77 "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36"
+127.0.0.1 - - [21/Mar/2022:16:32:33 +0800] "GET /js/test.js HTTP/1.1" 200 77 "http://localhost:8081/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36"
 127.0.0.1 - - [21/Mar/2022:16:35:55 +0800] "GET /js/test.js HTTP/1.1" 404 555 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36"
 ```
+
+
+## 设置软链
+
+通过`ln -sf 来源 指向`
+
+```bash
+ln -sf /Users/tutu/Downloads/code/test /usr/local/etc/nginx/test
+```
+
+进入/usr/local/etc/nginx，执行ll
+
+出现1个test，被软链到了/Users/tutu/Downloads/code/test
+
+```
+test -> /Users/tutu/Downloads/code/test
+```
+
+再次软链，实现二次指向，可实现不改nginx自由替换指向目录
+
+```bash
+ln -sf /Users/tutu/Downloads/code/demo /Users/tutu/Downloads/code/test
+```
+
+最终nginx的test目录，实际指向的是demo目录，此原理可用于前端部署，通过软链切换文件夹实现更新。
