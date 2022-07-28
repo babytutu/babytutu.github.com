@@ -667,3 +667,20 @@ what is your favorite color :
 #? 5
 you choose is black
 ```
+
+## Shell read
+
+通过用户输入设置变量，可设置-s隐藏输入内容，-p来设置提示语
+
+```bash
+read -sp "请输入用户密码:" pwd
+
+echo "\n输入的密码是：$pwd"
+```
+
+假设输入1234，输入时不会展示文字，但内部变量已赋值
+
+```
+请输入用户密码:
+输入的密码是：1234
+```
