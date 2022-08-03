@@ -13,6 +13,8 @@ Vue3使用ts重构，开始尝试把js都改成ts
 npm init vue@latest
 ```
 
+Vue3 + Vue-Router + Pinia
+
 ## VSCode Plugins
 
 - 需要安装vue@3插件Volar
@@ -100,6 +102,80 @@ dist/assets/index.bacc5500.css   3.06 KiB / gzip: 1.07 KiB
 dist/assets/demo.89f4e38a.js     57.36 KiB / gzip: 22.87 KiB
 ```
 
+## 状态管理 Pinia
+
+[Pinia官网](https://pinia.vuejs.org/)
+
+Install
+
+```bash
+yarn add pinia
+```
+
+Usage
+
+```ts
+// main.ts
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+const pinia = createPinia()
+const app = createApp(App)
+
+app.use(pinia)
+```
+
+新建文件夹stores，新增一个store，还是习惯用vue2的风格
+
+```ts
+// counter.ts
+import { defineStore } from 'pinia'
+
+export const useCounterStore = defineStore('counter', {
+  state: () => ({
+    count: 0,
+  }),
+  actions: {
+    changeCount(payload: string) {
+      this.count = Number(payload)
+    },
+  }
+})
+```
+
+在组件中使用
+
+```vue
+<template>
+  <van-cell-group title="状态管理" inset>
+    <van-field center :model-value="count" label="计数器" readonly>
+      <template #button>
+        <van-button size="small" type="primary" @click="reset">重置</van-button>
+      </template>
+    </van-field>
+    <van-field
+      v-model="digit"
+      center
+      type="digit"
+      label="整数"
+    >
+      <template #button>
+        <van-button size="small" type="primary" @click="update(digit)">更新</van-button>
+      </template>
+    </van-field>
+  </van-cell-group>
+</template>
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useCounterStore } from '@/stores/counter'
+const digit = ref('')
+const store = useCounterStore()
+const count = computed(() => store.count)
+const update = (val: string) => store.changeCount(val)
+const reset = () => store.$reset()
+</script>
+```
+
 ## 加载静态资源
 
 默认public下的内容会一并打包，如在项目中调用`public/img/avatar.png`，直接写`/img/avatar.png`就可以
@@ -119,16 +195,10 @@ tsconfig.json
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM"],
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "jsx": "preserve",
-    "allowJS": true,
-    "isolatedModules": true,
-    "strict": true
+    }
   },
 
   "references": [
@@ -147,8 +217,7 @@ tsconfig.config.json
   "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "manualChunks.json"],
   "compilerOptions": {
     "composite": true,
-    "types": ["node"],
-    "module": "ES2020"
+    "types": ["node"]
   }
 }
 ```
@@ -170,7 +239,7 @@ package.json
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "vant": "^3.5.3",
+    "pinia": "^2.0.16",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },
@@ -181,14 +250,10 @@ package.json
     "@vitejs/plugin-vue-jsx": "^2.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/tsconfig": "^0.1.3",
-    "axios": "^0.21.1",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^9.0.0",
     "npm-run-all": "^4.1.5",
-    "postcss-px-to-viewport-8-plugin": "^1.1.5",
-    "stylus": "^0.55.0",
     "typescript": "~4.7.4",
-    "unplugin-vue-components": "^0.21.2",
     "vite": "^3.0.1",
     "vue-tsc": "^0.38.8"
   }
@@ -199,7 +264,28 @@ package.json
 
 需要在 script 标签上加上 lang="ts"
 
-选项式 API
+#### 组合式 API
+
+[单文件组件 `<script setup>`](https://staging-cn.vuejs.org/api/sfc-script-setup.html)
+
+```vue
+<script setup lang="ts">
+interface Book {
+  title: string
+  author: string
+  year: number
+}
+
+
+defineProps<{
+  title: string,
+  list: Array<Book>,
+  id?: 'id',
+}>()
+</script>
+```
+
+#### 选项式 API
 
 对 prop 的类型推导需要用 defineComponent() 来包装组件
 
@@ -302,17 +388,7 @@ export default defineConfig({
 })
 ```
 
-#### 引入组件
-
-main.ts
-
-```ts
-import { createApp } from 'vue'
-import { Button } from 'vant'
-
-const app = createApp()
-app.use(Button)
-```
+在 `<script setup>` 中可以直接使用 Vant 组件，不需要进行组件注册。
 
 ### 浏览器适配
 
@@ -341,7 +417,62 @@ yarn add postcss-px-to-viewport-8-plugin -D
 }
 ```
 
-## 插件
+## Vite插件
+
+[官方插件](https://cn.vitejs.dev/plugins/)
+
+- [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
+- [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
+- [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
+
+### vue3相关
+
+Install
+
+```bash
+yarn add @vitejs/plugin-vue @vitejs/plugin-vue-jsx -D
+```
+
+Usage
+
+```js
+// vite.config.js
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
+export default {
+  plugins: [
+    vue(),
+    vueJsx(),
+  ]
+}
+```
+
+
+### @vitejs/plugin-legacy
+
+Install
+
+还需要安装terser，用于代码压缩
+
+```bash
+yarn add @vitejs/plugin-legacy terser -D
+```
+
+Usage
+
+```js
+// vite.config.js
+import legacy from '@vitejs/plugin-legacy'
+
+export default {
+  plugins: [
+    legacy({
+      targets: ['defaults', 'not IE 11']
+    })
+  ]
+}
+```
 
 ### vite-plugin-html
 
