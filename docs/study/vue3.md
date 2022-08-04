@@ -180,7 +180,9 @@ const reset = () => store.$reset()
 
 默认public下的内容会一并打包，如在项目中调用`public/img/avatar.png`，直接写`/img/avatar.png`就可以
 
-## ts配置
+## 搭配 TypeScript 使用 Vue
+
+[官方中文文档](https://staging-cn.vuejs.org/guide/typescript/overview.html)
 
 根据create-vue生成的默认配置，结合vue3开发中加入了一些参数配置
 
@@ -356,6 +358,203 @@ const global = window as any
 global.document.title = '标题'
 ```
 
+
+
+## TypeScript 与组合式 API
+
+[官方中文文档](https://staging-cn.vuejs.org/guide/typescript/composition-api.html)
+
+### 为组件的 prop 标注类型
+
+```vue
+<script setup lang="ts">
+const props = defineProps<{
+  foo: string
+  bar?: number
+}>()
+</script>
+```
+
+```vue
+<script setup lang="ts">
+interface Props {
+  foo: string
+  bar?: number
+}
+
+const props = defineProps<Props>()
+</script>
+```
+
+#### Prop 默认值(实验性)
+
+需要开启reactivityTransform
+
+```js
+// vite.config.js
+export default {
+  plugins: [
+    vue({
+      // 显式启用，响应性语法糖目前默认是关闭状态，需要你显式选择启用
+      reactivityTransform: true
+    })
+  ]
+}
+```
+
+```vue
+<script setup lang="ts">
+interface Props {
+  foo: string
+  bar?: number
+}
+
+// 对 defineProps() 的响应性解构
+// 默认值会被编译为等价的运行时选项
+const { foo, bar = 100 } = defineProps<Props>()
+</script>
+```
+
+### 为组件的 emit 标注类型
+
+可以通过运行时声明或类型声明进行
+
+```vue
+<script setup lang="ts">
+// 运行时
+const emit = defineEmits(['change', 'update'])
+
+// 基于类型
+const emit = defineEmits<{
+  (e: 'change', id: number): void
+  (e: 'update', value: string): void
+}>()
+</script>
+```
+
+### 为 ref() 标注类型
+
+ref 会根据初始化时的值推导其类型
+
+```ts
+import { ref } from 'vue'
+
+// 得到的类型：Ref<string | number>
+const year = ref<string | number>('2020')
+
+year.value = 2020 // 成功！
+
+// 推导得到的类型：Ref<number | undefined>
+const n = ref<number>()
+```
+
+### 为 computed() 标注类型
+
+computed() 会从其计算函数的返回值上推导出类型
+
+```ts
+const double = computed<number>(() => {
+  // 若返回值不是 number 类型则会报错
+})
+```
+
+### 为事件处理器标注类型
+
+```vue
+<script setup lang="ts">
+function handleChange(event) {
+  // `event` 隐式地标注为 `any` 类型
+  console.log(event.target.value)
+}
+</script>
+
+<template>
+  <input type="text" @change="handleChange" />
+</template>
+```
+
+
+```ts
+function handleChange(event: Event) {
+  console.log((event.target as HTMLInputElement).value)
+}
+```
+
+### 为 provide/inject 标注类型
+
+```ts
+import { provide, inject } from 'vue'
+import type { InjectionKey } from 'vue'
+
+const key = Symbol() as InjectionKey<string>
+
+provide(key, 'foo') // 若提供的是非字符串值会导致错误
+
+const foo = inject(key) // foo 的类型：string | undefined
+```
+
+```ts
+const foo = inject<string>('foo') // 类型：string | undefined
+```
+
+```ts
+const foo = inject<string>('foo', 'bar') // 类型：string
+```
+
+```ts
+const foo = inject('foo') as string // 强制转换该值
+```
+
+### 为模板 ref 标注类型
+
+```vue
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+const el = ref<HTMLInputElement | null>(null)
+
+onMounted(() => {
+  el.value?.focus()
+})
+</script>
+
+<template>
+  <input ref="el" />
+</template>
+```
+
+### 为组件模板 ref 标注类型
+
+使用子组件的方法，子组件defineExpose方法名
+
+```vue
+<!-- MyModal.vue -->
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const isContentShown = ref(false)
+const open = () => (isContentShown.value = true)
+
+defineExpose({
+  open
+})
+</script>
+```
+
+父组件调用
+
+```vue
+<!-- App.vue -->
+<script setup lang="ts">
+import MyModal from './MyModal.vue'
+
+const modal = ref<InstanceType<typeof MyModal> | null>(null)
+
+const openModal = () => {
+  modal.value?.open()
+}
+</script>
+```
 
 ## 移动端vant组件库
 
