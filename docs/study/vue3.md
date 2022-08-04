@@ -560,19 +560,14 @@ const openModal = () => {
 
 ### 按需引入组件
 
-推荐安装 unplugin-vue-components 插件
-
-#### 安装插件
+推荐安装 [unplugin-vue-components](https://www.npmjs.com/package/unplugin-vue-components) 插件
 
 ```bash
 yarn add unplugin-vue-components -D
 ```
 
-#### 配置插件
-
-vite.config.js 文件
-
 ```js
+// vite.config.js
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite';
 import { VantResolver } from 'unplugin-vue-components/resolvers';
@@ -616,13 +611,17 @@ yarn add postcss-px-to-viewport-8-plugin -D
 }
 ```
 
-## Vite插件
+## 插件
 
-[官方插件](https://cn.vitejs.dev/plugins/)
+[Vite官方插件](https://cn.vitejs.dev/plugins/)
 
 - [@vitejs/plugin-vue](https://github.com/vitejs/vite/tree/main/packages/plugin-vue)
 - [@vitejs/plugin-vue-jsx](https://github.com/vitejs/vite/tree/main/packages/plugin-vue-jsx)
 - [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy)
+- [vite-plugin-eslint](https://github.com/gxmari007/vite-plugin-eslint)
+- [vite-plugin-html](https://github.com/vbenjs/vite-plugin-html/)
+- [unplugin-vue-components](https://www.npmjs.com/package/unplugin-vue-components)
+
 
 ### vue3相关
 
@@ -670,6 +669,65 @@ export default {
       targets: ['defaults', 'not IE 11']
     })
   ]
+}
+```
+
+### vite-plugin-eslint
+
+让eslint规则生效，create-vue竟然只配置不在开发时报错，需要手动加上插件
+
+```bash
+yarn add eslint vite-plugin-eslint -D
+```
+
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import eslint from 'vite-plugin-eslint'
+
+export default defineConfig({
+  plugins: [eslint()]
+})
+```
+
+搭配prettier使用
+
+```bash
+yarn add prettier @vue/eslint-config-prettier -D
+```
+
+配置文件，习惯单引号和无分号，需要在2边都进行配置
+
+```js
+// .prettierrc.js
+module.exports = {
+  semi: false,
+  singleQuote: true
+}
+```
+
+```cjs
+// .eslintrc.cjs
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+
+module.exports = {
+  root: true,
+  env: {
+    node: true,
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/eslint-config-typescript/recommended',
+    '@vue/eslint-config-prettier',
+  ],
+  rules: {
+    '@typescript-eslint/no-explicit-any': 0,
+    'vue/multi-word-component-name': 0,
+    semi: 0,
+    quotes: [0, 'double'],
+  },
 }
 ```
 
@@ -723,4 +781,53 @@ export default defineConfig({
     }),
   ],
 })
+```
+
+### unplugin-vue-components
+
+组件按需引入，自定义组件自动引入，会在根目录自动生成components.d.ts文件
+
+> Once the setup is done, a components.d.ts will be generated and updates automatically with the type definitions. Feel free to commit it into git or not as you want.
+
+`Make sure you also add components.d.ts to your tsconfig.json under includes.`
+
+
+```json
+// tsconfig.json
+{
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "components.d.ts"]
+}
+```
+
+
+```js
+// vite.config.ts
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite';
+import { VantResolver } from 'unplugin-vue-components/resolvers';
+
+export default defineConfig({
+  plugins: [
+    vue({
+      // 显式启用，响应性语法糖目前默认是关闭状态，需要你显式选择启用
+      reactivityTransform: true,
+      template: {
+        compilerOptions: {
+          // 自动识别 T- 开头的文件做为自定义组件
+          isCustomElement: tag => tag.startsWith('T-')
+        }
+      },
+    }),
+    Components({
+      resolvers: [VantResolver()],
+      dts: true
+    }),
+  ],
+})
+```
+
+在 `<script setup>` 中可以直接使用组件，不需要进行组件注册。
+
+```vue
+<van-icon name="chat-o" />
 ```
