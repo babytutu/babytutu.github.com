@@ -17,7 +17,7 @@ module.exports = {
   description: '前端开发入门',
   theme: defaultTheme({
     logo: '/images/logo.svg',
-    lastUpdated: false,
+    lastUpdated: true,
     contributors: false,
     navbar: [
       {
