@@ -348,14 +348,13 @@ declare module 'vue' {
     $axios: typeof axios,
   }
 }
-```
 
-使用window
+// 定义模块，挂在window下的全局变量
+declare module 'lrz'
 
-```ts
-const global = window as any
-
-global.document.title = '标题'
+interface Window {
+  xxx: any
+}
 ```
 
 
@@ -583,6 +582,30 @@ export default defineConfig({
 ```
 
 在 `<script setup>` 中可以直接使用 Vant 组件，不需要进行组件注册。
+
+#### 引入函数组件的样式
+
+[快速上手](https://vant-contrib.gitee.io/vant/#/zh-CN/quickstart)
+
+Vant 中有个别组件是以函数的形式提供的，包括 Toast，Dialog，Notify 和 ImagePreview 组件。在使用函数组件时，unplugin-vue-components 无法自动引入对应的样式，因此需要手动引入样式。
+
+```ts
+// Toast
+import { Toast } from 'vant'
+import 'vant/es/toast/style'
+
+// Dialog
+import { Dialog } from 'vant'
+import 'vant/es/dialog/style'
+
+// Notify
+import { Notify } from 'vant'
+import 'vant/es/notify/style'
+
+// ImagePreview
+import { ImagePreview } from 'vant'
+import 'vant/es/image-preview/style'
+```
 
 ### 浏览器适配
 
