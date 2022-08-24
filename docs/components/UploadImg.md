@@ -8,14 +8,10 @@
   <uploadImg v-model="imgurl"></uploadImg>
 </ClientOnly>
 
-<script>
-  export default {
-    data () {
-      return {
-        imgurl: 'https://v2.vuepress.vuejs.org/images/hero.png'
-      }
-    }
-  }
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const imgurl = ref('/images/logo.svg')
 </script>
 
 @[code vue](@src/components/uploadImg/demo.vue)
@@ -24,7 +20,6 @@
 
 |参数|类型|说明|
 |---|---|---|
-|v-model|图片路径或对象|-|
-|max|图片大小限制，默认500k|500|
-|accept|可选文件类型|image/jpg,image/jpeg,image/png,image/gif|
-|tip|提示语|仅支持jpg,png,gif文件|
+|v-model|any|图片路径或对象|
+|max|number|图片大小限制，默认500k|
+|tip|string|仅支持jpg,png,gif文件|

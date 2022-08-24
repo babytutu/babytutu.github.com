@@ -30,7 +30,7 @@
           <div class="audio-player-title-btn">
             <template v-if="!error">
               <span>倍速</span>
-              <span v-for="i in rates" :class="{ 'rate-active': playbackRate === i }" :key="i" @click="changeRate(i)">{{i}}</span>
+              <span v-for="i in rates || [0.5, 1, 2]" :class="{ 'rate-active': playbackRate === i }" :key="i" @click="changeRate(i)">{{i}}</span>
             </template>
             <svg v-if="miniable" @click="changeStatus(true)" viewBox="0 0 1024 1024" width="20" height="20">
               <path d="M18.285714 201.142857c0-100.571429 82.285714-182.857143 182.857143-182.857143h621.714286c100.571429 0 182.857143 82.285714 182.857143 182.857143v621.714286c0 100.571429-82.285714 182.857143-182.857143 182.857143h-621.714286a183.369143 183.369143 0 0 1-182.857143-182.857143z m694.857143-109.714286v109.714286c0 60.342857 49.371429 109.714286 109.714286 109.714286h109.714286v-109.714286c0-60.342857-49.371429-109.714286-109.714286-109.714286h-109.714286z m-621.714286 109.714286v621.714286c0 60.342857 49.371429 109.714286 109.714286 109.714286h621.714286c60.342857 0 109.714286-49.371429 109.714286-109.714286v-438.857143h-109.714286a183.369143 183.369143 0 0 1-182.857143-182.857143v-109.714286h-438.857143c-60.342857 0-109.714286 49.371429-109.714286 109.714286z m129.828572 601.6c-14.628571-14.628571-14.628571-36.571429 0-51.2L479.085714 493.714286h-131.657143a36.644571 36.644571 0 0 1-36.571428-36.571429c0-20.114286 16.457143-36.571429 36.571428-36.571428h219.428572c9.142857 0 18.285714 3.657143 25.6 10.971428 7.314286 5.485714 10.971429 14.628571 10.971428 25.6v219.428572c0 20.114286-16.457143 36.571429-36.571428 36.571428a36.644571 36.644571 0 0 1-36.571429-36.571428v-131.657143l-257.828571 257.828571c-14.628571 14.628571-36.571429 14.628571-51.2 0z" p-id="5623"></path>
@@ -71,257 +71,216 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+
 import { AudioPlayer } from './audio-player-sdk'
 import slider from './slider.vue'
 
-export default {
-  name: 'audio-player',
-  components: {
-    slider,
-  },
-  props: {
-    /**
-     * 音频文件数组
-     */
-    list: {
-      type: Array,
-    },
-    /**
-     * 是否可最小化，默认否
-     */
-    miniable: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * 默认倍速选项
-     */
-    rates: {
-      type: Array,
-      default: () => ([0.5, 1, 2])
-    }
-  },
-  data () {
-    return {
-      player: '',
-      currentTime: '00:00', // 当前播放时间
-      duration: '00:00', // 媒体时长
-      durationNum: 0, // 文件总秒数，用于回显进度条样式
-      error: false, // 判断是否回显错误信息
-      rate: 0, // 播放进度条
-      volume: 1, // 音量
-      mini: false,
-      value: {},
-      // 拖拽效果临时参数
-      dragStartX: 0,
-      dragStartY: 0,
-      floatOriginX: 0,
-      floatOriginY: 0,
-      floatOffsetLeft: 0,
-      floatOffsetTop: 0,
-      clientWidth: 0,
-      clientHeight: 0,
-    }
-  },
-  created () {
-    this.value = this.list[0]
-  },
-  watch: {
-    list (val) {
-      if (val && val.length) {
-        this.changeMedia(val[0])
-      }
-    }
-  },
-  mounted () {
-    // 初始化方法
-    this.player = new AudioPlayer({
-      src: this.value.src, // 音频地址
-      /**
-       * 加载完成后回调播放时长
-       * @param {number} duration 总时长
-       */
-      onloadedmetadata: (duration) => {
-        this.error = false
-        this.durationNum = duration
-        this.duration = this.player && this.player.getSecondTimeFomate(duration)
-      },
-      /**
-       * 时间变化时给出播放时长
-       * @param {number} currentTime 当前时间
-       */
-      ontimeupdate: (currentTime) => {
-        this.currentTime = this.player && this.player.getSecondTimeFomate(currentTime)
-        this.rate = currentTime / this.durationNum
-      },
-      /**
-       * 异常处理
-       * @param {*} e 错误
-       */
-      onerror: () => {
-        this.error = true
-      }
-    })
-    this.player.initPlayer(this.value.src, this.volume)
-  },
-  computed: {
-    /**
-     * 是否播放状态
-     * @returns {boolean} 是否播放
-     */
-    playing () {
-      return this.player.status === 'play'
-    },
-    /**
-     * 是否静音
-     */
-    isMuted () {
-      return this.player.muted
-    },
-    /**
-     * 返回当前倍速
-     */
-    playbackRate () {
-      return this.player.playbackRate
-    },
-    /**
-     * 拖拽时样式
-     */
-    floatStyleObj () {
-      return {
-        transform: `translate(${this.floatOffsetLeft}px, ${this.floatOffsetTop}px)`,
-        cursor: 'move'
-      }
-    },
-  },
-  beforeDestroy () {
-    this.close()
-  },
-  methods: {
-    /**
-     * 播放器关闭时，暂停录音并清空播放器
-     */
-    close () {
-      this.player && this.player.pause()
-      this.player = ''
-    },
-    /**
-     * 播放or暂停
-     */
-    togglePlay () {
-      this.player.togglePlay()
-    },
-    /**
-     * 切换声音
-     */
-    toggleMute () {
-      this.player.toggleMute()
-    },
-    /**
-     * 调整播放进度
-     * @param {number} time 进度比例
-     */
-    changeTime (time) {
-      this.player && this.player.changeTime(this.durationNum * time)
-    },
-    /**
-     * 调节音量
-     * @param {number} volume 音量，0.0-1.0
-     */
-    changeVolume (volume) {
-      this.player && this.player.changeVolume(volume)
-    },
-    /**
-     * 调整倍速
-     * @param {number} rate 倍速
-     */
-    changeRate (rate) {
-      this.player && this.player.changeRate(rate)
-    },
-    /**
-     * 切换音频
-     * @param {object} media 音频对象
-     */
-    changeMedia (media) {
-      if (media === this.value) {
-        this.togglePlay()
-      } else {
-        this.value = media
-        // 初始化新的音频
-        this.player && this.player.reload(media.src)
-      }
-    },
-    /**
-     * 回到常规模式
-     * @param {boolean} val 是否迷你模式
-     */
-    changeStatus (val) {
-      this.mini = val
-      /**
-       * 切换模式
-       * @event change
-       * @param {boolean} val 是否迷你模式
-       */
-      this.$emit('change', val)
-    },
-    /**
-     * 最小化后的内部关闭按钮触发
-     */
-    closeWin () {
-      this.close()
-      /**
-       * 关闭迷你模式
-       * @event close
-       */
-      this.$emit('close')
-    },
+const props = defineProps<{
+  list: Array<any>, // 音频文件数组
+  miniable?: boolean, // 是否可最小化
+  rates?: Array<number> // 倍速
+}>()
 
-    /**
-     * mini模式下，数据拖拽开始
-     */
-    onDragBegin (e) {
-      if (this.mini) {
-        this.clientWidth = document.body.clientWidth
-        this.clientHeight = document.body.clientHeight
-        this.floatOriginX = this.floatOffsetLeft
-        this.floatOriginY = this.floatOffsetTop
-        this.dragStartX = e.clientX
-        this.dragStartY = e.clientY
-        document.addEventListener('mousemove', this.onDocumentMouseMove)
-        document.addEventListener('mouseup', this.onDocumentMouseUp)
-      }
-    },
-    /**
-     * 鼠标按下且拖拽时，实时更新播放器位置，限制在一定范围内
-     */
-    onDocumentMouseMove (e) {
-      const left = this.floatOriginX + e.clientX - this.dragStartX
-      const top = this.floatOriginY + e.clientY - this.dragStartY
-      if (left > 0) {
-        this.floatOffsetLeft = 0
-      } else if (left < -this.clientWidth + 84) {
-        this.floatOffsetLeft = -this.clientWidth + 84
-      } else {
-        this.floatOffsetLeft = left
-      }
-      if (top > this.clientHeight - 120) {
-        this.floatOffsetTop = this.clientHeight - 120
-      } else if (top < -60) {
-        this.floatOffsetTop = -60
-      } else {
-        this.floatOffsetTop = top
-      }
-    },
-    /**
-     * 鼠标移开，取消监听
-     */
-    onDocumentMouseUp () {
-      document.removeEventListener('mouseup', this.onDocumentMouseUp)
-      document.removeEventListener('mousemove', this.onDocumentMouseMove)
-    },
-  },
+const emit = defineEmits(['change', 'close'])
+
+const player = ref<any>('')
+const currentTime = ref('00:00') // 当前播放时间
+const duration = ref('00:00') // 媒体时长
+const durationNum = ref(0) // 文件总秒数，用于回显进度条样式
+const error = ref(false) // 判断是否回显错误信息
+const rate = ref(0) // 播放进度条
+const volume = ref(1) // 音量
+const mini = ref(false)
+const value = ref<any>({})
+// 拖拽效果临时参数
+const dragStartX = ref(0)
+const dragStartY = ref(0)
+const floatOriginX = ref(0)
+const floatOriginY = ref(0)
+const floatOffsetLeft = ref(0)
+const floatOffsetTop = ref(0)
+const clientWidth = ref(0)
+const clientHeight = ref(0)
+
+const playing = computed<boolean>(() => player.value?.status === 'play') // 是否播放状态
+const isMuted = computed<boolean>(() => player.value?.muted === true)
+const playbackRate = computed(() => player.value?.playbackRate)
+const floatStyleObj = computed<any>(() => ({
+  transform: `translate(${floatOffsetLeft.value}px, ${floatOffsetTop.value}px)`,
+  cursor: 'move'
+}))
+
+/**
+ * 播放器关闭时，暂停录音并清空播放器
+ */
+function close () {
+  player.value?.pause()
+  player.value = ''
 }
+
+/**
+ * 播放or暂停
+ */
+function togglePlay () {
+  player.value?.togglePlay()
+}
+
+/**
+ * 切换声音
+ */
+function toggleMute () {
+  player.value?.toggleMute()
+}
+
+/**
+ * 调整播放进度
+ * @param {number} time 进度比例
+ */
+function changeTime (time: nubmer) {
+  player.value?.changeTime(durationNum.value * time)
+}
+
+/**
+ * 调节音量
+ * @param {number} volume 音量，0.0-1.0
+ */
+function changeVolume (volume: number) {
+  player.value?.changeVolume(volume)
+}
+
+/**
+ * 调整倍速
+ * @param {number} rate 倍速
+ */
+function changeRate (rate: number) {
+  player.value.changeRate(rate)
+}
+
+/**
+ * 切换音频
+ * @param {object} media 音频对象
+ */
+function changeMedia (media: any) {
+  if (media === value.value) {
+    togglePlay()
+  } else {
+    value.value = media
+    // 初始化新的音频
+    player.value?.reload(media.src)
+  }
+}
+
+/**
+ * 回到常规模式
+ * @param {boolean} val 是否迷你模式
+ */
+function changeStatus (val: boolean) {
+  mini.value = val
+  /**
+   * 切换模式
+   * @event change
+   * @param {boolean} val 是否迷你模式
+   */
+  emit('change', val)
+}
+
+/**
+ * 最小化后的内部关闭按钮触发
+ */
+function closeWin () {
+  close()
+  /**
+   * 关闭迷你模式
+   * @event close
+   */
+  emit('close')
+}
+
+/**
+ * mini模式下，数据拖拽开始
+ */
+function onDragBegin (e: any) {
+  if (mini.value) {
+    clientWidth.value = document.body.clientWidth
+    clientHeight.value = document.body.clientHeight
+    floatOriginX.value = floatOffsetLeft.value
+    floatOriginY.value = floatOffsetTop.value
+    dragStartX.value = e.clientX
+    dragStartY.value = e.clientY
+    document.addEventListener('mousemove', onDocumentMouseMove)
+    document.addEventListener('mouseup', onDocumentMouseUp)
+  }
+}
+
+/**
+ * 鼠标按下且拖拽时，实时更新播放器位置，限制在一定范围内
+ */
+function onDocumentMouseMove (e: any) {
+  const left = floatOriginX.value + e.clientX - dragStartX.value
+  const top = floatOriginY.value + e.clientY - dragStartY.value
+  if (left > 0) {
+    floatOffsetLeft.value = 0
+  } else if (left < -clientWidth.value + 84) {
+    floatOffsetLeft.value = -clientWidth.value + 84
+  } else {
+    floatOffsetLeft.value = left
+  }
+  if (top > clientHeight.value - 120) {
+    floatOffsetTop.value = clientHeight.value - 120
+  } else if (top < -60) {
+    floatOffsetTop.value = -60
+  } else {
+    floatOffsetTop.value = top
+  }
+}
+
+/**
+ * 鼠标移开，取消监听
+ */
+function onDocumentMouseUp () {
+  document.removeEventListener('mouseup', onDocumentMouseUp)
+  document.removeEventListener('mousemove', onDocumentMouseMove)
+}
+
+onMounted(() => {
+  value.value = props.list[0]
+  // 初始化方法
+  player.value = new AudioPlayer({
+    src: value.value.src, // 音频地址
+    /**
+     * 加载完成后回调播放时长
+     * @param {number} duration 总时长
+     */
+    onloadedmetadata: (durationNumber: nubmer) => {
+      error.value = false
+      durationNum.value = durationNumber
+      duration.value = player.value?.getSecondTimeFomate(durationNumber)
+    },
+    /**
+     * 时间变化时给出播放时长
+     * @param {number} currentTime 当前时间
+     */
+    ontimeupdate: (current: number) => {
+      currentTime.value = player.value?.getSecondTimeFomate(current)
+      rate.value = current / durationNum.value
+    },
+    /**
+     * 异常处理
+     * @param {*} e 错误
+     */
+    onerror: () => {
+      error.value = true
+    }
+  })
+  player.value?.initPlayer(value.value.src, volume.value)
+})
+
+onUnmounted(() => {
+  close()
+})
+
 </script>
 <style lang="stylus" scoped>
 $btn-size = 60px
@@ -376,6 +335,7 @@ svg {
     padding 0 $space
     line-height: $line-height;
     color: #f56c6c;
+    font-size 12px
   }
   // 标题
   &-title {

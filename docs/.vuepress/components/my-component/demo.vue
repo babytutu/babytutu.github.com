@@ -1,8 +1,9 @@
 <template>
-  <uploadImg v-model="imgurl"></uploadImg>
+  <myComponent v-model.capitalize="myText" />
+  {{myText}}
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const imgurl = ref('/images/logo.svg')
+const myText = ref('Abc')
 </script>

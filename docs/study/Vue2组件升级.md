@@ -78,31 +78,11 @@
   {{myText}}
 </ClientOnly>
 
-<script>
-  export default {
-    data () {
-      return {
-        myText: ''
-      }
-    }
-  }
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const myText = ref('')
 </script>
-
-```html
-<myComponent v-model.capitalize="myText" />
-{{myText}}
-```
-
-```js
-export default {
-  data () {
-    return {
-      myText: ''
-    }
-  }
-}
-```
-
 
 ::: details myComponent.vue
 
@@ -110,27 +90,12 @@ export default {
 
 :::
 
+::: details demo.vue
 
-对于带参数的 v-model 绑定，生成的 prop 名称将为 arg + "Modifiers"：
+@[code vue](@src/components/my-component/demo.vue)
 
-```html
-<my-component v-model:description.capitalize="myText"></my-component>
-```
+:::
 
-```js
-app.component('my-component', {
-  props: ['description', 'descriptionModifiers'],
-  emits: ['update:description'],
-  template: `
-    <input type="text"
-      :value="description"
-      @input="$emit('update:description', $event.target.value)">
-  `,
-  created() {
-    console.log(this.descriptionModifiers) // { capitalize: true }
-  }
-})
-```
 
 ### 迁移策略
 

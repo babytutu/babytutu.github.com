@@ -10,37 +10,37 @@
 <ClientOnly>
   <button class="btn" @click="startRecoreder" :disabled="showRecorder">开始录音</button>
   <div class="recorder-container">
-    <recorder v-model="showRecorder" v-if="showRecorder" @src="getRecord"></recorder>
+    <recorder v-model:show="showRecorder" v-if="showRecorder" @src="getRecord" showCanvas>
+      <template #send>
+        <button class="btn">发送</button>
+      </template>
+      <template #cancel>
+        <button class="btn">取消</button>
+      </template>
+    </recorder>
     <audio :src="src" controls v-if="src"></audio>
   </div>
 </ClientOnly>
 
-<script>
-  export default {
-    data () {
-      return {
-        src: '',
-        showRecorder: false,
-        maxSecond: 30,
-      }
-    },
-    methods: {
-      /**
-       * 开始录音
-       */
-      startRecoreder () {
-        this.showRecorder = true
-        this.src = null
-      },
-      /**
-       * 获取录音数据
-       * @param {string} src 录音base64
-       */
-      getRecord (src) {
-        this.src = src
-      },
-    }
-  }
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const showRecorder = ref(false) // 录音
+const src = ref<any>(null)
+
+function startRecoreder () {
+  showRecorder.value = true
+  src.value = ''
+}
+
+/**
+ * 获取录音数据
+ * @param {string} base64 录音base64
+ */
+function getRecord (base64: string) {
+  src.value = base64
+}
+
 </script>
 
 <style>
@@ -56,8 +56,8 @@
 
 |参数|类型|说明|
 |---|---|---|
-|value|Boolean|是否显示录音界面，默认false|
-|maxSecond|Number|最大录音秒数，默认30|
+|v-model:show|Boolean|是否显示录音界面，默认false|
+|showCanvas|Boolean|是否显示波形图，非必须｜
 
 ## Events
 
@@ -70,4 +70,4 @@
 |名称|说明|
 |---|---|
 |cancel|取消按钮|
-|submit|完成按钮|
+|send|完成按钮|

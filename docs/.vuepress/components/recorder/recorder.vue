@@ -1,169 +1,160 @@
 <template>
-  <div class="utry-recorder-container">
-    <canvas id="visualizer" class="utry-recorder-container-visualizer"></canvas>
-    <span class="utry-recorder-container-time">{{time ? `${time}s` : ''}}</span>
-    <span class="utry-recorder-container-btn" @click="cancelRecord">
-      <!-- @slot 取消按钮 -->
-      <slot name="cancel">取消</slot>
-    </span>
-    <span class="utry-recorder-container-btn" @click="uploadRecord">
-      <!-- @slot 完成按钮 -->
-      <slot name="submit">完成</slot>
-    </span>
+  <div class="utry-recorder-container" v-if="initResult">
+    <span class="utry-recorder-container-time">{{time ? `正在录音${time}s` : '录音完成'}}</span>
+    <canvas v-if="showCanvas" id="canvas" width="120" height="40"></canvas>
+    <div class="utry-recorder-container-btn">
+      <span @click="cancelRecord">
+        <!-- @slot 取消按钮 -->
+        <slot name="cancel">取消</slot>
+      </span>
+      <span @click="uploadRecord">
+        <!-- @slot 发送按钮 -->
+        <slot name="send">发送</slot>
+      </span>
+    </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
+import { onBeforeMount, onMounted, ref } from 'vue'
+
 import { Recorder } from './recorder-sdk'
+
+const props = defineProps<{
+  show: boolean,
+  showCanvas?: boolean, // 展示canvas动态图
+}>()
+
+const emit = defineEmits(['src', 'update:show'])
+
+const maxSecond = 60
+
+const recorder = ref<any>(null)
+const src = ref('') // 媒体base64数据
+const time = ref(0) // 已录音秒数
+const timer = ref<any>(null) // 读秒定时器
+const isAutoStoped = ref(false) // 是否到达最大录音秒数后自动停止
+const isCanncel = ref(false) // 是否取消
+
+const initResult = ref<boolean>(false) // 初始化结果
+
+onBeforeMount(() => {
+  // 初始化方法，指定canvas和柱状图颜色、宽度、间隔，基准线
+  recorder.value = new Recorder({
+    option: {
+      audio: true
+    },
+    canvas: props.showCanvas ? 'canvas' : '',
+    onstop: (res: any) => {
+      // 点击取消触发停止无需获取音频
+      if (isCanncel.value) return
+      src.value = res
+      // 不是自动暂停就传递音频并关闭录音模块
+      if (!isAutoStoped.value) {
+        const duration = maxSecond - time.value
+        emit('src', src.value, duration)
+        emit('update:show', false)
+      }
+    },
+    onstart: () => startRecoreder(),
+    onerror: () => {
+      alert('浏览器不支持')
+      emit('update:show', false)
+    },
+  })
+  initResult.value = recorder.value.initMediaDevices()
+  if (!initResult.value) {
+    alert('浏览器不支持')
+    emit('update:show', false)
+  }
+})
+
+onMounted(() => {
+  if (initResult.value) {
+    init()
+  }
+})
+
 /**
- * 录音
- * @module recorder
+ * 初始化参数
  */
-export default {
-  name: 'recorder',
-  /**
-   * @name Props
-   * @prop {Number} [maxSecond=60] 最大录音秒数
-   * @prop {Boolean} [value=false] 是否显示录音界面
-   */
-  props: {
-    /**
-     * 是否显示录音界面
-     */
-    value: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * 最大录音秒数
-     */
-    maxSecond: {
-      type: Number,
-      default: 60
-    }
-  },
-  data () {
-    return {
-      recorder: null,
-      src: null, // 媒体base64数据
-      time: 0, // 已录音秒数
-      timer: null, // 读秒定时器
-      isAutoStoped: false, // 是否到达最大录音秒数后自动停止
-      isCanncel: false, // 是否取消
-    }
-  },
-  created () {
-    // 初始化方法，指定canvas和柱状图颜色、宽度、间隔，基准线
-    this.recorder = new Recorder({
-      canvas: '#visualizer',
-      color: '#f00',
-      barWidth: 6,
-      space: 4,
-      baseLine: 2,
-      option: {
-        audio: true
-      },
-      onstop: (res) => {
-        // 点击取消触发停止无需获取音频
-        if (this.isCanncel) return
-        this.src = res
-        // 不是自动暂停就传递音频并关闭录音模块
-        if (!this.isAutoStoped) {
-          const duration = this.maxSecond - this.time
-          this.$emit('src', this.src, duration)
-          this.close()
-        }
-      },
-      onstart: this.startRecoreder,
-      onerror: () => {
-        this.$message.error('浏览器不支持')
-        this.close()
-      },
-    })
-    this.recorder.initMediaDevices()
-  },
-  mounted () {
-    this.init()
-  },
-  beforeUnmount () {
-    this.cancelRecord()
-  },
-  methods: {
-    /**
-     * 关闭录音模块
-     */
-    close () {
-      this.$emit('update:modelValue', false)
-    },
-    /**
-     * 初始化参数
-     */
-    init () {
-      clearInterval(this.timer)
-      this.time = this.maxSecond
-      this.src = null
-      this.isCanncel = false
-      this.isAutoStoped = false
-      this.recorder.initRecording()
-    },
-    /**
-     * 开始录音，并走计时器，超过最大秒数自动暂停
-     */
-    startRecoreder () {
-      if (this.maxSecond) {
-        this.timer = setInterval(() => {
-          if (this.time <= 0) {
-            this.isAutoStoped = true
-            this.recorder.stop()
-            clearInterval(this.timer)
-          } else {
-            this.time--
-          }
-        }, 1000)
-      }
-    },
-    /**
-     * 点击上传按钮
-     * 1停止定时器
-     * 2自动暂停时获取已有的src
-     * 3传递src到父组件
-     * 4非自动暂停则停止录音
-     */
-    uploadRecord () {
-      clearInterval(this.timer)
-      if (this.src) {
-        const duration = this.maxSecond - this.time
-        /**
-         * 输出媒体base64
-         * @event src
-         * @type {string}
-         */
-        this.$emit('src', this.src, duration)
-        this.close()
+function init () {
+  clearInterval(timer.value)
+  time.value = maxSecond
+  src.value = ''
+  isCanncel.value = false
+  isAutoStoped.value = false
+  recorder.value.initRecording()
+}
+
+/**
+ * 开始录音，并走计时器，超过最大秒数自动暂停
+ */
+function startRecoreder () {
+  if (maxSecond) {
+    timer.value = setInterval(() => {
+      if (time.value <= 0) {
+        isAutoStoped.value = true
+        recorder.value.stop()
+        clearInterval(timer.value)
       } else {
-        this.recorder.stop()
+        time.value--
       }
-    },
+    }, 1000)
+  }
+}
+
+/**
+ * 点击上传按钮
+ * 1停止定时器
+ * 2自动暂停时获取已有的src
+ * 3传递src到父组件
+ * 4非自动暂停则停止录音
+ */
+function uploadRecord () {
+  clearInterval(timer.value)
+  if (src.value) {
+    const duration = maxSecond - time.value
     /**
-     * 点击取消按钮
-     * 1停止定时器
-     * 2设置录音为取消状态
-     * 3停止定时器
-     * 4关闭录音模块
+     * 输出媒体base64
+     * @event src
+     * @type {string}
      */
-    cancelRecord () {
-      clearInterval(this.timer)
-      this.isCanncel = true
-      !this.src && this.recorder.stop()
-      this.close()
-    },
-  },
+    emit('src', src.value, duration)
+    emit('update:show', false)
+  } else {
+    recorder.value.stop()
+  }
+}
+
+/**
+ * 点击取消按钮
+ * 1停止定时器
+ * 2设置录音为取消状态
+ * 3停止定时器
+ * 4关闭录音模块
+ */
+function cancelRecord() {
+  timer.value && clearInterval(timer.value)
+  isCanncel.value = true
+  !src.value && recorder.value.stop()
+  /**
+   * 关闭弹窗
+   * @event update:show
+   * @type {boolean}
+   */
+  emit('update:show', false)
 }
 </script>
+
 <style lang="stylus" scoped>
 .utry-recorder-container{
   display: flex
   justify-content: space-between;
   height 100%;
+  font-size 14px;
+  color #fff
+  line-height 44px
+  background rgba(0,0,0,0.3)
   &-visualizer{
     height 100%;
     flex: 1;
@@ -172,11 +163,13 @@ export default {
   &-time, &-btn{
     display flex
     align-items center
-    padding 0 10px;
+    padding-left 10px;
     word-break: keep-all;
   }
   &-btn{
-    cursor pointer
+    span{
+      cursor pointer
+    }
   }
 }
 </style>

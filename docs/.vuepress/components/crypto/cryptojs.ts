@@ -7,7 +7,7 @@ import CryptoJS from 'crypto-js'
 const keyWords = 'xxxxxx'
 
 // 加密方法，登录和修改密码使用
-export const encrypt = (pwd) => CryptoJS.AES.encrypt(pwd, keyWords).toString()
+export const encrypt = (pwd: string) :string => CryptoJS.AES.encrypt(pwd, keyWords).toString()
 
 // 解密方法，验证旧密码使用
-export const decrypt = (pwd) => CryptoJS.AES.decrypt(pwd, keyWords).toString(CryptoJS.enc.Utf8)
+export const decrypt = (pwd: string) :string => CryptoJS.AES.decrypt(pwd, keyWords).toString(CryptoJS.enc.Utf8)

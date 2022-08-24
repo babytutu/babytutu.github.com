@@ -56,11 +56,7 @@ module.exports = {
         children: [
           {
             text: 'Vue',
-            link: 'https://cn.vuejs.org/v2/guide/'
-          },
-          {
-            text: 'Element',
-            link: 'http://element.eleme.io/#/zh-CN/component/installation'
+            link: 'https://cn.vuejs.org'
           },
           {
             text: 'Vant',

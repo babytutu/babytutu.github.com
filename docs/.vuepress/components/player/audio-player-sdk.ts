@@ -9,6 +9,18 @@
  * @param {number} isDebugger 是否调试模式
  */
 export const AudioPlayer = class {
+  audio: any = null
+  status: string = 'pause'
+  muted: boolean = false
+  timer: any = ''
+  playbackRate: number = 1.0
+
+  src: string
+  onloadedmetadata: any
+  ontimeupdate: any
+  onerror: any
+  isDebugger: boolean
+
   constructor ({
     src,
     onloadedmetadata,
@@ -21,11 +33,6 @@ export const AudioPlayer = class {
     this.ontimeupdate = ontimeupdate
     this.onerror = onerror
     this.isDebugger = isDebugger
-    this.audio = null
-    this.status = 'pause'
-    this.muted = false
-    this.timer = ''
-    this.playbackRate = 1.0
   }
 
   /**
@@ -157,18 +164,13 @@ export const AudioPlayer = class {
 
   /**
    * 转换秒数回显
-   * @param {string}
+   * @param {number} a
    */
-  getSecondTimeFomate (a) {
-    const second = parseInt(a)
-    let m = (parseInt((second % 3600) / 60))
-    if (m.toString().length === 1) {
-      m = '0' + m
-    }
-    let s = (second - 60 * m)
-    if (s.toString().length === 1) {
-      s = '0' + s
-    }
-    return (m + ':' + s)
+  getSecondTimeFomate(a: number) {
+    const second = Math.floor(a)
+    let m = Math.floor(second % 3600 / 60)
+    let s = second - 60 * m
+    const prefix = (val: number) => String(val).padStart(2, '0')
+    return (prefix(m) + ':' + prefix(s))
   }
 }
