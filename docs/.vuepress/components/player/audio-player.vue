@@ -64,7 +64,7 @@
     </div>
     <div class="audio-player-list" v-if="!mini && list && list.length > 1">
       <ul>
-        <li v-for="(media, index) in list" :class="{ 'active': media === value }" :key="index" @click="changeMedia(media)">
+        <li v-for="(media, index) in list" :class="{ 'active': media.src === value.src }" :key="index" @click="changeMedia(media)">
           {{media.name}}
         </li>
       </ul>
