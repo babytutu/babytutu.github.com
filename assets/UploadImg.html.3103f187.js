@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-e426e112","path":"/components/UploadImg.html","title":"\u56FE\u7247\u4E0A\u4F20","lang":"en-US","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"Demo","slug":"demo","children":[]},{"level":2,"title":"Props","slug":"props","children":[]}],"git":{"updatedTime":1661320513000},"filePathRelative":"components/UploadImg.md"}');export{e as data};
