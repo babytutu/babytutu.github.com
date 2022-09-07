@@ -21,20 +21,15 @@ module.exports = {
     contributors: false,
     navbar: [
       {
-        text: '基础知识',
+        text: '新手起步',
         children: [
-          {
-            text: '新手起步',
-            children: [
-              ...getMdListByFolder('study'),
-            ]
-          },
-          {
-            text: '实用组件',
-            children: [
-              ...getMdListByFolder('components'),
-            ],
-          },
+          ...getMdListByFolder('study'),
+        ]
+      },
+      {
+        text: '实用组件',
+        children: [
+          ...getMdListByFolder('components'),
         ],
       },
       {
@@ -46,6 +41,10 @@ module.exports = {
       {
         text: 'Mac小技巧',
         link: '/mac/'
+      },
+      {
+        text: '字体文件预览',
+        link: '/utils/iconPreview.md'
       },
       {
         text: 'ES6 入门教程',
