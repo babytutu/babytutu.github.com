@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-58203d18","path":"/tools/Nodeppt.html","title":"Nodeppt","lang":"en-US","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"\u5B89\u88C5","slug":"\u5B89\u88C5","children":[]},{"level":2,"title":"\u4F7F\u7528","slug":"\u4F7F\u7528","children":[]}],"git":{"updatedTime":1627677468000},"filePathRelative":"tools/Nodeppt.md"}');export{e as data};

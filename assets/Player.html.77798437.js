@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-29366338","path":"/components/Player.html","title":"\u97F3\u9891\u64AD\u653E\u5668","lang":"en-US","frontmatter":{},"excerpt":"","headers":[{"level":2,"title":"Demo","slug":"demo","children":[]},{"level":2,"title":"Props","slug":"props","children":[]}],"git":{"updatedTime":1661320513000},"filePathRelative":"components/Player.md"}');export{e as data};

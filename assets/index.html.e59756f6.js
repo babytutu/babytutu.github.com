@@ -1,1 +1,0 @@
-const e=JSON.parse('{"key":"v-079c247c","path":"/es6tutorial/","title":"ES6 \u5165\u95E8\u6559\u7A0B","lang":"en-US","frontmatter":{},"excerpt":"","headers":[{"level":3,"title":"\u7248\u6743\u8BB8\u53EF","slug":"\u7248\u6743\u8BB8\u53EF","children":[]}],"git":{"updatedTime":1643337847000},"filePathRelative":"es6tutorial/README.md"}');export{e as data};
