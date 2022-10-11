@@ -1,6 +1,6 @@
 # 学无止境
 
-> 基于Vuepress开发，[vuepress官方文档](https://v2.vuepress.vuejs.org/zh/)
+> 基于VitePress开发，[官方文档](https://vitepress.vuejs.org/)
 
 
 - 新手起步

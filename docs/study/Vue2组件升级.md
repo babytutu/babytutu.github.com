@@ -1,10 +1,17 @@
+<script setup lang="ts">
+import myComponent from './my-component/my-component.vue'
+import { ref } from 'vue'
+
+const myText = ref('')
+</script>
+
 # Vue2组件升级
 
 对 IE11 的支持：Vue 3 已经官方放弃对 IE11 的支持。如果仍然需要支持 IE11 或更低版本，那你仍需继续使用 Vue 2。
 
 [官方迁移方案](https://v3.cn.vuejs.org/guide/migration/migration-build.html)
 
-整理出几个常用的<Badge type="danger" text="非兼容" vertical="middle" />API
+整理出几个常用的`非兼容`API
 
 - v-model
 - v-if 与 v-for 的优先级对比
@@ -73,26 +80,61 @@
 
 创建一个示例自定义修饰符 capitalize，它将 v-model 绑定提供的字符串的第一个字母大写。
 
+
 <ClientOnly>
   <myComponent v-model.capitalize="myText" />
   {{myText}}
 </ClientOnly>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const myText = ref('')
-</script>
 
 ::: details myComponent.vue
 
-@[code vue](@src/components/my-component/my-component.vue)
+```vue
+<template>
+  <input type="text" class="input-css" :value="modelValue" @input="emitValue">
+</template>
 
+<script setup lang="ts">
+
+const props = defineProps<{
+  modelValue: string,
+  modelModifiers: any
+}>()
+
+const emit = defineEmits(['update:modelValue'])
+
+function emitValue(e) {
+  let value = e.target.value
+  if (props.modelModifiers.capitalize) {
+    value = value.charAt(0).toUpperCase() + value.slice(1)
+  }
+  emit('update:modelValue', value)
+}
+</script>
+
+<style>
+.input-css {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc
+}
+</style>
+```
 :::
 
 ::: details demo.vue
 
-@[code vue](@src/components/my-component/demo.vue)
+```vue
+<template>
+  <myComponent v-model.capitalize="myText" />
+  {{myText}}
+</template>
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const myText = ref('Abc')
+</script>
+```
 
 :::
 

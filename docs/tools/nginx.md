@@ -209,7 +209,7 @@ curl -I http://127.0.0.1:8081/js/test.js -e "http://127.0.0.1"
 
 ### 禁止访问某些后缀文件
 
-```conf
+```
 location ~ \.(js|txt)$ {
   deny all;
 }
@@ -306,7 +306,7 @@ window.onload = function () {
 
 ::: details nginx.conf server部分
 
-```conf
+```
 # 测试nginx功能
     server {
         listen       8081;

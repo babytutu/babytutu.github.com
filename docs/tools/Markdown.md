@@ -332,14 +332,3 @@ cond(yes)->e
 cond(no)->op
 &```
 ```
-
-效果如下：
-```flow
-st=>start: 开始
-op=>operation: 今晚加班?
-cond=>condition: Yes or No?
-e=>end: 加油
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```

@@ -269,12 +269,6 @@ module.exports = {
 新建`.github/workflows/docs.yml`
 
 
-::: details 点击查看代码
-
-@[code yml](@src/docs.yml)
-
-:::
-
 ## 目录结构
 
 ```

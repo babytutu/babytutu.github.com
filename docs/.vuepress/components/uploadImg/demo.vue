@@ -1,8 +1,0 @@
-<template>
-  <uploadImg v-model="imgurl"></uploadImg>
-</template>
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const imgurl = ref('/images/logo.svg')
-</script>

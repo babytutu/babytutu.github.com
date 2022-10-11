@@ -1,3 +1,7 @@
+<script setup>
+import iconPreview from './icon-preview/icon-preview.vue'
+</script>
+
 # 字体文件预览
 
 - 通过opentype.js解析字体文件，预览本地字体文件内容

@@ -114,7 +114,7 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 
 其中配置的8080作为docker内部的端口号
 
-```conf
+```
 server {
     listen       8080;
     server_name  localhost;
@@ -151,9 +151,8 @@ docker build -t docker-demo .
 docker run -dp 9002:8080 --name docker-demo docker-demo
 ```
 
-打开浏览器可以查看
+打开浏览器可以查看`http://localhost:9002`
 
-[http://localhost:9002](http://localhost:3000/)
 
 ### 快捷脚本
 
