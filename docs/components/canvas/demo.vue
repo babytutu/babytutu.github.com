@@ -8,7 +8,7 @@
     </div>
     <div @click="draw.back">Undo</div>
     <div @click="draw.clearCanvas">Clean</div>
-    <div>
+    <div class="addImg" @click="addImg">addImg
       <input type="file" accept="image/*" ref="file" @change="onFileChange">
     </div>
   </div>
@@ -31,6 +31,7 @@ const types = ['pen', 'rect', 'circle', 'line', 'poly', 'eraser']
 const imgTypes = 'image/jpg,image/jpeg,image/png,image/gif'.split(',')
 // 画笔颜色
 const colors = ['#333', 'red', 'green', 'orange', 'blue', 'yellow']
+const file = ref()
 
 let draw = ref<any>(null)
 let options = ref({
@@ -47,11 +48,15 @@ function changeStyle(key, value) {
   draw.changeStyle(options.value)
 }
 
+function addImg() {
+  file.value.click()
+}
+
 /**
  * 文件改变事件
  * @param {Event} e - 文件事件对象
  */
- function onFileChange (e: any) {
+function onFileChange (e: any) {
   const file = e.target.files[0]
   if (!file) {
     return
@@ -104,6 +109,20 @@ canvas {
     &.active {
       border-color: #20a0ff
     }
+  }
+}
+
+.addImg {
+  position relative
+  cursor pointer
+  input {
+    position: absolute;
+    width: 60px;
+    height: 18px;
+    opacity: 0;
+    left 0
+    cursor pointer
+    font-size: 0
   }
 }
 </style>
