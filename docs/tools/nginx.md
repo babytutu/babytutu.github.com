@@ -376,3 +376,54 @@ ln -sf /Users/tutu/Downloads/code/demo /Users/tutu/Downloads/code/test
 ```
 
 最终nginx的test目录，实际指向的是demo目录，此原理可用于前端部署，通过软链切换文件夹实现更新。
+
+## 配置https
+
+### 通过openssl创建https证书
+
+在`nginx`目录生成证书
+
+```bash
+sudo openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /usr/local/etc/nginx/ssl/nginx.key -out /usr/local/etc/nginx/ssl/nginx.crt
+```
+
+### 配置nginx.conf
+
+把`ssl_certificate`和`ssl_certificate_key`改成证书所在路径
+
+```
+# HTTPS server
+#
+server {
+    listen       443 ssl;
+    server_name  localhost;
+
+    ssl_certificate      ssl/nginx.crt;
+    ssl_certificate_key  ssl/nginx.key;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    location / {
+        root    /usr/local/etc/nginx/test;
+        index  index.html index.htm;
+    }
+}
+```
+
+测试nginx配置
+
+```bash
+nginx -t
+```
+
+验证通过后重启nginx生效
+
+```bash
+nginx -s reload
+```
+
+本地访问网站`https://localhost`。浏览器会提示证书无效，但可以通过配置进入
