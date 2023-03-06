@@ -1,5 +1,5 @@
 {
-  "name": "books",
+  "name": "babytutu",
   "version": "2.0.0",
   "author": "babytutu <babytutu@live.com>",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "private": true,
   "devDependencies": {
     "stylus": "^0.59.0",
-    "vitepress": "^1.0.0-alpha.33"
+    "vitepress": "^1.0.0-alpha.49"
   },
   "scripts": {
     "start": "vitepress dev docs",

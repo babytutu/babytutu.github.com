@@ -1,6 +1,9 @@
+
 /**
  * 定制canvas画笔
  */
+import { withBase } from 'vitepress'
+
 export const Draw = class {
   type: string
   width: number
@@ -48,6 +51,7 @@ export const Draw = class {
           if (['pen', 'eraser'].includes(this.action)) {
             this[this.action](e.offsetX, e.offsetY)
           }
+          dom.style.cursor = `url(${withBase('/ico/pen.ico')}), pointer`
         }
         document.onmouseup = (e) => {
           // 矩形/圆形/直线/多边形只根据起始和结束节点绘制

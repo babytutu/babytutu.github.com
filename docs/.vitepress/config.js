@@ -20,7 +20,7 @@ module.exports = {
     ['link', { rel: 'icon', href: '/favicon.ico' }],
   ],
   markdown: {
-    theme: 'material-palenight',
+    theme: 'material-theme-palenight',
     lineNumbers: true
   },
   themeConfig: {
