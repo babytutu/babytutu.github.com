@@ -13,7 +13,7 @@ npm init
 安装依赖包
 
 ```bash
-npm install --save-dev electron
+npm install -D electron
 ```
 
 ### 解决安装依赖失败
@@ -38,35 +38,119 @@ ELECTRON_MIRROR = https://npmmirror.com/mirrors/electron/
       preload: path.join(__dirname, 'preload.js')
     },
     resizable: false,
-    icon: path.join(__dirname, 'icon.png')
+    icon: path.join(__dirname, 'img/icon.png')
   })
 
   // 加载 url
   mainWindow.loadURL('https://fm.douban.com')
 ```
 
-## DOCK设置
+## dock设置
+
+mac独有
 
 ```js
 const { app } = require('electron')
 const path = require('path')
 
 // dock弹跳效果
-setTimeout(() => {
-  app.dock.bounce()
-}, 5000)
+app.dock.bounce()
 
 // 设置dock图标
-app.dock.setIcon(path.join(__dirname, 'icon.png'))
+app.dock.setIcon(path.join(__dirname, 'img/icon.png'))
 ```
 
-## 禁用默认菜单
+## 设置菜单
 
 在app.whenReady()之前调用
+
+### 禁用默认菜单
 
 ```js
 // 禁用默认菜单
 Menu.setApplicationMenu(null)
+```
+
+### 自定义菜单
+
+```js
+const menuTemp = [
+  {
+    label: '设置',
+    submenu: [
+      {
+        label: '关于',
+        role: 'about',
+      },
+      { type: 'separator' },
+      {
+        label: '退出',
+        role: 'quit',
+      }
+    ]
+  }
+]
+const menu = Menu.buildFromTemplate(menuTemp)
+Menu.setApplicationMenu(menu)
+```
+
+## 设置顶部图标
+
+使用Tray
+
+```js
+let tray
+
+const image = nativeImage.createFromPath('img/icon.png')
+tray = new Tray(image.resize({
+  width: 20,
+  height: 20
+}))
+
+const contextMenu = Menu.buildFromTemplate([
+  {
+    label: '退出',
+    role: 'quit',
+  }
+])
+tray.setContextMenu(contextMenu)
+```
+
+## 设置关于面板
+
+```js
+// 设置 "关于" 面板选项
+app.setAboutPanelOptions({
+  credits: '使用Electron制作,可点击源代码DIY',
+})
+```
+
+## 本地缓存
+
+新增`electron-store`实现app内数据缓存，不能安装在开发依赖`devDependencies`中，生成app时需要把这个模块一起打包才能使用
+
+```bash
+npm install electron-store
+```
+
+```js
+const Store = require('electron-store')
+
+// 初始化缓存
+const schema = {
+  showTitle: {
+    type: 'boolean',
+    default: true
+  }
+}
+
+const store = new Store({schema})
+
+// 读取
+console.log(store.get('showTitle'))
+
+// 修改
+store.set('showTitle', false)
 ```
 
 ## 生成app
@@ -74,7 +158,7 @@ Menu.setApplicationMenu(null)
 ### 使用 Electron Forge
 
 ```
-npm install --save-dev @electron-forge/cli
+npm install -D @electron-forge/cli @electron-forge/maker-dmg
 npx electron-forge import
 ```
 
@@ -82,114 +166,52 @@ npx electron-forge import
 
 forge.config.js
 
-调整packagerConfig实现打包app的图标和名称自定义
+调整packagerConfig实现打包app的图标和版本自定义
 
 需要新增img文件夹，准备icon.icns文件作为app的图标
+
+打包时默认使用`package.json`中的`name`，建议增加`productName`，Electron 会优先使用这个字段作为应用名
 
 ```js
 module.exports = {
   packagerConfig: {
-    name: '豆瓣FM',
     icon: 'img/icon',
-    buildVersion: '2023-03-20',
+    buildVersion: '2023-03-23',
   },
+  makers: [
+    {
+      name: '@electron-forge/maker-dmg',
+      config: {
+        background: './img/background.png',
+        icon: './img/icon.icns',
+      }
+    }
+  ]
 }
 ```
 
+#### 存在问题
+
+参数封装过于扎实，造成背景图可能不生效（白色）
+
+- 每次生成dmg后，需要退出后再重新打包
+- 配置路径必须用`./`起头，表示js和img目录的相对关系
+- 背景图尺寸，推荐658*498（源代码里写的），至少高度大于480，否则会出现滚动条
+
 ### 创建可分发的应用程序
 
-```
+```bash
 npm run package
 ```
 
 Electron-forge 会创建 out 文件夹
 
-
-## 生成DMG文件
-
-使用appdmg实现打包成DMG文件
-
-### 新增依赖包
-
-```bash
-yarn add appdmg -D
-```
-
-### 新增appdmg.js
-
-```js
-const fs = require('fs')
-const appdmg = require('appdmg')
-
-const dmgName = 'out/doubanFM.dmg'
-
-const setting = {
-  "title": "doubanFM",
-  "icon": "img/icon.icns",
-  "icon-size": 100,
-  "format": "ULMO",
-  "window": {
-    "size": {
-      "width": 600,
-      "height": 400
-    }
-  },
-  "contents": [
-    { "x": 150, "y": 100, "type": "file", "path": "./out/豆瓣FM-darwin-x64/豆瓣FM.app" },
-    { "x": 300, "y": 100, "type": "link", "path": "/Applications" },
-    { "x": 450, "y": 100, "type": "file", "path": "README.md" }
-  ]
-}
-
-// 删除已有文件
-if (fs.existsSync(dmgName)) {
-  fs.unlinkSync(dmgName)
-  console.log('删除已有文件并开始打包')
-} else {
-  console.log('开始打包')
-}
-
-const dmg = appdmg({
-  target: dmgName,
-  basepath: __dirname,
-  specification: setting
-})
-
-dmg.on('progress', function (info) {
-  const {
-    title,
-    current,
-    total,
-  } = info
-  if (title) {
-    console.log(`[${String(current).padStart(2, '0')}/${total}]${title}`)
-  }
-})
-
-dmg.on('finish', function () {
-  // There now is a `test.dmg` file
-  console.log('打包已完成')
-})
-
-dmg.on('error', function (err) {
-  // An error occurred
-  console.error('打包失败', err)
-})
-
-```
-
-### package.json新增打包脚本
-
-```json
-{
-  "script": {
-    "dmg": "node appdmg.js"
-  }
-}
-```
-
 ### 生成dmg文件
 
 ```bash
-npm run dmg
+npm run make
 ```
+
+## 直接使用appdmg打包
+
+直接打包需要处理文件删除，参数配置，但生成的dmg会小将近20M
