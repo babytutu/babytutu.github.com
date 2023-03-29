@@ -11,7 +11,7 @@ const getMdListByFolder = (folder) => fs.readdirSync(`./docs/${folder}`).filter(
 }))
 
 /**
- * @see https://vitepress.vuejs.org/config/introduction
+ * @see https://vitepress.dev/reference/site-config
  */
 module.exports = {
   base: '/',

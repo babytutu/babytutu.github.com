@@ -138,19 +138,28 @@ const Store = require('electron-store')
 
 // 初始化缓存
 const schema = {
-  showTitle: {
-    type: 'boolean',
-    default: true
+  name: {
+    type: 'string',
+    default: 'abc'
   }
 }
 
 const store = new Store({schema})
 
 // 读取
-console.log(store.get('showTitle'))
+store.get('name')
 
 // 修改
-store.set('showTitle', false)
+store.set('name', 'ABC')
+```
+
+## 通知
+
+```js
+new Notification({
+  title: '通知标题',
+  body: '通知内容',
+}).show()
 ```
 
 ## 生成app

@@ -7,10 +7,10 @@
   "private": true,
   "devDependencies": {
     "stylus": "^0.59.0",
-    "vitepress": "^1.0.0-alpha.49"
+    "vitepress": "^1.0.0-alpha.63"
   },
   "scripts": {
-    "start": "vitepress dev docs",
+    "start": "vitepress dev docs --host",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"
   },
