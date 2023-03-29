@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as n,N as l}from"./chunks/framework.cec8ca25.js";const d=JSON.parse('{"title":"CSS预处理 - Stylus","description":"","frontmatter":{},"headers":[],"relativePath":"study/CSS预处理.md"}'),p={name:"study/CSS预处理.md"},e=l("",31),o=[e];function r(c,t,i,y,C,D){return a(),n("div",null,o)}const b=s(p,[["render",r]]);export{d as __pageData,b as default};

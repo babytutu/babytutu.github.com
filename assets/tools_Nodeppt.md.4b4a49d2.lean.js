@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as s,N as t}from"./chunks/framework.cec8ca25.js";const m=JSON.parse('{"title":"Nodeppt","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Nodeppt.md"}'),o={name:"tools/Nodeppt.md"},n=t("",7),l=[n];function p(r,i,c,d,h,_){return a(),s("div",null,l)}const b=e(o,[["render",p]]);export{m as __pageData,b as default};

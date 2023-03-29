@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as n,N as e}from"./chunks/framework.cec8ca25.js";const C=JSON.parse('{"title":"自动生成目录结构","description":"","frontmatter":{},"headers":[],"relativePath":"study/自动生成目录结构.md"}'),l={name:"study/自动生成目录结构.md"},p=e("",26),r=[p];function o(t,i,c,d,b,h){return a(),n("div",null,r)}const m=s(l,[["render",o]]);export{C as __pageData,m as default};

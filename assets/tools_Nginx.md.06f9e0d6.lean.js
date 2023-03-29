@@ -1,0 +1,1 @@
+import{_ as s,o as n,c as a,N as l}from"./chunks/framework.cec8ca25.js";const y=JSON.parse('{"title":"Nginx 入门","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Nginx.md"}'),e={name:"tools/Nginx.md"},p=l("",104),o=[p];function r(c,t,i,C,b,u){return n(),a("div",null,o)}const A=s(e,[["render",r]]);export{y as __pageData,A as default};

@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as n,N as l}from"./chunks/framework.cec8ca25.js";const A=JSON.parse('{"title":"Canvas","description":"","frontmatter":{},"headers":[],"relativePath":"study/canvas.md"}'),p={name:"study/canvas.md"},o=l("",21),e=[o];function t(c,r,y,F,D,i){return a(),n("div",null,e)}const d=s(p,[["render",t]]);export{A as __pageData,d as default};
