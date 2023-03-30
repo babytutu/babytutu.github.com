@@ -729,6 +729,25 @@ module.exports = {
 }
 ```
 
+忽略文件，新建 .prettierignore
+
+```
+# Ignore artifacts:
+build
+coverage
+node_modules
+public
+dist
+
+.env.local
+.env.*.local
+*.zip
+*.rar
+
+# Ignore all HTML files:
+*.html
+```
+
 ```js
 // .eslintrc.cjs
 /* eslint-env node */
