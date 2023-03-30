@@ -1,1 +1,0 @@
-import{_ as s,o as n,c as a,N as l}from"./chunks/framework.cec8ca25.js";const A=JSON.parse('{"title":"Vue3 with Vite","description":"","frontmatter":{},"headers":[],"relativePath":"study/Vue3 with Vite.md"}'),p={name:"study/Vue3 with Vite.md"},o=l("",151),e=[o];function t(r,c,D,y,i,F){return n(),a("div",null,e)}const u=s(p,[["render",t]]);export{A as __pageData,u as default};
