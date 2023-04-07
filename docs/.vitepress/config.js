@@ -50,6 +50,10 @@ module.exports = {
         link: '/utils/iconPreview'
       },
       {
+        text: '北京旅游',
+        link: '/play/北京景点'
+      },
+      {
         text: '参考资料',
         items: [
           {
@@ -97,6 +101,14 @@ module.exports = {
           text: '实用工具',
           items: [
             ...getMdListByFolder('tools'),
+          ],
+        },
+      ],
+      '/play/': [
+        {
+          text: '北京旅游',
+          items: [
+            ...getMdListByFolder('play'),
           ],
         },
       ],
