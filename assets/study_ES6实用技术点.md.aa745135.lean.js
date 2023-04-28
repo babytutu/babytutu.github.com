@@ -1,0 +1,1 @@
+import{_ as s,o as n,c as a,N as l}from"./chunks/framework.cd143d77.js";const A=JSON.parse('{"title":"ES6实用技术点","description":"","frontmatter":{},"headers":[],"relativePath":"study/ES6实用技术点.md"}'),p={name:"study/ES6实用技术点.md"},o=l("",112),e=[o];function r(c,t,y,D,F,i){return n(),a("div",null,e)}const b=s(p,[["render",r]]);export{A as __pageData,b as default};

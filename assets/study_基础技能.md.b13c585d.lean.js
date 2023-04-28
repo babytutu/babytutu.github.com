@@ -1,1 +1,0 @@
-import{_ as t,o as e,c as r,N as a}from"./chunks/framework.cec8ca25.js";const m=JSON.parse('{"title":"基础技能","description":"","frontmatter":{},"headers":[],"relativePath":"study/基础技能.md"}'),d={name:"study/基础技能.md"},l=a("",16),o=[l];function h(i,n,s,c,b,f){return e(),r("div",null,o)}const p=t(d,[["render",h]]);export{m as __pageData,p as default};

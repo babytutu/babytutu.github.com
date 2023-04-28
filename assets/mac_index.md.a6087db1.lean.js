@@ -1,1 +1,0 @@
-import{_ as s,o as a,c as l,N as n}from"./chunks/framework.cec8ca25.js";const D=JSON.parse('{"title":"Mac小技巧","description":"","frontmatter":{},"headers":[],"relativePath":"mac/index.md"}'),e={name:"mac/index.md"},p=n("",18),o=[p];function t(c,r,i,C,d,y){return a(),l("div",null,o)}const m=s(e,[["render",t]]);export{D as __pageData,m as default};

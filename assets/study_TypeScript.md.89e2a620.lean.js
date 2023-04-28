@@ -1,1 +1,0 @@
-import{_ as s,o as n,c as a,N as l}from"./chunks/framework.cec8ca25.js";const A=JSON.parse('{"title":"TypeScript","description":"","frontmatter":{},"headers":[],"relativePath":"study/TypeScript.md"}'),p={name:"study/TypeScript.md"},e=l("",42),o=[e];function r(c,t,D,y,i,F){return n(),a("div",null,o)}const u=s(p,[["render",r]]);export{A as __pageData,u as default};

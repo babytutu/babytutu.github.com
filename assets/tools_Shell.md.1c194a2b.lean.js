@@ -1,0 +1,1 @@
+import{_ as s,o as a,c as n,N as l}from"./chunks/framework.cd143d77.js";const C=JSON.parse('{"title":"Shell Script","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Shell.md"}'),e={name:"tools/Shell.md"},p=l("",161),t=[p];function o(r,c,i,y,D,d){return a(),n("div",null,t)}const u=s(e,[["render",o]]);export{C as __pageData,u as default};
