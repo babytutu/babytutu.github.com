@@ -50,6 +50,12 @@ module.exports = {
         link: '/utils/iconPreview'
       },
       {
+        text: 'NASA API',
+        items: [
+          ...getMdListByFolder('NASA'),
+        ],
+      },
+      {
         text: '参考资料',
         items: [
           {
@@ -97,6 +103,14 @@ module.exports = {
           text: '实用工具',
           items: [
             ...getMdListByFolder('tools'),
+          ],
+        },
+      ],
+      '/NASA/': [
+        {
+          text: 'NASA API',
+          items: [
+            ...getMdListByFolder('NASA'),
           ],
         },
       ],
