@@ -12,6 +12,7 @@ const getMdListByFolder = (folder) => fs.readdirSync(`./docs/${folder}`).filter(
 
 /**
  * @see https://vitepress.dev/reference/site-config
+ * @see https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes
  */
 module.exports = {
   base: "/",
@@ -57,8 +58,8 @@ module.exports = {
             link: "https://cn.vuejs.org",
           },
           {
-            text: "Vant",
-            link: "https://vant-contrib.gitee.io/vant/#/zh-CN/",
+            text: "React",
+            link: "https://react.dev/",
           },
           {
             text: "miniprogram",
@@ -71,6 +72,14 @@ module.exports = {
           {
             text: "ES6 教程",
             link: "https://wangdoc.com/es6/",
+          },
+          {
+            text: "Vant",
+            link: "https://vant-contrib.gitee.io/vant/#/zh-CN/",
+          },
+          {
+            text: "Ant Design Mobile",
+            link: "https://mobile.ant.design/zh",
           },
         ],
       },
@@ -121,6 +130,9 @@ module.exports = {
     footer: {
       message: "Released under the MIT License.",
       copyright: "Copyright © 2021-present Babytutu",
+    },
+    search: {
+      provider: "local",
     },
   },
 };
