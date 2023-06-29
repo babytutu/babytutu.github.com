@@ -385,32 +385,21 @@ const props = defineProps<Props>()
 </script>
 ```
 
-#### Prop 默认值(实验性)
-
-需要开启reactivityTransform
-
-```js
-// vite.config.js
-export default {
-  plugins: [
-    vue({
-      // 显式启用，响应性语法糖目前默认是关闭状态，需要你显式选择启用
-      reactivityTransform: true
-    })
-  ]
-}
-```
+#### Props 解构默认值
 
 ```vue
 <script setup lang="ts">
-interface Props {
+export interface Props {
   foo: string
   bar?: number
 }
 
 // 对 defineProps() 的响应性解构
 // 默认值会被编译为等价的运行时选项
-const { foo, bar = 100 } = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  foo: 'abc',
+  bar: 10
+})
 </script>
 ```
 
