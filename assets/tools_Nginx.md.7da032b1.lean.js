@@ -1,1 +1,0 @@
-import{_ as s,c as n,o as a,V as l}from"./chunks/framework.9805713b.js";const y=JSON.parse('{"title":"Nginx 入门","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Nginx.md","filePath":"tools/Nginx.md"}'),e={name:"tools/Nginx.md"},p=l("",104),o=[p];function r(c,t,i,C,b,d){return a(),n("div",null,o)}const D=s(e,[["render",r]]);export{y as __pageData,D as default};
