@@ -126,7 +126,7 @@ vue编译出来的`dist`拷贝到webapps目录
 
 可以通过网页管理应用程序
 
-http://localhost:7788/manager/html
+http://localhost:9090/manager/html
 
 
 ## 日志切割方案
