@@ -15,124 +15,120 @@ const getMdListByFolder = (folder) => fs.readdirSync(`./docs/${folder}`).filter(
  * @see https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes
  */
 module.exports = {
-  base: "/",
-  title: "学无止境",
-  head: [["link", { rel: "icon", href: "/favicon.ico" }]],
+  base: '/',
+  title: '学无止境',
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   markdown: {
-    theme: "material-theme-palenight",
+    theme: 'material-theme-palenight',
     lineNumbers: true,
   },
   themeConfig: {
-    logo: "/logo.png",
-    title: "学无止境",
+    logo: '/logo.png',
+    title: '学无止境',
     nav: [
       {
-        text: "新手起步",
-        link: "/study/基础技能.md",
+        text: '新手起步',
+        link: '/study/基础技能.md',
       },
       {
-        text: "实用组件",
-        items: [...getMdListByFolder("components")],
+        text: '实用组件',
+        items: [...getMdListByFolder('components')],
       },
       {
-        text: "实用工具",
-        link: "/tools/Charles",
+        text: '实用工具',
+        link: '/tools/Charles',
       },
       {
-        text: "Mac小技巧",
-        link: "/mac/",
+        text: 'Mac小技巧',
+        link: '/mac/解决端口被占用',
       },
       {
-        text: "字体文件预览",
-        link: "/utils/iconPreview",
+        text: '字体文件预览',
+        link: '/utils/iconPreview',
       },
       {
-        text: "NASA API",
-        items: [...getMdListByFolder("NASA")],
-      },
-      {
-        text: "参考资料",
+        text: '参考资料',
         items: [
           {
-            text: "Vue",
-            link: "https://cn.vuejs.org",
+            text: 'Vue',
+            link: 'https://cn.vuejs.org',
           },
           {
-            text: "React",
-            link: "https://react.dev/",
+            text: 'React',
+            link: 'https://react.dev/',
           },
           {
-            text: "miniprogram",
-            link: "https://developers.weixin.qq.com/miniprogram/dev/framework/",
+            text: 'miniprogram',
+            link: 'https://developers.weixin.qq.com/miniprogram/dev/framework/',
           },
           {
-            text: "MDN Web Docs",
-            link: "https://developer.mozilla.org",
+            text: 'MDN Web Docs',
+            link: 'https://developer.mozilla.org',
           },
           {
-            text: "ES6 教程",
-            link: "https://wangdoc.com/es6/",
+            text: 'ES6 教程',
+            link: 'https://wangdoc.com/es6/',
           },
           {
-            text: "Vant",
-            link: "https://vant-contrib.gitee.io/vant/#/zh-CN/",
+            text: 'Vant',
+            link: 'https://vant-contrib.gitee.io/vant/#/zh-CN/',
           },
           {
-            text: "Ant Design Mobile",
-            link: "https://mobile.ant.design/zh",
+            text: 'Ant Design Mobile',
+            link: 'https://mobile.ant.design/zh',
           },
         ],
       },
     ],
     sidebar: {
-      "/components/": [
+      '/components/': [
         {
-          text: "实用组件",
-          items: [...getMdListByFolder("components")],
+          text: '实用组件',
+          items: [...getMdListByFolder('components')],
         },
       ],
-      "/study/": [
+      '/study/': [
         {
-          text: "新手起步",
-          items: [...getMdListByFolder("study")],
+          text: '新手起步',
+          items: [...getMdListByFolder('study')],
         },
       ],
-      "/tools/": [
+      '/tools/': [
         {
-          text: "实用工具",
-          items: [...getMdListByFolder("tools")],
+          text: '实用工具',
+          items: [...getMdListByFolder('tools')],
         },
       ],
-      "/NASA/": [
+      '/mac/': [
         {
-          text: "NASA API",
-          items: [...getMdListByFolder("NASA")],
+          text: 'Mac小技巧',
+          items: [...getMdListByFolder('mac')],
         },
       ],
     },
     socialLinks: [
-      { icon: "github", link: "https://github.com/babytutu" },
+      { icon: 'github', link: 'https://github.com/babytutu' },
       {
         icon: {
           svg: `<svg viewBox="0 0 128 128" width="24" height="24" data-v-11b02119=""><path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z" data-v-11b02119=""></path><path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z" data-v-11b02119=""></path></svg>`,
         },
-        ariaLabel: "vue",
-        link: "https://babytutu.github.io/front-h5",
+        ariaLabel: 'vue',
+        link: 'https://babytutu.github.io/front-h5',
       },
       {
         icon: {
           svg: `<svg width="100%" height="100%" viewBox="-10.5 -9.45 21 18.9" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="0" cy="0" r="2" fill="rgb(8,126,64)"></circle><g stroke="rgb(8,126,64)" stroke-width="1" fill="none"><ellipse rx="10" ry="4.5"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(60)"></ellipse><ellipse rx="10" ry="4.5" transform="rotate(120)"></ellipse></g></svg>`,
         },
-        ariaLabel: "react",
-        link: "https://babytutu.github.io/react-app",
+        ariaLabel: 'react',
+        link: 'https://babytutu.github.io/react-app',
       },
     ],
     footer: {
-      message: "Released under the MIT License.",
-      copyright: "Copyright © 2021-present Babytutu",
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2021-present Babytutu',
     },
     search: {
-      provider: "local",
+      provider: 'local',
     },
   },
-};
+}
