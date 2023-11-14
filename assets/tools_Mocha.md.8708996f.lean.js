@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as n,Q as l}from"./chunks/framework.77441a25.js";const b=JSON.parse('{"title":"Mocha","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Mocha.md","filePath":"tools/Mocha.md"}'),p={name:"tools/Mocha.md"},o=l("",17),e=[o];function r(t,c,i,B,d,y){return n(),a("div",null,e)}const h=s(p,[["render",r]]);export{b as __pageData,h as default};

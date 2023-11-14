@@ -1,0 +1,1 @@
+import{_ as e,c as a,o,Q as s}from"./chunks/framework.77441a25.js";const m=JSON.parse('{"title":"Nodeppt","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Nodeppt.md","filePath":"tools/Nodeppt.md"}'),t={name:"tools/Nodeppt.md"},n=s("",7),p=[n];function l(r,d,i,c,_,h){return o(),a("div",null,p)}const b=e(t,[["render",l]]);export{m as __pageData,b as default};
