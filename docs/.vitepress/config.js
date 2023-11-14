@@ -19,7 +19,7 @@ module.exports = {
   title: '学无止境',
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   markdown: {
-    theme: 'material-theme-palenight',
+    theme: 'one-dark-pro',
     lineNumbers: true,
   },
   themeConfig: {
@@ -41,6 +41,10 @@ module.exports = {
       {
         text: 'Mac小技巧',
         link: '/mac/解决端口被占用',
+      },
+      {
+        text: 'Linux常用命令',
+        link: '/linux/command',
       },
       {
         text: '字体文件预览',
