@@ -43,6 +43,10 @@ module.exports = {
         link: '/mac/解决端口被占用',
       },
       {
+        text: 'iOS开发',
+        link: '/iOS/iOS Distribution',
+      },
+      {
         text: 'Linux常用命令',
         link: '/linux/command',
       },
@@ -107,6 +111,12 @@ module.exports = {
         {
           text: 'Mac小技巧',
           items: [...getMdListByFolder('mac')],
+        },
+      ],
+      '/iOS/': [
+        {
+          text: 'iOS开发',
+          items: [...getMdListByFolder('iOS')],
         },
       ],
     },
