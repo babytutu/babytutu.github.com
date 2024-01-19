@@ -47,8 +47,8 @@ module.exports = {
         link: '/iOS/iOS Distribution',
       },
       {
-        text: 'Linux常用命令',
-        link: '/linux/command',
+        text: 'Linux',
+        link: '/linux/Linux常用命令',
       },
       {
         text: '字体文件预览',
@@ -117,6 +117,12 @@ module.exports = {
         {
           text: 'iOS开发',
           items: [...getMdListByFolder('iOS')],
+        },
+      ],
+      '/linux/': [
+        {
+          text: 'Linux',
+          items: [...getMdListByFolder('linux')],
         },
       ],
     },
