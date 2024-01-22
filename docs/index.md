@@ -25,4 +25,7 @@ features:
   - icon: 🛠️
     title: Mac小技巧
     details: Mac重度使用者的心得
+  - icon: 📱
+    title: iOS开发
+    details: 开发从零开始
 ---
