@@ -20,7 +20,7 @@ https://tomcat.apache.org/download-90.cgi
 
 这个版本就是搭配jdk1.8使用
 
-下载Core到zip包就可以了
+下载zip包就可以了
 
 https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.79/bin/apache-tomcat-9.0.79.zip
 

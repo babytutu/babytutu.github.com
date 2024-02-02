@@ -47,6 +47,10 @@ module.exports = {
         link: '/iOS/iOS Distribution',
       },
       {
+        text: 'Java开发',
+        link: '/Java/Java安装',
+      },
+      {
         text: 'Linux',
         link: '/linux/Linux常用命令',
       },
@@ -117,6 +121,12 @@ module.exports = {
         {
           text: 'iOS开发',
           items: [...getMdListByFolder('iOS')],
+        },
+      ],
+      '/Java/': [
+        {
+          text: 'Java开发',
+          items: [...getMdListByFolder('Java')],
         },
       ],
       '/linux/': [
