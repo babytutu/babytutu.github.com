@@ -1,0 +1,1 @@
+import{_ as a,c as s,o as e,V as n}from"./chunks/framework.CN9jWNAZ.js";const h=JSON.parse('{"title":"Java安装","description":"","frontmatter":{},"headers":[],"relativePath":"Java/Java安装.md","filePath":"Java/Java安装.md"}'),o={name:"Java/Java安装.md"},p=n("",15),l=[p];function r(i,t,c,d,u,v){return e(),s("div",null,l)}const m=a(o,[["render",r]]);export{h as __pageData,m as default};
