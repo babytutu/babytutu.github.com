@@ -91,6 +91,59 @@ module.exports = {
           },
         ],
       },
+      {
+        text: '开发相关网站',
+        items: [
+          {
+            text: '全国互联网安全管理服务平台',
+            link: 'https://beian.mps.gov.cn/',
+          },
+          {
+            text: '工业和信息化部',
+            link: 'https://dxzhgl.miit.gov.cn',
+          },
+          {
+            text: '邓白氏编码',
+            link: 'https://www.dnbportal.cn/',
+          },
+          {
+            text: '苹果开发者网站',
+            link: 'https://developer.apple.com/',
+          },
+          {
+            text: 'Dcloud开发者后台',
+            link: 'https://dev.dcloud.net.cn/',
+          },
+          {
+            text: '微信公众平台',
+            link: 'https://mp.weixin.qq.com/',
+          },
+          {
+            text: '微信开放平台',
+            link: 'https://open.weixin.qq.com/',
+          },
+          {
+            text: '中国版权保护中心',
+            link: 'https://www.ccopyright.com/',
+          },
+          {
+            text: '腾讯应用开放平台',
+            link: 'https://open.tencent.com/',
+          },
+          {
+            text: '中国信通院',
+            link: 'https://appsign.caict.ac.cn/register',
+          },
+          {
+            text: '百度移动应用平台',
+            link: 'https://app.baidu.com/',
+          },
+          {
+            text: '小米开放平台',
+            link: 'https://dev.mi.com/platform/appstore',
+          },
+        ],
+      },
     ],
     sidebar: {
       '/components/': [
