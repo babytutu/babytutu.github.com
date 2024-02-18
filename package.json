@@ -6,8 +6,8 @@
   "homepage": "https://babytutu.github.io",
   "private": true,
   "devDependencies": {
-    "stylus": "0.60.0",
-    "vitepress": "1.0.0-rc.39"
+    "stylus": "0.62.0",
+    "vitepress": "1.0.0-rc.43"
   },
   "scripts": {
     "start": "vitepress dev docs --host",
