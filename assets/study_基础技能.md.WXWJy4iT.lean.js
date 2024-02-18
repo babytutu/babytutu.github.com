@@ -1,1 +1,0 @@
-import{_ as t,c as e,o as r,V as a}from"./chunks/framework.CN9jWNAZ.js";const m=JSON.parse('{"title":"基础技能","description":"","frontmatter":{},"headers":[],"relativePath":"study/基础技能.md","filePath":"study/基础技能.md"}'),d={name:"study/基础技能.md"},l=a("",16),o=[l];function h(i,n,s,c,b,f){return r(),e("div",null,o)}const p=t(d,[["render",h]]);export{m as __pageData,p as default};
