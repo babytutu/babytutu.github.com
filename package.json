@@ -7,7 +7,7 @@
   "private": true,
   "devDependencies": {
     "stylus": "0.62.0",
-    "vitepress": "1.0.0-rc.43"
+    "vitepress": "1.0.0-rc.45"
   },
   "scripts": {
     "start": "vitepress dev docs --host",
