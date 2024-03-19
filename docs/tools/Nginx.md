@@ -427,3 +427,28 @@ nginx -s reload
 ```
 
 本地访问网站`https://localhost`。浏览器会提示证书无效，但可以通过配置进入
+
+## 跨域设置
+
+通过配置白名单，和`add_header`实现
+
+```
+location /api/ {
+    # 拦截非法referer,none可以直接请求,blocked无法直接请求
+    valid_referers blocked localhost;
+    if ($invalid_referer) {
+        return 403;
+    }
+
+    # 添加以下行以支持CORS
+    add_header 'Access-Control-Allow-Origin' '*';
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+
+    # 本地服务代理
+    proxy_pass http://localhost:9999/;
+    proxy_set_header Host $host:$server_port;
+    proxy_connect_timeout 300s;
+    proxy_send_timeout 3000s;
+    proxy_read_timeout 3000s;
+}
+```
