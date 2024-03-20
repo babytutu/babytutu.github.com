@@ -443,6 +443,7 @@ location /api/ {
     # 添加以下行以支持CORS
     add_header 'Access-Control-Allow-Origin' '*';
     add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+    add_header Access-Control-Allow-Headers 'Content-Type';
 
     # 本地服务代理
     proxy_pass http://localhost:9999/;

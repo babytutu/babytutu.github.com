@@ -2,7 +2,7 @@
 
 > 超级终端
 
-### 安装
+## 安装
 
 ```bash
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -21,7 +21,7 @@ sh -c "$(curl -fsSL https://gitee.com/mcornella/ohmyzsh/raw/master/tools/install
 chsh -s $(which zsh)
 ```
 
-#### 解决权限错误
+### 解决权限错误
 
 ```
 Insecure completion-dependent directories detected:
@@ -47,7 +47,7 @@ ZSH_DISABLE_COMPFIX="true"
 source .zshrc
 ```
 
-### 定制化zsh配置
+## 定制化zsh配置
 
 [配置文档](https://github.com/ohmyzsh/ohmyzsh/wiki/Settings)
 
@@ -55,7 +55,7 @@ source .zshrc
 nano ~/.zshrc
 ```
 
-### 修改主题
+## 修改主题
 
 [主题列表](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes)
 
@@ -63,7 +63,7 @@ nano ~/.zshrc
 ZSH_THEME="pygmalion"
 ```
 
-### 定义别名
+## 定义别名
 
 > `alias`是别名，表示你输入'pz'就会执行等号后面的命令
 
@@ -80,7 +80,7 @@ ctrl + x 退出，如果内容有修改，会提示是否保存修改（Y/N）�
 nano ~/.bashrc
 ```
 
-#### 实用alias
+### 实用alias
 
 ```bash
 alias pz="nano ~/.zshrc"
@@ -91,4 +91,21 @@ alias ni="npm i"
 alias sshkey="pbcopy < ~/.ssh/id_rsa.pub"
 alias sall="defaults write com.apple.finder AppleShowAllFiles YES"
 alias noall="defaults write com.apple.finder AppleShowAllFiles NO"
+```
+
+## 解决更新异常
+
+进入目录
+```sh
+cd $ZSH
+```
+
+修改远程仓库的地址
+```sh
+git remote set-url origin "https://github.com/ohmyzsh/ohmyzsh.git"
+```
+
+升级
+```sh
+omz update
 ```
