@@ -1,1 +1,0 @@
-import{_ as s,c as a,o as n,a4 as l}from"./chunks/framework.9gsOza2N.js";const B=JSON.parse('{"title":"PM2","description":"","frontmatter":{},"headers":[],"relativePath":"tools/PM2.md","filePath":"tools/PM2.md"}'),p={name:"tools/PM2.md"},e=l("",14),o=[e];function r(c,t,i,y,d,b){return n(),a("div",null,o)}const F=s(p,[["render",r]]);export{B as __pageData,F as default};
