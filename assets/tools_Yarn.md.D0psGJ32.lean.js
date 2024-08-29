@@ -1,0 +1,1 @@
+import{_ as n,c as s,o as a,a4 as e}from"./chunks/framework.DPvy7iKm.js";const m=JSON.parse('{"title":"Yarn","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Yarn.md","filePath":"tools/Yarn.md"}'),l={name:"tools/Yarn.md"},p=e("",20),r=[p];function i(o,t,c,d,u,b){return a(),s("div",null,r)}const v=n(l,[["render",i]]);export{m as __pageData,v as default};

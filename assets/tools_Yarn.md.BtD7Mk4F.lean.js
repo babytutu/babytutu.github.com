@@ -1,1 +1,0 @@
-import{_ as s,c as n,o as a,a3 as l}from"./chunks/framework.BEDRypF0.js";const m=JSON.parse('{"title":"Yarn","description":"","frontmatter":{},"headers":[],"relativePath":"tools/Yarn.md","filePath":"tools/Yarn.md"}'),e={name:"tools/Yarn.md"},p=l("",20),r=[p];function o(i,c,t,u,d,b){return a(),n("div",null,r)}const v=s(e,[["render",o]]);export{m as __pageData,v as default};
