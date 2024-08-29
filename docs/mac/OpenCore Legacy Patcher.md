@@ -25,6 +25,8 @@ Create macOS Installer
 - Download macOS Installer      下载安装包，老系统无法直接下载新系统，这个选项非常棒
 - Use existing macOS Installer  使用已下载好的安装包
 
+![macOS](./macOS.png)
+
 
 ## 安装启动准备
 

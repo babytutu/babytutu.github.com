@@ -142,6 +142,14 @@ module.exports = {
             text: '小米开放平台',
             link: 'https://dev.mi.com/platform/appstore',
           },
+          {
+            text: '华为应用市场',
+            link: 'https://developer.huawei.com/',
+          },
+          {
+            text: '支付宝开放平台',
+            link: 'https://open.alipay.com/',
+          },
         ],
       },
     ],

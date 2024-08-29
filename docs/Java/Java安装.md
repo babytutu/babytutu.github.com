@@ -16,7 +16,7 @@ vi ~/.zshrc
 
 增加环境变量配置
 
-```
+```bash
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 ```
 
@@ -34,7 +34,7 @@ java -version
 
 会展示信息如下，表示安装配置成功
 
-```
+```bash
 java version "1.8.0_381"
 Java(TM) SE Runtime Environment (build 1.8.0_381-b09)
 Java HotSpot(TM) 64-Bit Server VM (build 25.381-b09, mixed mode)

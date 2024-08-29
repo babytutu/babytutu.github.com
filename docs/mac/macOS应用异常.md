@@ -1,4 +1,6 @@
-# macOS 运行应用出现「意外退出」及「崩溃闪退」问题修复方法
+# 破解软件安装失败解决办法
+
+## macOS 运行应用出现「意外退出」及「崩溃闪退」问题修复方法
 
 更新系统后有很多软件打不开，或者出现闪退的情况，是因为Apple苹果公司在新系统中删除了TNT的证书
 
@@ -14,4 +16,10 @@ sudo codesign --force --deep --sign - (应用路径)
 
 ```bash
 /文件位置 : replacing existing signature
+```
+
+## 解决APP安装已损坏，无法打开
+
+```bash
+sudo xattr -d com.apple.quarantine 空格键（然后在应用程序里拖入）
 ```
