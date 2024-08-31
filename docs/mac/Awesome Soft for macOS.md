@@ -51,6 +51,15 @@ Licensee: speedzodiac
 Key: UpzmG6yPo/QyZbu4vhiNe5+Oy9U57YGqW6hglQC1B2uF1eHScD70uAHbZ+Gza0tf
 ```
 
+### iStat Menus v6.xx
+
+```
+Email Address:
+982092332@qq.com
+
+License Number:
+GAWAE-FCWQ3-P8NYB-C7GF7-NEDRT-Q5DTB-MFZG6-6NEQC-CRMUD-8MZ2K-66SRB-SU8EW-EDLZ9-TGH3S-8SGA
+```
 
 ## Office Download URL
 
