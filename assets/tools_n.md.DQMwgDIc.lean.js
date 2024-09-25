@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as n,a4 as e}from"./chunks/framework.DPvy7iKm.js";const m=JSON.parse('{"title":"安装不同版本的nodejs","description":"","frontmatter":{},"headers":[],"relativePath":"tools/n.md","filePath":"tools/n.md"}'),o={name:"tools/n.md"},t=e("",19),l=[t];function p(r,d,c,i,h,b){return n(),a("div",null,l)}const y=s(o,[["render",p]]);export{m as __pageData,y as default};
