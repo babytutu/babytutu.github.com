@@ -8,6 +8,33 @@ https://www.oracle.com/cn/java/technologies/downloads/#java8
 
 官网下载需要登陆账号
 
+## 设置环境变量
+
+打开终端，编辑配置文件：
+
+```bash
+vi ~/.zshrc
+```
+
+增加环境变量配置
+
+```bash
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
+export PATH=$PATH:$JAVA_HOME/bin
+```
+
+保存配置并重新加载配置
+
+```bash
+source .zshrc
+```
+
+确认变量
+
+```bash
+echo $JAVA_HOME
+```
+
 ## 验证安装结果
 
 ```bash
