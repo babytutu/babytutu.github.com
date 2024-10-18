@@ -14,7 +14,7 @@ const getMdListByFolder = (folder) => fs.readdirSync(`./docs/${folder}`).filter(
  * @see https://vitepress.dev/reference/site-config
  * @see https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes
  */
-module.exports = {
+export default {
   base: '/',
   title: '学无止境',
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
