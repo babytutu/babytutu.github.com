@@ -29,3 +29,29 @@ pmset -g log | grep Wake
 ```
 pmset -g log | grep -e "Sleep.*due to" -e "Wake.*due to"
 ```
+
+查看从开机以来的睡眠/唤醒次数
+
+```
+pmset -g stats
+```
+
+|字段|注释|
+|---|---|
+|Sleep Count|睡眠次数|
+|Dark Wake Count|后台唤醒次数（不亮屏）|
+|User Wake Count|亮屏唤醒次数（通常是用户手动唤醒）|
+
+## 个性化配置
+
+电池下关闭小憩（推荐）：
+
+```
+sudo pmset -b powernap 0
+```
+
+查看配置是否生效，分别显示电池和插电模式下的配置
+
+```
+pmset -g custom
+```
