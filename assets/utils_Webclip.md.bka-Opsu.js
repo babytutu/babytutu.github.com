@@ -1,0 +1,55 @@
+import{_ as C,p as u,a6 as D,h as I,o as p,c as d,j as t,t as $,e as b,a4 as s,a5 as y,a7 as L,a as V,G as v,w as h,B as S}from"./chunks/framework.CaQJM1GN.js";const N={class:"webclip-generator"},O={class:"form-group"},R={key:0,class:"form-group"},z=["src"],T={key:0,class:"error-message"},W={class:"config-form"},B={class:"form-group"},F={class:"form-group"},M={class:"form-group"},E={class:"form-group"},j={class:"form-group"},A=["disabled"],G={key:1,class:"warning-message"},J={__name:"webclip",setup(w){const g=u(null),a=u(""),n=u(""),m=u(""),l=D({label:"",organization:"",description:"",url:"",fullScreen:!0}),f=I(()=>l.label.trim()!==""&&l.organization.trim()!==""&&l.url.trim()!==""&&m.value!==""),P=()=>{var i;(i=g.value)==null||i.click()},U=i=>{const e=i.target.files[0];if(n.value="",!e)return;if(!e.type.startsWith("image/")){n.value="请选择图片文件";return}if(e.size>2*1024*1024){n.value="图片大小不能超过2MB";return}const o=new FileReader;o.onload=c=>{a.value=c.target.result,m.value=c.target.result.split(",")[1]},o.onerror=()=>{n.value="图片读取失败"},o.readAsDataURL(e)},k=()=>"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(i){const e=Math.random()*16|0;return(i==="x"?e:e&3|8).toString(16)}),_=()=>{if(!f.value)return;const i=k(),e=k(),o=`<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>FullScreen</key>
+      <${l.fullScreen}/>
+      <key>Icon</key>
+      <data>
+      ${m.value}
+      </data>
+      <key>IsPrecomposed</key>
+      <false/>
+      <key>IsRemovable</key>
+      <true/>
+      <key>Label</key>
+      <string>${l.label}</string>
+      <key>PayloadDescription</key>
+      <string>${l.description}</string>
+      <key>PayloadDisplayName</key>
+      <string>${l.label}</string>
+      <key>PayloadIdentifier</key>
+      <string>${e}</string>
+      <key>PayloadType</key>
+      <string>com.apple.webClip.managed</string>
+      <key>PayloadUUID</key>
+      <string>${i}</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>Precomposed</key>
+      <false/>
+      <key>URL</key>
+      <string>${l.url}</string>
+    </dict>
+  </array>
+  <key>PayloadDescription</key>
+  <string>${l.description}</string>
+  <key>PayloadDisplayName</key>
+  <string>${l.label}</string>
+  <key>PayloadIdentifier</key>
+  <string>${e}</string>
+  <key>PayloadOrganization</key>
+  <string>${l.organization}</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>${i}</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>`,c=new Blob([o],{type:"application/x-apple-aspen-config"}),x=URL.createObjectURL(c),r=document.createElement("a");r.href=x,r.download=`${l.label.replace(/\s+/g,"_")}.mobileconfig`,document.body.appendChild(r),r.click(),document.body.removeChild(r),URL.revokeObjectURL(x)};return(i,e)=>(p(),d("div",N,[t("div",O,[e[5]||(e[5]=t("label",{for:"icon"},"图标",-1)),t("input",{type:"file",ref_key:"fileInput",ref:g,accept:"image/*",id:"icon",onChange:U,class:"file-input"},null,544),t("button",{onClick:P,class:"btn-secondary"},"选择图片")]),a.value?(p(),d("div",R,[e[6]||(e[6]=t("label",{for:"image"},"图标预览",-1)),t("img",{src:a.value,alt:"WebClip图标预览",class:"image-preview"},null,8,z),n.value?(p(),d("p",T,$(n.value),1)):b("",!0)])):b("",!0),t("div",W,[t("div",B,[e[7]||(e[7]=t("label",{for:"webclipName"},"标题",-1)),s(t("input",{type:"text",id:"webclipName","onUpdate:modelValue":e[0]||(e[0]=o=>l.label=o),placeholder:"",class:"form-input"},null,512),[[y,l.label]])]),t("div",F,[e[8]||(e[8]=t("label",{for:"PayloadOrganization"},"副标题",-1)),s(t("input",{type:"text",id:"PayloadOrganization","onUpdate:modelValue":e[1]||(e[1]=o=>l.organization=o),placeholder:"example.com",class:"form-input"},null,512),[[y,l.organization]])]),t("div",M,[e[9]||(e[9]=t("label",{for:"webclipDesc"},"描述",-1)),s(t("input",{type:"text",id:"webclipDesc","onUpdate:modelValue":e[2]||(e[2]=o=>l.description=o),placeholder:"",class:"form-input"},null,512),[[y,l.description]])]),t("div",E,[e[10]||(e[10]=t("label",{for:"webclipUrl"},"URL",-1)),s(t("input",{type:"url",id:"webclipUrl","onUpdate:modelValue":e[3]||(e[3]=o=>l.url=o),placeholder:"https://www.example.com",class:"form-input"},null,512),[[y,l.url]])]),t("div",j,[e[11]||(e[11]=t("label",{for:"fullScreen"},"全屏",-1)),s(t("input",{class:"form-checkbox",type:"checkbox",id:"fullScreen","onUpdate:modelValue":e[4]||(e[4]=o=>l.fullScreen=o)},null,512),[[L,l.fullScreen]])])]),t("button",{onClick:_,disabled:!f.value,class:"btn-primary"}," 生成配置文件 ",8,A),f.value?b("",!0):(p(),d("p",G," 请填写所有必填字段并上传图标图片 "))]))}},X=C(J,[["__scopeId","data-v-ff3ba9b0"]]),H=JSON.parse('{"title":"WebClip 配置文件生成器","description":"","frontmatter":{},"headers":[],"relativePath":"utils/Webclip.md","filePath":"utils/Webclip.md"}'),Y={name:"utils/Webclip.md"},K=Object.assign(Y,{setup(w){return(g,a)=>{const n=S("ClientOnly");return p(),d("div",null,[a[0]||(a[0]=t("h1",{id:"webclip-配置文件生成器",tabindex:"-1"},[V("WebClip 配置文件生成器 "),t("a",{class:"header-anchor",href:"#webclip-配置文件生成器","aria-label":'Permalink to "WebClip 配置文件生成器"'},"​")],-1)),a[1]||(a[1]=t("p",null,"WebClip（网页剪辑）就是一个让你能把任何网站或网页，像手机 App 一样“安装”到手机主屏幕上的功能。",-1)),a[2]||(a[2]=t("p",null,"它创建的是一个快捷方式，而不是一个真正的、需要从应用商店下载的 App。",-1)),v(n,null,{default:h(()=>[v(X)]),_:1})])}}});export{H as __pageData,K as default};
