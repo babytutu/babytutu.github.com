@@ -27,7 +27,7 @@ export default {
     title: '学无止境',
     nav: [
       {
-        text: '新手起步',
+        text: '前端开发',
         link: '/study/基础技能.md',
       },
       {
@@ -43,20 +43,29 @@ export default {
         link: '/mac/解决端口被占用',
       },
       {
-        text: 'iOS开发',
-        link: '/iOS/iOS Distribution',
+        text: '全面发展',
+        items: [
+          {
+            text: 'iOS开发',
+            link: '/iOS/iOS Distribution',
+          },
+          {
+            text: 'Java开发',
+            link: '/Java/Java安装',
+          },
+          {
+            text: 'Linux',
+            link: '/linux/Linux常用命令',
+          },
+        ],
       },
       {
-        text: 'Java开发',
-        link: '/Java/Java安装',
-      },
-      {
-        text: 'Linux',
-        link: '/linux/Linux常用命令',
-      },
-      {
-        text: '字体文件预览',
+        text: '字体预览',
         link: '/utils/iconPreview',
+      },
+      {
+        text: 'Webclip',
+        link: '/utils/Webclip',
       },
       {
         text: '参考资料',
@@ -70,15 +79,15 @@ export default {
             link: 'https://react.dev/',
           },
           {
-            text: 'miniprogram',
+            text: '微信小程序',
             link: 'https://developers.weixin.qq.com/miniprogram/dev/framework/',
           },
           {
-            text: 'MDN Web Docs',
+            text: 'MDN',
             link: 'https://developer.mozilla.org',
           },
           {
-            text: 'ES6 教程',
+            text: 'ES6教程',
             link: 'https://wangdoc.com/es6/',
           },
           {
@@ -86,13 +95,13 @@ export default {
             link: 'https://vant-contrib.gitee.io/vant/#/zh-CN/',
           },
           {
-            text: 'Ant Design Mobile',
+            text: 'Ant Design',
             link: 'https://mobile.ant.design/zh',
           },
         ],
       },
       {
-        text: '开发相关网站',
+        text: '开发相关',
         items: [
           {
             text: '全国互联网安全管理服务平台',
