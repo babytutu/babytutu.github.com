@@ -63,6 +63,8 @@ redis-cli
 
 通过界面输入用户名密码等信息即可连接 Redis
 
+## 修改配置
+
 查找 redis 配置文件 redis.conf 的位置
 
 ```sh
