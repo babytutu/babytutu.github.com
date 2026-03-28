@@ -60,25 +60,54 @@ redis-cli
 
 通过界面输入用户名密码等信息即可连接Redis
 
-## 设置密码
+
+## 设置用户名和密码
 
 查找redis配置文件redis.conf的位置
 ```sh
 find / -name redis.conf 2>/dev/null
 ```
 
-搜索`requirepass`，原有配置行被#注释
+### 仅设置密码
+
+修改 `requirepass` 配置项
+
+```
+requirepass testpassword
+```
+
+测试是否生效
+
+```
+redis-cli -a testpassword
+```
+
+### 设置用户名和密码
+
+Redis 6.0及以上版本支持多用户模式
+
+搜索`user`，原有配置行被#注释
+
+```
+# user alice on +@all -DEBUG ~* >somepassword
+```
 
 修改为
 
 ```
-requirepass yourpasword
+user newuser on +@all ~* >password
 ```
+
+- newuser 是用户名。
+- on 表示启用该用户。
+- password 是用户密码。
+- ~* 表示该用户可以访问所有键。
+- +@all 表示该用户可以执行所有命令。
 
 修改完成后需要重启redis服务生效，登录时命令为
 
 ```
-redis-cli -a yourpasword
+redis-cli -u redis://newuser:password@localhost:6379
 ```
 
 ## 使用Node.js连接
@@ -94,14 +123,19 @@ npm install redis
 ```js
 import { createClient } from 'redis'
 
-const client = createClient()
-
-client.on('error', err => console.log('Redis Client Error', err))
-
-await client.connect()
+const client = await createClient({
+  url: 'redis://babytutu:testpassword@localhost:6380/0',
+})
+  .on('error', (err) => {
+    console.log('Redis Client Error', err)
+    process.exit(1)
+  })
+  .connect()
 
 await client.set('key', 'value')
 const value = await client.get('key')
+
+client.destroy()
 ```
 
 ### 连接外部带密码的redis
@@ -112,6 +146,27 @@ redis[s]://[[username][:password]@][host][:port][/db-number]
 
 ```js
 createClient({
-  url: 'redis://alice:foobared@awesome.redis.server:6380'
+  url: 'redis://alice:foobared@awesome.redis.server:6379/0'
 })
 ```
+
+### 修改默认端口
+
+默认端口号是6379，可通过修改配置文件`redis.conf`中的port字段自定义
+
+位置可能在/etc/redis/、/usr/local/etc/redis/或者Redis安装目录下
+
+mac通过homebrew安装，目录在`/opt/homebrew/etc/redis.conf`
+
+
+```sh
+sudo nano /opt/homebrew/etc/redis.conf
+```
+
+保存修改后重启redis服务，执行命令确认生效，如修改为6380
+
+```sh
+redis-cli -p 6380 ping
+```
+
+返回`PONG`说明生效
