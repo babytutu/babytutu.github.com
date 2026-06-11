@@ -58,7 +58,7 @@ yarn start
 
 在`docs/.vitepress`目录下，新建`config.js`
 
-[默认主题配置官方文档](https://vitepress.vuejs.org/config/theme-configs)
+[默认主题配置官方文档](https://vitepress.dev/zh/reference/default-theme-config)
 
 ```js
 export default {
@@ -77,7 +77,7 @@ export default {
 
 ## Markdown
 
-[自定义容器](https://v2.vuepress.vuejs.org/zh/reference/default-theme/markdown.html)
+[自定义容器](https://vitepress.dev/zh/guide/markdown)
 
 ```md
 ::: tip
@@ -115,7 +115,7 @@ export default {
 
 ## 配置首页
 
-[官方文档](https://vitepress.vuejs.org/guide/theme-home-page)
+[官方文档](https://vitepress.dev/zh/reference/default-theme-home-page)
 
 例子
 
@@ -157,7 +157,7 @@ hero:
 
 ## 部署GitHub Pages
 
-[部署说明官方文档](https://vitepress.vuejs.org/guide/deploying#github-pages)
+[部署说明官方文档](https://vitepress.dev/zh/guide/deploy)
 
 
 新建`.github/workflows/docs.yml`
