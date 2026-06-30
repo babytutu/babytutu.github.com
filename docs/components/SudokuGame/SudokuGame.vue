@@ -116,6 +116,7 @@ const selectedCell = ref(-1)
 const isNoteMode = ref(false)
 const highlightedNotesMap = ref({})
 const isWin = ref(false)
+const highlightNum = ref(0) // ✨ 一定要加回这一行！
 
 const difficulty = ref('easy')
 const difficultyText = computed(() => diffTypes[difficulty.value])
@@ -145,6 +146,7 @@ const initGame = () => {
   highlightedNotesMap.value = {}
   isNoteMode.value = false
   isWin.value = false
+  highlightNum.value = 0
 }
 
 watch(difficulty, () => {
@@ -172,6 +174,8 @@ const onCellTap = (index) => {
     return
   }
 
+  const existingHighlightNum = highlightNum.value
+
   // 切换格子前先清空旧高亮
   g.forEach((c) => {
     c.isHighlight = false
@@ -185,12 +189,15 @@ const onCellTap = (index) => {
   const notes = cell.notes || []
 
   const hMap = {}
+  let nextHighlight = 0
+
   if (val > 0) {
     g.forEach((c) => {
       c.isHighlight = c.value === val
       c.noteHighlightMap = {}
       if (c.notesMap && c.notesMap[val]) c.noteHighlightMap[val] = true
     })
+    nextHighlight = val
   } else if (isNoteMode.value && notes.length > 0) {
     const set = new Set(notes)
     g.forEach((c) => {
@@ -198,7 +205,22 @@ const onCellTap = (index) => {
       c.isNoteMatch = n.length === notes.length && n.every((x) => set.has(x))
     })
     notes.forEach((n) => (hMap[n] = true))
+    nextHighlight = 0
+  } else {
+    if (existingHighlightNum > 0) {
+      g.forEach((c) => {
+        c.isHighlight = c.value === existingHighlightNum
+        c.noteHighlightMap = {}
+        if (c.notesMap && c.notesMap[existingHighlightNum])
+          c.noteHighlightMap[existingHighlightNum] = true
+      })
+      nextHighlight = existingHighlightNum
+    } else {
+      nextHighlight = 0
+    }
   }
+
+  highlightNum.value = nextHighlight
   highlightedNotesMap.value = hMap
 }
 
