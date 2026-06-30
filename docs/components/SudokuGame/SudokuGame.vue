@@ -411,6 +411,7 @@ initGame()
   background: #fff;
 }
 
+/* 单个单元格 —— 物理锁死尺寸版 */
 .cell {
   display: flex;
   justify-content: center;
@@ -420,6 +421,10 @@ initGame()
   font-size: 24px;
   cursor: pointer;
   aspect-ratio: 1 / 1;
+  /* ✨ 核心修复：绝对锁死容器，防止被内部弹窗撑大 */
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 .cell.original .number {
   color: var(--color-dark-text) !important;
@@ -468,6 +473,8 @@ initGame()
   height: 100%;
   padding: 0;
   box-sizing: border-box;
+  /* ✨ 加上这行，防止任何行高/文字把容器撑破 */
+  line-height: 0;
 }
 .note-num {
   display: flex;
