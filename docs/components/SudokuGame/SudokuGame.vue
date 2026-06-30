@@ -161,11 +161,18 @@ const changeDifficulty = (newDiff) => {
 const onCellTap = (index) => {
   const g = grid.value
   if (selectedCell.value === index) {
+    // 取消选中时同时清空高亮
+    g.forEach((c) => {
+      c.isHighlight = false
+      c.isNoteMatch = false
+      c.noteHighlightMap = {}
+    })
     selectedCell.value = -1
     highlightedNotesMap.value = {}
     return
   }
 
+  // 切换格子前先清空旧高亮
   g.forEach((c) => {
     c.isHighlight = false
     c.isNoteMatch = false
@@ -503,7 +510,7 @@ initGame()
   color: var(--color-dark);
 }
 
-/* 2. 写了草稿的数字：边框变为深色，作为“已选中”标识 */
+/* 2. 写了草稿的数字：边框变为深色，作为"已选中"标识 */
 .key.highlight-note-key {
   background: var(--color-gray-light);
   border: 2px solid var(--color-dark) !important;
